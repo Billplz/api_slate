@@ -7,9 +7,9 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - php
 
 toc_footers:
-  - <a href='https://www.billplz.com'>Sign Up to Start</a>
-  - <a href='https://www.billplz-sandbox.com'>Sign Up to Sandbox</a>
-  - <a href='https://www.fb.com/groups/billplzdevjam'>Billplz Developer Community</a>
+  - <a href='https://www.billplz.com/agreement.pdf'>Agreement</a>
+  - <a href='https://www.facebook.com/groups/billplzdevjam'>Developer Community</a>
+  - <a href='https:///help.billplz.com'>Frequently Asked Questions</a>
 
 includes:
   - errors
@@ -1665,175 +1665,522 @@ curl https://www.billplz.com/api/v3/fpx_banks \
 
 \* Only applicable in staging environment.
 
+# X Signature
 
-# Kittens
+###### X SIGNATURE CALCULATION
 
-## Get All Kittens
+The message level security is implemented by using signing and verification of the message.
 
-```ruby
-require 'kittn'
+###### STEP 1 - CONSTRUCT SOURCE STRING
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
+- The source string should be formed with elements, construct with key and value pair data.
+- The elements should then be sorted in ascending order, case-insensitive.
+- Each element should be separated by a "|" (pipe) character in between them.
+- Below is a sample of key value pairs:
 
-```python
-import kittn
+  `collection_id: 'inbmmepb', description: 'testing', email: 'api@billplz.com', name: 'Michael', amount: '200', callback_url: 'https://example.com/webhook'`
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+- Below is sample of constructed source string by using key value pairs above:
 
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
+  `amount200|callback_urlhttps://example.com/webhook|collection_idinbmmepb|descriptiontesting|emailapi@billplz.com|nameMichael`
 
-```javascript
-const kittn = require('kittn');
+- In the case of nested data, the parent key should be prepanded to the nested elements.
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
+- Example of nested key value pairs:
 
-> The above command returns JSON structured like this:
+  `collections: [{id: 'inbmmepb', title: 'testing'}, {id: 'xyzabc', title: 'testing x 2'}], page: 1`
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
+- Will construct source string as below:
 
-This endpoint retrieves all kittens.
+  `collectionsidinbmmepb|collectionsidxyzabc|collectionstitletesting|collectionstitletesting x 2|page1`
 
-###### HTTP Request
+###### STEP 2 - SIGN THE SOURCE STRING
 
-`GET http://example.com/api/kittens`
+- Get your XSignature Key from setting page.
+- Sign the constructed source string in step #1 using **HMAC_SHA256** and the shared XSignature Key.
 
-###### Query Parameters
+Below is a sample of constructed source string:
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+`amount200|callback_urlhttps://example.com/webhook|collection_idinbmmepb|descriptiontesting|emailapi@billplz.com|nameMichael`
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+Below is the final x_signature value using above source string with 'abc123cde456' as XSignature Key:
+
+`ef5e54a22af0925cba88fab467119742e90262e3646eea1dee3949938daf3a38`
+
+<aside class="notice">
+  Elements in the source string should not contain <code>x_signature</code>.
 </aside>
 
-## Get a Specific Kitten
+# Payment Completion
 
-```ruby
-require 'kittn'
+## Basic Callback Url
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
+`callback_url` feature does not give your users the same instant bill update experience as of redirect_url feature, however **it does guarantee you 100% execution backend to backend update**.
+
+`callback_url` feature integration is **compulsory** but `redirect_url` feature is **optional**.
+
+\*\****you are strongly advised to integrate both redirect_url feature (for better user experience) and callback_url feature (for 100% transaction update)***
+
+> Example Server Side Request from Billplz:
+
+```
+POST /webhook/ HTTP/1.1
+Connection: close
+Host: 127.0.0.1
+Content-Length: 346
+Content-Type: application/x-www-form-urlencoded
+
+  id="W_79pJDk"
+  &collection_id="599"
+  &paid="true"
+  &state="paid"
+  &amount="200"
+  &paid_amount="0"
+  &due_at="2020-12-31"
+  &email="api@billplz.com"
+  &mobile="+60112223333"
+  &name="MICHAEL API"
+  &metadata[id]="9999"
+  &metadata[description]="This is to test bill creation"
+  &url="http://billplz.dev/bills/W_79pJDk"
+  &paid_at="2015-03-09 16:23:59 +0800"
 ```
 
-```python
-import kittn
+> Body formatted for readability.
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
+###### SERVER SIDE REQUEST
+
+Billplz will make a POST request to `callback_url` with Bill object upon payment completion (`failure` or `success`).
+
+A bill that catched payment failure will be in `due` state.
+
+By default, `Basic Callback URL` feature is disabled due to security reason.
+
+<aside class="notice">
+  Billplz account registered before September 2018 will have Basic Callback URL feature enabled by default.
+</aside>
+
+###### HTTP REQUEST
+
+`POST {CALLBACK_URL}`
+
+###### POST PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents bill. |
+| collection_id | ID that represents the collection where the bill belongs to. |
+| paid | Boolean value to tell if a bill has paid. It will return `false` for `due` and `hidden` bills; `true` for paid bills. |
+| state | State that representing the bill's status, possible states are `due`, `hidden`, and `paid`. |
+| amount | Bill's amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| paid_amount | Bill's paid amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| due_at | Due date for the bill, in format `YYYY-MM-DD`. Example, `2020-12-31`. |
+| email | The email address of the bill's recipient. |
+| mobile | Recipient's mobile number, in format `+601XXXXXXXX` |
+| name | Recipient's name. |
+| metadata | Deprecated hash value data. |
+| URL | URL to the bill page. |
+| paid_at | Date time when the bill was paid, in format `YYYY-MM-DD HH:MM:SS TimeZone`. Example, `2017-02-13 05:43:43 +0800` |
+
+Callback request will be timeout at 20 seconds.
+
+Billplz server also expecting the end point server responds with status code of 200.
+
+In a case of either the end point server does not able to respond within the limit seconds (20 secs) or does not respond with 200 status code, the callback will consider as failure.
+
+On failure, the job is scheduled again in 15 minutes * N, where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours after 4th attempt.
+
+Billplz will attempt for maximum of 5 times and the callback will be removed from the system queue permanently after that.
+
+<aside class="warning">
+  YOUR <a href="#webhook-rank">ACCOUNT RANK</a> WILL BE DEGRADED BY 1 FOR EVERY UNSUCCESSFUL ATTEMPT OF CALLBACK AND WILL RESULT TO LOWER SCHEDULING PRIORITY FOR THE CALLBACK TO BE EXECUTED FOR YOUR ACCOUNT.
+</aside>
+
+<aside class="warning">
+  YOU ARE STRONGLY ADVISED TO USE <a href="#x-signature-callback-url">X SIGNATURE CALLBACK URL</a>. USING X SIGNATURE ALLOWS YOU TO VALIDATE THE DATA INTEGRITY BY USING CHECKSUM.
+</aside>
+
+## Basic Redirect Url
+
+`redirect_url` feature is just a front-end redirection to `redirect_url` specified, **it does not guaranteed the execution**, due to many factors (user disconnected, browser closed, app hang, etc).
+
+But it is good to have, to provide better user experience (front-end instant bill status update)
+
+`callback_url` feature integration is **compulsory** but `redirect_url` feature is **optional**.
+
+\*\****you are strongly advised to integrate both redirect_url feature (for better user experience) and callback_url feature (for 100% transaction update)***
+
+###### CLIENT SIDE REQUEST
+
+If `redirect_url` exists, Billplz will redirect the browser to `redirect_url`
+
+By default, `Basic Redirect URL` feature is disabled due to security reason.
+
+<aside class="notice">
+  Billplz account registered before September 2018 will have Basic Redirect URL feature enabled by default.
+</aside>
+
+###### HTTP REQUEST
+
+`GET {REDIRECT_URL}?billplz[id]=W_79pJDk`
+
+###### URL PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| billplz[id] | ID that represents bill. |
+
+<aside class="warning">
+  YOU ARE STRONGLY ADVISED TO USE <a href="#x-signature-redirect-url">X SIGNATURE REDIRECT URL</a>. USING X SIGNATURE ALLOWS YOU TO VALIDATE THE DATA INTEGRITY BY USING CHECKSUM.
+</aside>
+
+## X Signature Callback Url
+
+`callback_url` feature does not give you the same instant bill update experience as of redirect_url feature, however **it does guarantee you 100% execution backend to backend update**.
+
+`callback_url` feature integration is **compulsory** but `redirect_url` feature is **optional**.
+
+\*\****you are strongly advised to integrate both redirect_url feature (for better user experience) and callback_url feature (for 100% transaction update)***
+
+###### SERVER SIDE REQUEST
+
+Billplz will make a POST request to `callback_url` with Bill object upon payment completion (`failure` or `success`).
+
+X Signature Callback URL request created through the API by Billplz can be verified by calculating a digital signature - `x_signature`.
+
+Each callback request includes a `x_signature` which is generated using HMAC-SHA256 algorithm and shared XSignature Key, along with the data sent in the request.
+
+To verify that the request came from Billplz, compute the HMAC-SHA256 digest according to the <a href="#x-signature-section">X Signature section</a> and compare it to the value in the `x_signature` parameter. If they match, you can be sure that the callback was sent from Billplz and the data has not been compromised.
+
+A bill that catched payment failure will be in `due` state.
+
+<aside class="success">
+  By default, X Signature Callback URL feature is activated for account registered starting September 2018.
+</aside>
+
+> Example Server Side Request from Billplz:
+
 ```
+POST /webhook/ HTTP/1.1
+Connection: close
+Host: 127.0.0.1
+Content-Length: 346
+Content-Type: application/x-www-form-urlencoded
+
+  id="W_79pJDk"
+  &collection_id="599"
+  &paid="true"
+  &state="paid"
+  &amount="200"
+  &paid_amount="0"
+  &due_at="2020-12-31"
+  &email="api@billplz.com"
+  &mobile="+60112223333"
+  &name="MICHAEL API"
+  &url="http://billplz.dev/bills/W_79pJDk"
+  &paid_at="2015-03-09 16:23:59 +0800"
+  &x_signature="f0ff6c564f98d5403e2b26fbd3d45309c76eb68d8c5bcda0d48b541c3502a396"
+```
+
+> Body formatted for readability.
+
+###### HTTP REQUEST
+
+`POST {CALLBACK_URL}`
+
+###### POST PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents bill. |
+| collection_id | ID that represents the collection where the bill belongs to. |
+| paid | Boolean value to tell if a bill has paid. It will return `false` for `due` and `hidden` bills; `true` for `paid` bills. |
+| state | State that representing the bill's status, possible states are `due`, `hidden` and `paid`. |
+| amount | Bill's amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| paid_amount | Bill's paid amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| due_at | Due date for the bill, in format `YYYY-MM-DD`. Example, `2020-12-31`. |
+| email | The email address of the bill's recipient. |
+| mobile | Recipient's mobile number. |
+| name | Recipient's name. |
+| URL | URL to the bill page. |
+| paid_at | Date time when the bill was paid, in format `YYYY-MM-DD HH:MM:SS TimeZone`. Example, `2015-03-09 16:23:59 +0800`. |
+| x_signature | Digital signature computed with posted data and shared XSignature Key. |
+
+Callback request will be timeout in 20 seconds.
+
+Billplz server also expecting the end point server responds with status code of 200.
+
+In a case of either the end point server does not able to respond within the limit seconds (20 secs) or does not respond with 200 status code, the callback will consider as failure.
+
+On failure, the job is scheduled again in 15 minutes \* N, where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours after 4th attempt.
+
+Assuming the first callback is initiated at 1300. The second attempt will be at 1315. The third attempt will be at 1330. The fourth attempt will be at 1345. The fifth attempt will be at 1345 next day.
+
+Billplz will attempt for maximum of 5 times and the callback will be removed from the system queue permanently after that.
+
+###### SAMPLE HTTP REQUEST FROM X SIGNATURE CALLBACK URL FEATURE
+
+`POST {CALLBACK_URL}`
+
+with POST body,
+`{:id=>"zq0tm2wc", :collection_id=>"yhx5t1pp", :paid=>true, :state=>"paid", :amount=>100, :paid_amount=>100, :due_at=>"2018-9-27", :email=>"tester@test.com", :mobile=>nil, :name=>"TESTER", :url=>"http://www.billplz-sandbox.com/bills/zq0tm2wc", :paid_at=>"2018-09-27 15:15:09 +0800", :x_signature=>"0fe0a20b8d557eeae570377783d062a3816a9ea80f368860bacfa7ec3ca4d00e"}`
+
+######\#1 Extract all key-value pair parameters except x_signature.
+
+`id="zq0tm2wc"`
+
+`collection_id="yhx5t1pp"`
+
+`paid="true"`
+
+`state="paid"`
+
+`amount="100"`
+
+`paid_amount="100"`
+
+`due_at="2018-9-27"`
+
+`email="tester@test.com"`
+
+`mobile=""`
+
+`name="TESTER"`
+
+`url="http://www.billplz-sandbox.com/bills/zq0tm2wc"`
+
+`paid_at="2018-09-27 15:15:09 +0800"`
+
+######\#2 Construct source string from each key-value pair parameters above.
+
+`idzq0tm2wc`
+
+`collection_idyhx5t1pp`
+
+`paidtrue`
+
+`statepaid`
+
+`amount100`
+
+`paid_amount100`
+
+`due_at2018-9-27`
+
+`emailtester@test.com`
+
+`mobile`
+
+`nameTESTER`
+
+`urlhttp://www.billplz-sandbox.com/bills/zq0tm2wc`
+
+`paid_at2018-09-27 15:15:09 +0800`
+
+######\#3 Sort in ascending order, case-insensitive.
+
+`amount100`
+
+`collection_idyhx5t1pp`
+
+`due_at2018-9-27`
+
+`emailtester@test.com`
+
+`idzq0tm2wc`
+
+`mobile`
+
+`nameTESTER`
+
+`paid_amount100`
+
+`paid_at2018-09-27 15:15:09 +0800`
+
+`paidtrue`
+
+`statepaid`
+
+`urlhttp://www.billplz-sandbox.com/bills/zq0tm2wc`
+
+######\#4 Combine sorted source strings with "|" (pipe) character in between.
+
+`amount100|collection_idyhx5t1pp|due_at2018-9-27|emailtester@test.com|idzq0tm2wc|mobile|nameTESTER|paid_amount100|paid_at2018-09-27 15:15:09 +0800|paidtrue|statepaid|urlhttp://www.billplz-sandbox.com/bills/zq0tm2wc`
+
+######\#5 Compute x_signature by signing the final source in #4 using HMAC_SHA256 and the sample XSignature Key.
+
+`S-s7b4yWpp9h7rrkNM1i3Z_g`
+
+`0fe0a20b8d557eeae570377783d062a3816a9ea80f368860bacfa7ec3ca4d00e`
+
+######\#6 Compare the computed x_signature with the x_signature passed in the request.
+
+If they match, you can be sure that the callback was sent from Billplz and the data has not been compromised, and you **do not need to trigger additional Get a Bill API for primary status validation**.
+
+<aside class="warning">
+  YOUR ACCOUNT RANK WILL BE DEGRADED BY 1 FOR EVERY UNSUCCESSFUL ATTEMPT OF CALLBACK AND WILL RESULT TO LOWER SCHEDULING PRIORITY FOR THE CALLBACK TO BE EXECUTED FOR YOUR ACCOUNT.
+</aside>
+
+## X Signature Redirect Url
+
+`redirect_url` feature is just a front-end redirection to the `redirect_url` specified, **it does not guaranteed the execution**, due to many factors (user disconnected, browser closed, app hang, etc).
+
+But it is good to have, to provide better user experience (front-end instant bill status update)
+
+`callback_url` feature integration is **compulsory** but `redirect_url` feature is **optional**.
+
+\*\****you are strongly advised to integrate both redirect_url feature (for better user experience) and callback_url feature (for 100% transaction update)***
+
+###### CLIENT SIDE REQUEST
+
+If `redirect_url` exists, Billplz will redirect the browser to `redirect_url`
+
+X Signature Redirect URL request created by Billplz can be verified by calculating a digital signature - `x_signature`.
+
+Each redirect request includes a x_signature which is generated using HMAC-SHA256 algorithm and shared XSignature Key, along with the parameters passed in the request.
+
+To verify that the request came from Billplz, compute the HMAC-SHA256 digest according to the <a href="#x-signature-section">X Signature section</a> and compare it to the value in the `x_signature` parameter. If they match, you can be sure that the redirection was sent from Billplz and the data has not been compromised.
+
+<aside class="success">
+  By default, X Signature Redirect URL feature is activated for account registered starting September 2018.
+</aside>
+
+###### HTTP REQUEST
+
+`GET {REDIRECT_URL}?billplz[id]=ifpgaa&billplz[paid]=true&billplz[paid_at]=2017-01-04%2013%3A10%3A45%20%2B0800&billplz[x_signature]=76de0ad8cc23706d694fd81c9027b8e3ae169e0880d75e1e123c5832c82bf707`
+
+###### URL PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| billplz[id] | ID that represents bill. |
+| billplz[paid] | Boolean value to tell if a bill has paid. It will return `false` for `due` and `hidden` bills; `true` for paid bills. |
+| billplz[paid_at] | Date time when the bill was paid, in format `YYYY-MM-DD HH:MM:SS TimeZone`. Example, `2017-01-04 13:10:45 +0800`. |
+| billplz[x_signature] | Digital signature computed with passing parameters and shared XSignature Key. |
+
+###### SAMPLE HTTP REQUEST FROM X SIGNATURE REDIRECT URL FEATURE
+
+`GET {REDIRECT_URL}?billplz[id]=zq0tm2wc&billplz[paid]=true&billplz[paid_at]=2018-09-27%2015%3A15%3A09%20%2B0800&billplz[x_signature]=4aab095fe5a39b1d534500988f9a0cb085cd1b6d5bbb55dd4e02ea6fa102b47b`
+
+######\#1 Extract all key-value pair parameters except x_signature.
+
+`billplz[id]="zq0tm2wc"`
+
+`billplz[paid]="true"`
+
+`billplz[paid_at]="2018-09-27 15:15:09 +0800"`
+
+######\#2 Construct source string from each key-value pair parameters above.
+
+`billplzidzq0tm2wc`
+
+`billplzpaidtrue`
+
+`billplzpaid_at2018-09-27 15:15:09 +0800`
+
+######\#3 Sort in ascending order, case-insensitive.
+
+`billplzidzq0tm2wc`
+
+`billplzpaid_at2018-09-27 15:15:09 +0800`
+
+`billplzpaidtrue`
+
+######\#4 Combine all source strings with "|" (pipe) character in between.
+
+`billplzidzq0tm2wc|billplzpaid_at2018-09-27 15:15:09 +0800|billplzpaidtrue`
+
+######\#5 Compute x_signature by signing the final source in #4 using HMAC_SHA256 and the sample XSignature Key.
+
+`S-s7b4yWpp9h7rrkNM1i3Z_g`
+
+`4aab095fe5a39b1d534500988f9a0cb085cd1b6d5bbb55dd4e02ea6fa102b47b`
+
+######\#6 Compare parameter x_signature passed in the request with the computed x_signature in #5.
+
+If they match, you can be sure that the redirection was sent from Billplz and the data has not been compromised, and you **do not need to trigger additional Get a Bill API for primary status validation**.
+
+# Rate Limit
+
+> Example request:
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
+curl https://www.billplz.com/api/v3/bills/8X0Iyzaw \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
 ```
 
-```javascript
-const kittn = require('kittn');
+> Example response header without rate limit:
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+```
+RateLimit-Limit: unlimited
+RateLimit-Remaining: unlimited
+RateLimit-Reset: unlimited
+Content-Type: application/json;
 ```
 
-> The above command returns JSON structured like this:
+> Example response header with rate limit:
 
-```json
+```
+RateLimit-Limit: 300
+RateLimit-Remaining: 299
+RateLimit-Reset: 899
+Content-Type: application/json;
+```
+
+> Example response after exceeding limit:
+
+```
+RateLimit-Limit: 300
+RateLimit-Remaining: 0
+RateLimit-Reset: 299
+Content-Type: application/json;
+```
+```json 
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "error": 
+  {
+    "type": "RateLimit",
+    "message": "Too many requests"
+  }
 }
 ```
 
-This endpoint retrieves a specific kitten.
+This section lists all API Endpoints that are subjected to rate limit. API Endpoints not listed here are not subject to rate limit.
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+The limit is **300 request per request window (15 minutes period)**. The limit is cumulative per IP address and is not counted per API Endpoint Basis. Requesting for specific API Endpoint will reduce the limit for another API Endpoint within a request window.
 
-###### HTTP Request
+<aside class="notice">
+  We will set a rate limit for specific IP Address if the request appears to be abusive. We reserve the rights, at our sole discretion to set this rate-limit.
+</aside>
 
-`GET http://example.com/kittens/<ID>`
+This table describes all API endpoints that are subjected to rate limit.
 
-###### URL Parameters
+###### API ENDPOINTS LIST
+| Version | Name | Endpoint |
+| --- | --- | --- |
+| `V2`/`V3` | [Get a Bill](#get-a-bill) | api/:VERSION/bills/{BILL_ID} |
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+###### RESPONSE HEADER
 
-## Delete a Specific Kitten
+| Parameter | Description |
+| --- | --- |
+| RateLimit-Limit | Total requests allowed per request window. It's either `unlimited`, or `300`.|
+| RateLimit-Remaining | Total available requests allowed per request window. It's either `unlimited`, or less than or equal to `RateLimit-Limit` parameter. |
+| RateLimit-Reset | Time remaining (in seconds) for next request window restart. It's either `unlimited`, or less than or equal to `900`. |
 
-```ruby
-require 'kittn'
+<aside class="notice">
+  Exceeding the rate limit will result to <code>429</code> Too Many Requests.
+</aside>
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
+<aside class="success">
+  Normal HTTP status code will be <code>200</code>.
+</aside>
 
-```python
-import kittn
+###### RESPONSE PARAMETER
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
+Response parameter will be as usual if didn't exceed the rate limit. Otherwise, the response parameters will be as follows:
 
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-###### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-###### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+| Parameter | Value |
+| --- | --- |
+| error[type] | `RateLimit` |
+| error[message] | `Too many requests` |

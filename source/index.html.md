@@ -914,7 +914,7 @@ https://www.billplz.com/api/v3/collections/qag4fe_o6/activate \
 
 ## Bills
 
-Bills need to be created inside a [collection](#collections35). It must be either `Collection` or `Open Collection`. However, only `Collection` can be used to create a bill via API and `Open Collection` cannot be used to create a bill via API. 
+Bills need to be created inside a [collection](#v4-collections). It must be either `Collection` or `Open Collection`. However, only `Collection` can be used to create a bill via API and `Open Collection` cannot be used to create a bill via API. 
 
 ### Create a Bill
 

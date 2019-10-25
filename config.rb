@@ -13,7 +13,7 @@ set :markdown,
     tables: true,
     with_toc_data: true,
     no_intra_emphasis: true,
-    renderer: UniqueHeadCounter,
+    #renderer: UniqueHeadCounter,
     renderer: NestingUniqueHeadCounter
 
 # Assets

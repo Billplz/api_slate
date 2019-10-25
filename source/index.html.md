@@ -30,8 +30,6 @@ Welcome to the Billplz API! You can use our API to access Billplz API endpoints 
 
 Our API is organized around REST. JSON will be returned in all responses from the API, including errors. The API will accept both application/x-www-form-urlencoded and application/json.
 
-`V4` API is in active development state where all new features introduced will be added in this version.
-
 <aside class="notice">
   THE MANAGEMENT CANNOT ACCEPT RESPONSIBILITY FOR LOSS OF MONEY DUE TO IMPROPER USE OF BILLPLZ API.
 </aside>
@@ -1664,6 +1662,1383 @@ curl https://www.billplz.com/api/v3/fpx_banks \
 | TEST0023\* | Test 0023 |
 
 \* Only applicable in staging environment.
+
+# V4
+
+This version is in active development state. New feature will be introduced in this version.
+
+## Collections
+
+Collections are where all of your [Bills](#bills) are belongs to. Collections can be useful to categorize your bill payment. As an example, you may use Collection to separate a Tuition Fee Collection for September and November collection.
+
+### Create a Collection
+
+Billplz API now support creation of collection with 2 split rules feature, the response will contain the collection’s ID that is needed in Bill API, split rules info and fields
+
+<aside class="warning">
+  Collection with custom logo support are removed starting in <code>V4</code>
+</aside>
+
+> Example Request:
+
+```shell
+# Creates a collection
+curl https://www.billplz.com/api/v4/collections \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -F title="My First V4 API Collection"
+```
+
+> Response:
+
+```json
+{
+  "id": "inbmmepb",
+  "title": "My First V4 API Collection",
+  "logo": 
+  {
+    "thumb_url": null,
+    "avatar_url": null
+  },
+  "split_header": false,
+  "split_payments": []
+}
+```
+
+> Example request with optional arguments:
+
+```shell
+curl https://www.billplz.com/api/v4/collections \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -F title="My First V4 API Collection"\
+  -F split_payments[][email]="verified@account.com" \
+  -F split_payments[][fixed_cut]=100 \
+  -F split_payments[][variable_cut]=2\
+  -F split_payments[][stack_order]=0\
+  -F split_payments[][email]="verified2@account.com" \
+  -F split_payments[][fixed_cut]=200 \
+  -F split_payments[][variable_cut]=3\
+  -F split_payments[][stack_order]=1
+```
+
+> Response:
+
+```json
+{
+  "id": "inbmmepb",
+  "title": "My First V4 API Collection",
+  "logo":
+  {
+    "thumb_url": null,
+    "avatar_url": null
+  },
+  "split_header": false,
+  "split_payments": [
+    {
+      "email": "verified@account.com",
+      "fixed_cut": 100,
+      "variable_cut": 2,
+      "stack_order": 0
+    },
+    {
+      "email": "verified2@account.com",
+      "fixed_cut": 200,
+      "variable_cut": 3,
+      "stack_order": 1
+    }
+   ]
+}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/collections`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| title | The collection title. Will be displayed on bill template. String format.|
+
+###### OPTIONAL ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| split_payments[][email] | The email address of the split rule's recipient (The account must be a verified account). |
+| split_payments[][fixed_cut] | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00). <br>This field is required if `split_payment[variable_cut]` is not present. |
+| split_payments[][variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present. |
+| split_payments[][stack_order] | Integer format that defines the sequence of the split rule recipients. <br>This field is required and must be in correct order starts from 0 and increment by 1 subsequently if you want to set a split rule. <br>This input is crucial to determine a precise recipient's order. |
+| split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents a collection. |
+| title | The collection's title in string format. |
+| logo[thumb_url] | The thumb dimension's (180x180) URL. |
+| logo[avatar_url] | The avatar dimension's (40x40) URL. |
+| split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
+| split_payments | Array that contains all split rule recipients in hash format. |
+| email | in hash represents the recipient's email. |
+| fixed_cut | in hash represents the recipient's fixed cut in smallest and positive currency unit. |
+| variable_cut | The recipient's percentage cut in positive integer format. |
+| stack_order | The order of the recipient defined in split rules. |
+
+### Get a Collection
+
+Use this API to query your collection record.
+
+> Example request:
+
+```shell
+# Get a collection
+curl https://www.billplz.com/api/v4/collections/inbmmepb \
+-u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+        
+> Response:
+
+```json
+{
+  "id": "inbmmepb",
+  "title": "My First API Collection",
+  "logo": 
+  {
+    "thumb_url": null,
+    "avatar_url": null
+  },
+  "split_header": false,
+  "split_payments": [
+    {
+      "email": "verified@account.com",
+      "fixed_cut": 100,
+      "variable_cut": 2,
+      "stack_order": 0
+    },
+    {
+      "email": "verified2@account.com",
+      "fixed_cut": 200,
+      "variable_cut": 3,
+      "stack_order": 1
+    }
+   ],
+  "status": "active"
+}
+```
+
+###### HTTP REQUEST
+
+`GET https://www.billplz.com/api/v4/collections/{COLLECTION_ID}`
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents a collection. |
+| title | The collection's title in string format. |
+| logo[thumb_url] | The thumb dimension's (180x180) URL. |
+| logo[avatar_url] | The avatar dimension's (40x40) URL. |
+| split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
+| split_payments | Array that contains all split rule recipients in hash format. <br>`email` in hash represents the recipient's email. <br>`fixed_cut` in hash represents the recipient's fixed cut in smallest and positive currency unit. <br>`variable_cut` is the recipient's percentage cut in positive integer format.<br>`stack_order` is the order of the recipient defined in split rules. |
+| status | Collection's status, it is either `active` and `inactive`. |
+
+<aside class="notice">
+   It will return <code>404</code> status code, and a message of <code>RecordNotFound</code> if the collection you trying to query is not exists.
+</aside>
+
+### Get Collection Index
+
+Use this API to retrieve your collections list. To utilise paging, append a page parameter to the URL e.g. ?page=1. If there are 15 records in the response you will need to check if there is any more data by fetching the next page e.g. ?page=2 and continuing this process until no more results are returned.
+
+> Example request:
+
+```shell
+# Get collection index
+curl https://www.billplz.com/api/v4/collections \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{
+  "collections":
+  [{
+    "id": "inbmmepb",
+    "title": "My First API Collection",
+    "logo": 
+    {
+      "thumb_url": null,
+      "avatar_url": null
+    },
+    "split_header": false,
+    "split_payments": [],
+    "status": "active"
+  }],
+  "page": 1
+}
+```
+
+> Example request with optional arguments:
+
+```shell
+# Get collection index
+curl https://www.billplz.com/api/v4/collections?page=2&status=active \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{
+  "collections":
+  [{
+    "id": "inbmmepb",
+    "title": "My First API Collection",
+    "logo": 
+    {
+      "thumb_url": null,
+      "avatar_url": null
+    },
+    "split_header": false,
+    "split_payments": [],
+    "status": "active"
+  }],
+  "page": 2
+}
+```
+
+###### HTTP REQUEST
+
+`GET https://www.billplz.com/api/v4/collections`
+
+###### OPTIONAL ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| page | Up to 15 collections will be returned in a single API call per specified page. Default to **1** if not present. |
+| status | Parameter to filter collection's status, valid value are `active` and `inactive`. |
+
+### Create an Open Collection
+
+Billplz API now support creation of open collections (Payment Form) with 2 split rule recipients feature, the response will contain the collection’s attributes, including the payment form URL.
+
+> Example request:
+
+```shell
+# Creates an open collection
+curl https://www.billplz.com/api/v4/open_collections \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d title="My First API Open Collection" \
+  -d description="Maecenas eu placerat ante." \
+  -d amount=299
+```
+
+> Response:
+
+```json
+{
+  "id": "0pp87t_6",
+  "title": "MY FIRST API OPEN COLLECTION",
+  "description": "Maecenas eu placerat ante.",
+  "reference_1_label": null,
+  "reference_2_label": null,
+  "email_link": null,
+  "amount": 299,
+  "fixed_amount": true,
+  "tax": null,
+  "fixed_quantity": true,
+  "payment_button": "pay",
+  "photo":
+  {
+    "retina_url":  null,
+    "avatar_url":  null
+  },
+  "split_header": false,
+  "split_payments": [],
+  "url": "https://www.billplz.com/0pp87t_6"
+}
+```
+
+> Example request with optional arguments:
+
+```shell
+# Creates a collection
+curl https://www.billplz.com/api/v4/open_collections \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -F title="My First API Open Collection" \
+  -F description="Maecenas eu placerat ante." \
+  -F fixed_amount=false \
+  -F fixed_quantity=false \
+  -F payment_button="buy" \
+  -F reference_1_label="ID No" \
+  -F reference_2_label="First Name" \
+  -F email_link="http://www.test.com" \
+  -F tax=1 \
+  -F photo=@/Users/Billplz/Documents/uploadPhoto.png \
+  -F split_header=true \
+  -F split_payments[][email]="verified@account.com" \
+  -F split_payments[][variable_cut]=20 \
+  -F split_payments[][stack_order]=0
+```
+
+> Response:
+
+```json
+{
+  "id": "0pp87t_6",
+  "title": "MY FIRST API OPEN COLLECTION",
+  "description": "Maecenas eu placerat ante.",
+  "reference_1_label": "ID No",
+  "reference_2_label": "First Name",
+  "email_link": "http://www.test.com",
+  "amount": null,
+  "fixed_amount": false,
+  "tax": 1,
+  "fixed_quantity": false,
+  "payment_button": "buy",
+  "photo":
+  {
+    "retina_url":  "https://sample.net/assets/uploadPhoto.png",
+    "avatar_url":  "https://sample.net/assets/uploadPhoto.png"
+  },
+  "split_header": true,
+  "split_payments": [
+    {
+      "email": "verified@account.com",
+      "fixed_cut": null,
+      "variable_cut": 20,
+      "stack_order": 0
+    }
+  ],
+  "url": "https://www.billplz.com/0pp87t_6"
+}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/open_collections`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| title | The collection title. Will be displayed on payment form. String format (Max of 50 characters). |
+| description | The collection description. Will be displayed on payment form. String format (Max of 200 characters). |
+| amount | A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br>Required if `fixed_amount` is `true`; Ignored if `fixed_amount` is `false`. |
+
+###### OPTIONAL ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| fixed_amount | Boolean value. Set `fixed_amount` to `false` for Open Amount. Default value is `true`. |
+| fixed_quantity | Boolean value. Set `fixed_quantity` to `false` for Open Quantity. Default value is `true`. |
+| payment_button | Payment button's text. Available options are `buy` and `pay`. Default value is `pay`. |
+| reference_1_label | Label #1 to reconcile payments (Max of 20 characters). <br>Default value is `Reference 1`. |
+| reference_2_label | Label #2 to reconcile payments (Max of 20 characters). <br>Default value is `Reference 2`. |
+| email_link | A URL that email to customer after payment is successful. |
+| tax | Tax rate in positive integer format. |
+| photo | This image will be resized to retina (960x960) and avatar (180x180) dimensions. Whitelisted formats are `jpg`, `jpeg`, `gif` and `png`. |
+| split_payments[][email] | The email address of the split rule's recipient (The account must be a verified account). |
+| split_payments[][fixed_cut] | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00) <br>This field is required if `split_payment[variable_cut]` is not present. |
+| split_payments[][variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present. |
+| split_payments[][stack_order] | Integer format that defines the sequence of the split rule recipients. <br>This field is required and must be in correct order starts from 0 and increment by 1 subsequently if you want to set a split rule. <br>This input is crucial to determine a precise recipient's order. |
+| split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | The collection ID. |
+| title | The collection's title. |
+| description | The collection description. |
+| reference_1_label | Label #1 to reconcile payments. |
+| reference_2_label | Label #2 to reconcile payments. |
+| email_link | A URL that email to customer after payment is successful. |
+| amount | The collection's fixed amount to create bill in the smallest currency unit. |
+| fixed_amount | Boolean value. It returns to `false` if Open Amount.
+tax | Tax rate in positive integer format. |
+| fixed_quantity | Boolean value. It returns `false` if Open Quantity.
+| payment_button | Payment button's text. |
+| photo[retina_url] | The retina dimension's (960x960) URL. |
+| photo[avatar_url] | The avatar dimension's (180x180) URL. |
+| split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`.|
+| split_payments | Array that contains all split rule recipients in hash format. <br>`email` in hash represents the recipient's email. <br>`fixed_cut` in hash represents the recipient's fixed cut in smallest and positive currency unit. <br>`variable_cut` is the recipient's percentage cut in positive integer format. <br>`stack_order` is the order of the recipient defined in split rules. |
+| url | URL to the collection. |
+
+### Get an Open Collection
+
+Use this API to query your open collection record.
+
+> Example request:
+
+```shell
+# Get an open collection
+curl https://www.billplz.com/api/v4/open_collections/0pp87t_6 \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{
+  "id": "0pp87t_6",
+  "title": "MY FIRST API OPEN COLLECTION",
+  "description": "Maecenas eu placerat ante. Fusce ut neque justo, et aliquet enim. In hac habitasse platea dictumst.",
+  "reference_1_label": null,
+  "reference_2_label": null,
+  "email_link": null,
+  "amount": 299,
+  "fixed_amount": true,
+  "tax": null,
+  "fixed_quantity": true,
+  "payment_button": "pay",
+  "photo":
+  {
+    "retina_url":  null,
+    "avatar_url":  null
+  },
+  "split_header": false,
+  "split_payments": [],
+  "url": "https://www.billplz.com/0pp87t_6",
+  "status": "active"
+}
+```
+
+###### HTTP REQUEST
+
+`GET https://www.billplz.com/api/v4/open_collections/{COLLECTION_ID}`
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | The collection ID. |
+| title | The collection's title. |
+| description | The collection description. |
+| reference_1_label | Label #1 to reconcile payments. |
+| reference_2_label | Label #2 to reconcile payments. |
+| email_link | A URL that email to customer after payment is successful. |
+| amount | The collection's fixed amount to create bill in the smallest currency unit. |
+| fixed_amount | Boolean value. It returns to `false` if Open Amount. |
+| tax | Tax rate in positive integer format. |
+| fixed_quantity | Boolean value. It returns `false` if Open Quantity. |
+| payment_button | Payment button's text. |
+| photo[retina_url] | The retina dimension's (960x960) URL. |
+| photo[avatar_url] | The avatar dimension's (180x180) URL. |
+| split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
+| split_payments | Array that contains all split rule recipients in hash format. <br>`email` in hash represents the recipient's email. <br>`fixed_cut` in hash represents the recipient's fixed cut in smallest and positive currency unit. <br>`variable_cut` is the recipient's percentage cut in positive integer format. <br>`stack_order` is the order of the recipient defined in split rules.
+| url | URL to the collection. |
+| status | Collection's status, it is either `active` and `inactive`.|
+
+<aside class="notice">
+  It will return 404 status code, and a message of RecordNotFound if the open collection you trying to query is not exists.
+</aside>
+
+### Get Open Collection Index
+
+Use this API to retrieve your open collections list. To utilise paging, append a page parameter to the URL e.g. ?page=1. If there are 15 records in the response you will need to check if there is any more data by fetching the next page e.g. ?page=2 and continuing this process until no more results are returned.
+
+> Example request:
+
+```shell
+# Get open collection index
+curl https://www.billplz.com/api/v4/open_collections \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{
+  "open_collections":
+  [{
+    "id": "0pp87t_6",
+    "title": "MY FIRST API OPEN COLLECTION",
+    "description": "Maecenas eu placerat ante. Fusce ut neque justo, et aliquet enim. In hac habitasse platea dictumst.",
+    "reference_1_label": "ID No",
+    "reference_2_label": "First Name",
+    "email_link": "http://www.test.com",
+    "amount": null,
+    "fixed_amount": false,
+    "tax": 1,
+    "fixed_quantity": false,
+    "payment_button": "buy",
+    "photo":
+    {
+      "retina_url":  "https://sample.net/assets/uploadPhoto.png",
+      "avatar_url":  "https://sample.net/assets/uploadPhoto.png"
+    },
+    "split_header": false,
+    "split_payments": [
+      {
+        "email": "verified@account.com",
+        "fixed_cut": null,
+        "variable_cut": 20,
+        "stack_order": 0
+      }
+    ],
+    "url": "https://www.billplz.com/0pp87t_6",
+    "status": "active"
+  }],
+  "page": 1
+}
+```
+
+> Example request with optional arguments:
+
+```shell
+# Get collection index
+curl https://www.billplz.com/api/v4/open_collections?page=2&status=active \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{
+  "open_collections":
+  [{
+    "id": "0pp87t_6",
+    "title": "MY FIRST API OPEN COLLECTION",
+    "description": "Maecenas eu placerat ante. Fusce ut neque justo, et aliquet enim. In hac habitasse platea dictumst.",
+    "reference_1_label": "ID No",
+    "reference_2_label": "First Name",
+    "email_link": "http://www.test.com",
+    "amount": null,
+    "fixed_amount": false,
+    "tax": 1,
+    "fixed_quantity": false,
+    "payment_button": "buy",
+    "photo":
+    {
+      "retina_url":  "https://sample.net/assets/uploadPhoto.png",
+      "avatar_url":  "https://sample.net/assets/uploadPhoto.png"
+    },
+    "split_header": false,
+    "split_payments": [
+      {
+        "email": "verified@account.com",
+        "fixed_cut": null,
+        "variable_cut": 20,
+        "stack_order": 0
+      }
+    ],
+    "url": "https://www.billplz.com/0pp87t_6",
+    "status": "active"
+  }],
+  "page": 2
+}
+```
+
+###### HTTP REQUEST
+
+`GET https://www.billplz.com/api/v4/open_collections`
+
+###### OPTIONAL ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| page | Up to 15 open collections will be returned in a single API call per specified page. Default to **1** if not present. |
+| status | Parameter to filter open collection's status, valid value are `active` and `inactive`. |
+
+### Payout Flow
+
+Payout allows you to make payment to any account bank registered in Malaysia. Since Bank doesn't provide way to programatically make payment to bank account, you can achieve that by using our Payout API.
+
+Payout implements the same collection concept as per [API Flow](#api-flow). You will have collection that consists of multiple payouts.
+
+Before proceeding further, you need to ensure that you have enough payout limit to perform Payout. To increase payout limit, navigate to Payout tab and you will notice the Payout Limit at the top.
+
+![Payout Limit Interface Screenshot.](payoutlimit.png)
+
+To start using the API, you would have to create a Payout Collection. Then the payout will kicks in as per below:
+
+1. Get bank information from the recipient.
+1. Execute [Create a Payout](#create-a-payout) API.
+1. If failed, perform one-time bank account registration using [Create a Bank Account](#create-a-bank-account);
+1. Then, execute Create a Payout API again after three working days.
+1. The payment will be settled to the receipient in one (1) working day except Thursday and public holidays.
+
+<aside class="notice">
+  Get a Bank Account API will pass the latest record from Create a Bank Account API. Merchant is expected to store the recipient details on their own and not relying on details provided by Get a Bank Account API.
+</aside>
+
+## Payout Collections
+
+### Create a Payout Collection
+
+New Payout Collection used to group all your Payouts to make payout transfers.
+
+> Example request:
+
+```shell
+# Creates a Payout collection
+curl https://www.billplz.com/api/v4/mass_payment_instruction_collections \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d title="My First API Payout Collection"
+```
+
+> Response:
+
+```json
+{
+  "id": "4po8no8h",
+  "title": "My First API Payout Collection",
+  "mass_payment_instructions_count": "0",
+  "paid_amount": "0",
+  "status": "active"
+}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/mass_payment_instruction_collections`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| title | The collection title. Will be displayed on bill template. String format. |
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents a collection. |
+| title | The collection's title in string format. |
+| mass_payment_instructions_count | The number of payout belongs to this collection. |
+| paid_amount | Total paid amount for payouts in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| status | Collection's status, it is either `active` and `inactive`. |
+
+### Get a Payout Collection
+
+Use this API to query your Payout Collection record.
+
+> Example request:
+
+```shell
+# Get a Payout collection
+curl https://www.billplz.com/api/v4/mass_payment_instruction_collections/4po8no8h \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{
+  "id": "4po8no8h",
+  "title": "My First API Payout Collection",
+  "mass_payment_instructions_count": "0",
+  "paid_amount": "0",
+  "status": "active"
+}
+```
+
+###### HTTP REQUEST
+
+`GET https://www.billplz.com/api/v4/mass_payment_instruction_collections/{PAYOUT_COLLECTION_ID}`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| PAYOUT_COLLECTION_ID | Collection ID returned in Payout Collection object. |
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents a collection. |
+| title | The collection's title in string format. |
+| mass_payment_instructions_count | The number of payout belongs to this collection. |
+| paid_amount | Total paid amount for payouts in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| status | Collection's status, it is either `active` and `inactive`. |
+
+## Payout
+
+### Create a Payout
+       
+To make a payment transfer to another bank account, simply create a Payout.
+
+To create a Payout, you would need the Payout collection’s ID. Each Payout must be created within a Payout Collection.
+
+<aside class="warning">
+  It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout Limit</strong>.
+</aside>
+
+> Example request:
+
+```shell
+# Creates a Payout for RM 20.00
+curl https://www.billplz.com/api/v4/mass_payment_instructions \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d mass_payment_instruction_collection_id="4po8no8h" \
+  -d bank_code="MBBEMYKL" \
+  -d bank_account_number="820808062202123" \
+  -d identity_number="820808062202" \
+  -d name="Michael Yap" \
+  -d description="Maecenas eu placerat ante." \
+  -d total=2000
+```
+
+> Response:
+
+```json
+{
+  "id": "afae4bqf",
+  "mass_payment_instruction_collection_id": "4po8no8h",
+  "bank_code": "MBBEMYKL",
+  "bank_account_number": "820808062202123",
+  "identity_number": 820808062202 ,
+  "name": "Michael Yap",
+  "description": "Maecenas eu placerat ante.",
+  "email" :"hello@billplz.com",
+  "status": "processing",
+  "notification": false,
+  "recipient_notification": true,
+  "total": "2000"
+}
+```
+
+> Example request with optional arguments:
+
+```shell
+# Creates a Payout for RM 20.00
+curl https://www.billplz.com/api/v4/mass_payment_instructions \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d mass_payment_instruction_collection_id="4po8no8h" \
+  -d bank_code="MBBEMYKL" \
+  -d bank_account_number="820808062202123" \
+  -d identity_number="820808062202" \
+  -d name="Michael Yap" \
+  -d description="Maecenas eu placerat ante." \
+  -d total=2000 \
+  -d email="recipient@email.com" \
+  -d notification=true \
+  -d recipient_notification=false
+```
+
+> Response:
+
+```json
+{
+  "id": "57iofla8",
+  "mass_payment_instruction_collection_id": "4po8no8h",
+  "bank_code": "MBBEMYKL",
+  "bank_account_number": "820808062202123",
+  "identity_number": 820808062202 ,
+  "name": "Michael Yap",
+  "description": "Maecenas eu placerat ante.",
+  "email" :"recipient@email.com",
+  "status": "processing",
+  "notification": true,
+  "recipient_notification": false,
+  "total": "2000"
+}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/mass_payment_instructions`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| mass_payment_instruction_collection_id | The Payout Collection ID. A string. |
+| bank_code | Bank Code that represents bank, in string value. Case sensitive. <br><br> Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#get-a-bank-account). |
+| bank_account_number | Bank account number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#get-a-bank-account). |
+| identity_number | Bank account's IC Number/SSM Registration Number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#get-a-bank-account). |
+| name | Payout’s recipient name. Useful for identification on recipient part. |
+| description | The Payout's description. Will be displayed on bill template. String format (Max of 200 characters). |
+| total | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+
+###### OPTIONAL ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| email | The email address of recipient (it default to sender's email if not present). <br>A receipt will be sent to this email once the Payout has been processed. |
+| notification | Boolean value. As a sender, you can opt-in for email notification by setting this to `true`. Sender will receive email once a Payout has been processed. Default value is `false`. |
+| recipient_notification | Boolean value. If this is set to `true`, recipient of the Payout will receive email notification once the Payout has been processed. Default value is `true`. Set to false if you do not like the recipient to receive any email notifications. |
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents a Payout. |
+| mass_payment_instruction_collection_id | The Payout collection's title in string format. |
+| bank_code | Bank Code that represents bank, in string value. Case sensitive. |
+| bank_account_number | Bank account number, in string value. |
+| identity_number | Bank account's IC Number/SSM Registration Number, in string value. |
+| name | Payout’s recipient name. |
+| description | The Payout's description. |
+| email | The email address of recipient (it default to sender's email if not present). |
+| status | Payout status. It is either `processing` or `completed` or `refunded`. |
+| notification | Boolean value. Sender will receive email notification if this is `true`. |
+| recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>A standard `RM1.50` or `RM0.50` or `RM0.00` fee would be charged from your credits when you successfully created a Payout request;<br>while the total of each Payout will be deducted from your Payout limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
+
+### Get a Payout
+        
+Use this API to query your Payout record.
+
+> Example request:
+
+```shell
+# Get a Payout
+curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{
+  "id": "afae4bqf",
+  "mass_payment_instruction_collection_id": "4po8no8h",
+  "bank_code": "MBBEMYKL",
+  "bank_account_number": "820808062202123",
+  "identity_number": 820808062202 ,
+  "name": "Michael Yap",
+  "description": "Maecenas eu placerat ante.",
+  "email" :"hello@billplz.com",
+  "status": "processing",
+  "notification": false,
+  "recipient_notification": true,
+  "total": "2000"
+}
+```
+
+###### HTTP REQUEST
+
+`GET https://www.billplz.com/api/v4/mass_payment_instructions/{PAYOUT_ID}`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| PAYOUT_ID | The Payout ID. A string. |
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents a Payout. |
+| mass_payment_instruction_collection_id | The Payout collection's title in string format. |
+| bank_code | Bank Code that represents bank, in string value. Case sensitive. |
+| bank_account_number | Bank account number, in string value. |
+| identity_number | Bank account's IC Number/ROC/ROB/ROS Number, in string value. |
+| name | Payout’s recipient name. |
+| description | The Payout's description. |
+| email | The email address of recipient (it default to sender's email if not present). |
+| status | Payout status. It is either `processing` or `completed` or `refunded`. |
+| notification | Boolean value. Sender will receive email notification if this is `true`. |
+| recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+
+## Webhook Rank
+        
+Webhook Rank has been introduced to ensure callback is running at it's best. The higher the ranking, the higher priority for the callback to be executed. Use this API to query your current Account Ranking. `0.0` indicate highest ranking (default) and `10.0` lowest ranking.
+
+<aside class="notice">
+  The ranking will be reset to default daily at 17:00.
+</aside>
+
+> Example request:
+
+```shell
+# Get a Payout
+curl https://www.billplz.com/api/v4/webhook_rank \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{
+  "rank": 0.0
+}
+```
+###### HTTP REQUEST
+
+`GET https://www.billplz.com/api/v4/webhook_rank`
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| rank | Ranking Number (0.0 - 10.0) |
+
+## Get Payment Gateways
+        
+Use this API to get a complete list of supported payment gateways' bank code that need for setting `reference_1` in [API#bypass-billplz-bill-page](#bypass-billplz-bill-page).
+
+This API returns not only online banking, but also all other payment gateways' bank code that are supported in [API#bypass-billplz-bill-page](#bypass-billplz-bill-page).
+
+<aside class="success">
+  Pull payment gateway list on hourly basis.
+</aside>
+
+> Example request:
+
+```shell
+curl https://www.billplz.com/api/v4/payment_gateways \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{
+  "payment_gateways":
+  [{
+    "code": "MBU0227",
+    "active": true,
+    "category": "fpx"
+    },{
+    "code": "OCBC0229",
+    "active": false,
+    "category": "fpx"
+    },{
+    "code": "BP-FKR01",
+    "active": true,
+    "category": "billplz"
+    },{
+    "code": "BP-PPL01",
+    "active": true,
+    "category": "paypal"
+    },{
+    "code": "BP-2C2P1",
+    "active": false,
+    "category": "2c2p"
+    },{
+    "code": "BP-OCBC1",
+    "active": true,
+    "category": "ocbc"
+  }]
+}
+```
+
+###### HTTP REQUEST
+
+`GET https://www.billplz.com/api/v4/payment_gateways`
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| code | This is the bank code that need to set to `reference_1`. Case sensitive. |
+| active | `true` or `false` boolean that represents payment gateway's availability. If an inactive / invalid payment gateway was set to `reference_1`, the payment process will show Billplz page for payer to choose another payment option from the list. |
+| category | Category this payment gateway belongs to. |
+
+#### Payment Gateway Abbreviations
+| Code | Name |
+| --- | --- |
+| ABMB0212 | Alliance Bank |
+| ABB0233 | Affin Bank |
+| AMBB0209 | AmBank |
+| BCBB0235 | CIMB Clicks |
+| BIMB0340 | Bank Islam |
+| BKRM0602 | Bank Rakyat |
+| BMMB0341 | Bank Muamalat |
+| BSN0601 | BSN |
+| CIT0217 | Citibank Berhad |
+| HLB0224 | Hong Leong Bank |
+| HSBC0223 | HSBC Bank |
+| KFH0346 | Kuwait Finance House |
+| MB2U0227 | Maybank2u |
+| MBB0227 | Maybank2E |
+| MBB0228 | Maybank2E |
+| OCBC0229 | OCBC Bank |
+| PBB0233 | Public Bank |
+| RHB0218 | RHB Now |
+| SCB0216 | Standard Chartered |
+| UOB0226 | UOB Bank |
+| TEST0001* | Test 0001 |
+| TEST0002* | Test 0002 |
+| TEST0003* | Test 0003 |
+| TEST0004* | Test 0004 |
+| TEST0021* | Test 0021 |
+| TEST0022* | Test 0022 |
+| TEST0023* | Test 0023 |
+| BP-FKR01* | Billplz Simulator |
+| BP-PPL01  | PayPal |
+| BP-2C2P1  | e-pay |
+| BP-2C2PC  | Visa / Mastercard |
+| BP-2C2PU  | UnionPay |
+| BP-OCBC1  | Visa / Mastercard |
+| BP-BST01  | Boost |
+
+\* Only applicable in staging environment.
+
+## Tokenization
+
+This feature allows you to exchange for a card’s tokenization from our provider’s PCI DSS certified vault, and use the token to charge your customer later.
+
+###### Providers
+
+| Provider | Type | Eligibility |
+| --- | --- | --- |
+| Senangpay | Non-3DS | Priority & Ultimate Members |
+| OCBC | 3DS | Any membership plan including Standard |
+
+### Senangpay
+
+This feature enables you to tokenize Non-3DS Visa / Mastercard cards to be charged later, which will be stored in Senangpay's PCI DSS certified servers.
+
+###### Card Tokenization Flow
+
+1. Merchant to collect card details from card holder. Card number, expiry date and CVV.
+1. Create card & token using this [API](#create-card-api).
+1. Upon successful request, merchant is to store the response which includes CARD_ID and TOKEN.
+
+<aside class="notice">
+  This feature won't be enabled by default, and only applicable to Priority & Ultimate members. Email <a href="mailto:team@billplz.com?subject=Senangpay_Tokenization">team@billplz.com</a> for assistance.
+</aside>
+<aside class="warning">
+  You will need to comply with PCI-DSS to be able to store card details. If you store without meeting the PCI-DSS compliance, you do it at your own risk of being sued.
+</aside>
+
+#### Create Card
+
+Use this API to create a card token for Non-3DS Visa / Mastercard cards. Since this is a non-3DS tokenization, no 3DS verification is required by the card holder. Remember to store the response, as no card details nor tokens will be stored in Billplz's servers.
+
+To charge a card with the token generated, refer to this [API](#charge-card).
+
+> Example request:
+
+```shell
+# Creates a card token
+curl https://www.billplz.com/api/v4/cards \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d name="Michael" \
+  -d email="api@billplz.com" \
+  -d phone="60122345678" \
+  -d card_number="5111111111111118" \
+  -d expiry="0521" \
+  -d cvv="100"
+```
+
+> Response:
+
+```json
+  {
+    "id": "8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6",
+    "card_number": "xxxx1118",
+    "expiry": "0521",
+    "provider": "mastercard",
+    "token": "77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740",
+    "active": true
+  }
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/cards`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| name | Name on the card / name of the card owner. |
+| email | Email of the card owner. |
+| phone | Contact number of card owner. |
+| card_number | Card number, only numbers. |
+| cvv | Card CVV number (3 digits). |
+| expiry | Card expiry in `MMYY` format, without spaces, slashes or dashes.(e.g. Dec 2021 should be written as `1221`).|
+
+<aside class="notice">
+  This tokenization function can only tokenize Visa / Mastercard cards. You won't be able to tokenize Amex cards.
+</aside>
+
+#### Deactivate / Reactivate Card
+
+Use this API to deactivate or reactivate a card. Once deactivated, card cannot be charged until it is reactivated.
+
+> Example request:
+
+```shell
+# Deactivate an active card token
+curl https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6 \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d token="77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740" \
+  -d active=false
+```
+
+> Response:
+
+```json
+{
+  "id": "8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6",
+  "card_number": "xxxx1118",
+  "expiry": "0521",
+  "provider": "mastercard",
+  "token": "77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740",
+  "active": false
+}
+```
+
+###### HTTP REQUEST
+
+`PUT https://www.billplz.com/api/v4/cards/{CARD_ID}`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| token | Card's token. |
+| active | Boolean value to be set for card token active status. Set `false` to deactivate an active card token, or set `true` to reactivate a deactivated card token. |
+
+#### Charge Card
+
+Use this API to make bill payment by charging a Visa / Mastercard card with [token generated](#token-generated).
+
+###### REQUIREMENTS
+
+1. Collection without split recipients (split payment).
+1. Bill. Email and Mobile number are required during bill creation.
+[Card Token & ID](#card-token-id).
+
+<aside class="notice">
+  This function is only applicable for Visa / Mastercard cards. You won't be able to charge Amex cards.
+</aside>
+
+> Example request:
+
+```shell
+# Make bill payment with token
+curl https://www.billplz.com/api/v4/bills/awyzmy0m/charge \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d token="77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740" \
+  -d card_id="8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6"
+```
+
+> Response:
+
+```json
+{
+  "amount": 10000,
+  "status": "success",
+  "reference_id": "15681981586116610",
+  "hash_value": "1b66606732d846192b0b6aa4b754b3c8addd59072fce4bdd066b5d631c31d5e8",
+  "message": "Payment was successful",
+}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/bills/{BILL_ID}/charge`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| card_id | ID that represents a card. |
+| token | Card token. |
+
+### OCBC
+This feature enables merchants with OCBC business account to tokenize 3DS Visa / Mastercard cards to be charged later, which will be stored in OCBC's PCI DSS certified servers.
+
+###### CARD TOKENIZATION FLOW
+1. Merchant to collect card details from card holder. Card number, expiry date and CVV.
+1. Create card & token using this [API](#create-card-token).
+1. Upon receiving the response, redirect card holder to the URL (authentication_redirect_url) given.
+1. Card holder is required to complete 3DSecure verification process within an hour.
+1. Billplz updates card status based on verification result.
+1. Billplz sends POST request to callback_url specified by merchant. If card holder fails to complete the verification process within an hour, Billplz will send a POST request with failed Card object. Merchants are expected to set up this callback_url to get and update the result of card's 3DSecure verification. [Click here to learn more](#click-here-to-learn-more).
+
+<aside class="notice">
+  This feature won't be enabled by default, and only applicable to members with OCBC business accounts. Email <a href="mailto:team@billplz.com?subject=OCBC_Tokenization">team@billplz.com</a> for assistance.
+</aside>
+
+#### Create Card
+
+Use this API to create a card token for 3DS Visa / Mastercard. Remember to store the responses for future use.
+
+After creating a card, the token can not be used yet as it is not active. To activate the token, redirect card holder to the `authentication_redirect_url` provided in the response, where the card holder will have to go through acquiring bank's 3DSecure authentication process.
+
+To charge a card with the token generated, refer to this [API](#this-api).
+
+> Example request:
+
+```shell
+# Creates a card token
+curl https://www.billplz.com/api/v4/ocbc_cards \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d card_number="5123450000000008" \
+  -d expiry_month="05" \
+  -d expiry_year="21" \
+  -d cvv="100" \
+  -d callback_url="https://www.example.com/callback"
+```
+
+> Response:
+
+```json
+{
+  "id": "a35296ad-b50c-4179-8024-036da00c1aee",
+  "card_number": "512345xxxxxx0008",
+  "expiry": "0521",
+  "provider": "MASTERCARD",
+  "token": "9887706765197232",
+  "status": "active",
+  "authentication_redirect_url": "https://www.billplz.com/banks/ocbc/cards/a35296ad-b50c-4179-8024-036da00c1aee/authenticate",
+  "callback_url": "https://www.example.com/callback"
+}
+```
+
+> Callback request:
+
+```json
+{
+  "id": "a35296ad-b50c-4179-8024-036da00c1aee",
+  "card_number": "512345xxxxxx0008",
+  "expiry": "0521",
+  "provider": "MASTERCARD",
+  "token": "9887706765197232",
+  "status": "active",
+  "authentication_redirect_url": "https://www.billplz.com/banks/ocbc/cards/a35296ad-b50c-4179-8024-036da00c1aee/authenticate",
+  "callback_url": "https://www.example.com/callback"
+}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/ocbc_cards`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| card_number | Card number, only numbers. |
+| expiry_month | 2 character string. May should be written as `05`. |
+| expiry_year | 2 character string. 2021 should be written as `21`. |
+| cvv | Card CVV number (3 digits). |
+| callback_url | Web hook URL to be called after 3DSecure verification/authorization completed. It will POST a Card object. |
+
+#### Delete Card
+
+Use this API to delete a tokenized card.
+
+> Example request:
+
+```shell
+# Deletes a card token
+curl https://www.billplz.com/api/v4/ocbc_cards/8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6 \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d token="9887706765197232"
+```
+
+> Response:
+
+```json
+{
+  "id": "8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6",
+  "status": "deleted"
+}
+```
+
+###### HTTP REQUEST
+
+`DELETE https://www.billplz.com/api/v4/ocbc_cards/{CARD_ID}`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| token | Card token. |
+
+### 3D Secure Update
+
+Billplz will send a POST request to `callback_url` provided within an hour, regardless the card holder has completed the 3DSecure verification or not. This callback_url will also serve as `redirect_url` on the client's side.
+
+> Example request to callback_url:
+
+```shell
+# POST request sent to callback_url
+curl https://www.example.com/callback \
+  -d id="a35296ad-b50c-4179-8024-036da00c1aee" \
+  -d status="active" \
+  -d checksum="ef5e54a22af0925cba88fab467119742e90262e3646eea1dee3949938daf3a38"
+```
+
+###### HTTP REQUEST
+
+`POST {CALLBACK_URL}`
+
+###### POST PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents card. |
+| status | Status that represents the card's status, possible values are `pending`, `active`, `failed`, and `deleted`. |
+| checksum | Digital signature computed with posted data and shared XSignature Key. |
+
+###### RESPONSE CODES
+
+Based on the response code received as below, you can identify if this POST request to `callback_url` is a client-side or server-side request. For better user experience, you are expected to redirect the card holder to your success page.
+
+| Response Code | Description |
+| --- | --- |
+| 200 - 300 | Server-side - You should update the card's status. |
+| 301 - 307 | Client-side - You should update the card's status, and redirect card holder to a success page. |
+
+###### CHECKSUM
+
+Checksum is a digital signature computed with posted data and shared XSignature Key, similar to the X Signature received on Payment Completion.
+
+For security purposes, checksum is inserted into this POST request so that merchants can verify this request comes from Billplz. To learn more on how to calculate this checksum, [click here](#click-here).
+
+<aside class="success">
+  Check the checksum value for better security.
+</aside>
+
+#### Charge Card
+
+Use this API to make bill payment by charging a 3DS Visa / Mastercard card with [token generated](#token-generated).
+
+###### REQUIREMENTS
+
+1. Collection without split recipients (split payment).
+1. Bill.
+1. [Card Token & ID](#create-a-ocbc-card).
+
+> Example request:
+
+```shell
+# Make bill payment with token
+curl https://www.billplz.com/api/v4/bills/awyzmy0m/charge \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d token="77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740" \
+  -d card_id="8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6"
+```
+
+> Response:
+
+```json
+{
+  "amount": 10000,
+  "status": "success",
+  "reference_id": "926611194776",
+  "message": "Approved",
+}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/bills/{BILL_ID}/ocbc_charge`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| card_id | ID that represents a card. |
+| token | Card token. |
+
+<aside class="notice">
+  This function is only applicable for Visa / Mastercard cards. Card tokens must be 3DSecure verified to be set as <code>active</code>.
+</aside>
 
 # X Signature
 

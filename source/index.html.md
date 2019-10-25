@@ -2243,7 +2243,7 @@ curl https://www.billplz.com/api/v4/open_collections?page=2&status=active \
 | page | Up to 15 open collections will be returned in a single API call per specified page. Default to **1** if not present. |
 | status | Parameter to filter open collection's status, valid value are `active` and `inactive`. |
 
-### Payout Flow
+## Payout Flow
 
 Payout allows you to make payment to any account bank registered in Malaysia. Since Bank doesn't provide way to programatically make payment to bank account, you can achieve that by using our Payout API.
 

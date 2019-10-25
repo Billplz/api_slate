@@ -7,7 +7,8 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - php
 
 toc_footers:
-  - <a href='https://www.billplz.com/agreement.pdf'>Agreement</a>
+  - <a href='https://www.billplz.com'>Billplz</a>
+  - <a href='https://www.billplz-sandbox.com'>Billplz Sandbox</a>
   - <a href='https://www.facebook.com/groups/billplzdevjam'>Developer Community</a>
   - <a href='https:///help.billplz.com'>Frequently Asked Questions</a>
 
@@ -69,9 +70,9 @@ To start using the API, you would have to create a Collection. Then the payment 
 1. Billplz API returns Bill's URL.
 1. Your site redirects the customer to Bill's URL.
 1. The customer makes payment via payment option of choice.
-1. Billplz sends a server-side update \*\***at best effort** (Payment Completion) to your site upon payment failure or success. (Basic Callback URL / X Signature Callback URL depending on your configuration) ***[your backend server should capture the transaction update at this point]*** *refer to [API#X Signature Callback Url](#x-signature-callback_url)*.
+1. Billplz sends a server-side update \*\***at best effort** (Payment Completion) to your site upon payment failure or success. (Basic Callback URL / X Signature Callback URL depending on your configuration) ***[your backend server should capture the transaction update at this point]*** *refer to [X Signature Callback Url](#payment-completion-x-signature-callback-url)*.
 1. Billplz redirects (Payment Completion) the customer back to your site if `redirect_url` is not empty (Basic Redirect URL / X Signature Redirect URL depending on your configuration)
-***[your server should capture the transaction update at this point and give your user an instant reflection on the page loaded]*** *refer to [API#X Signature Redirect Url](#x-signature-redirect_url)*
+***[your server should capture the transaction update at this point and give your user an instant reflection on the page loaded]*** *refer to [X Signature Redirect Url](#payment-completion-x-signature-redirect-url)*
 or,
 The customer will see Billplz receipt if `redirect_url` is not present.
 
@@ -83,7 +84,7 @@ The customer will see Billplz receipt if `redirect_url` is not present.
 1. Your site redirects the customer to Bill's URL.
 1. The customer makes payment via payment option of choice.
 1. Billplz sends a server-side update \*\*at best effort (Payment Completion) to your site upon payment failure or success. (Basic Callback URL / X Signature Callback URL depending on your configuration)
-***[your backend server should capture the transaction update at this point]*** *refer to [API#X Signature Callback Url](#x-signature-callback_url)*.
+***[your backend server should capture the transaction update at this point]*** *refer to [X Signature Callback Url](#payment-completion-x-signature-callback-url)*.
 Billplz does not redirects (Payment Completion) the customer back to your site, `redirect_url` (due to many possibilities, app hang, browser closed, disconnected, etc)
 
 <aside class="warning">
@@ -210,8 +211,8 @@ Use this feature if you would like to bypass Billplz bill page, and direct payer
 
 1. Create bills through Billplz API with a present of `reference_1_label` and `reference_1`.
   - Always set `reference_1_label` as **Bank Code**
-  - Always set a bank code to `reference_1`. Please refer to section [API#get-payment-gateways](#get-payment-gateways) for more details on how to get the bank codes.
-1. Always append parameter, auto_submit=true to the bill's URL return from [API#create-a-bill](#create-a-bill).
+  - Always set a bank code to `reference_1`. Please refer to section [Get Payment Gateways](#v4-get-payment-gateways) for more details on how to get the bank codes.
+1. Always append parameter, auto_submit=true to the bill's URL return from API [Create a Bill](#v3-bills-create-a-bill).
   - Example: [https://www.billplz.com/bills/abcdef]() becomes;
   - [https://www.billplz.com/bills/abcdef?auto_submit=true]()
 
@@ -223,14 +224,14 @@ Direct Payment Gateway feature will fallback to Billplz bill page for invalid `r
 1. Merchant redirects payer from merchant's page to bill URL (returned from #1).
 1. Payer lands at Billplz page to select payment option.
 1. Payer redirected from Billplz to selected payment gateway to pay.
-1. Payer redirected from payment gateway to `redirect_url` / receipt page (refer to [API#flow](#api-flow)).
+1. Payer redirected from payment gateway to `redirect_url` / receipt page (refer to [API Flow](#api-flow)).
 
 ###### DIRECT PAYMENT GATEWAY PAYMENT FLOW
 
 1. Merchant creates bill through API with a valid bank code
 1. Merchant redirects payer from merchant's page to bill URL (returned from #1) with extra parameter, **auto_submit=true**
 1. Payer lands at selected payment gateway to pay
-1. Payer redirected from payment gateway to `redirect_url` / receipt page (refer to [API#flow](#api-flow))
+1. Payer redirected from payment gateway to `redirect_url` / receipt page (refer to [API Flow](#api-flow))
 
 ###### INVALID DIRECT PAYMENT GATEWAY PAYMENT FLOW
 
@@ -238,13 +239,13 @@ Direct Payment Gateway feature will fallback to Billplz bill page for invalid `r
 1. Merchant redirects payer from merchant's page to bill URL (returned from #1) with extra parameter, auto_submit=true
 1. Payer lands at Billplz page to payment option
 1. Payer redirected from Billplz to selected payment gateway to pay
-1. Payer redirected from payment gateway to redirect_url / receipt page (refer to [API#flow](#api-flow))
+1. Payer redirected from payment gateway to redirect_url / receipt page (refer to [API Flow](#api-flow))
 
 <aside class="warning">
   Bypass bill page using parameter <code>?auto_submit</code> with value <code>fpx</code> or <code>paypal</code> has been removed.
 </aside>
 <aside class="notice">
-  If an inactive or invalid payment gateway for whatever reasons was submitted, the payment process will land at Billplz page for payer to re-choose a payment option again. (refer to <a href="#invalid-direct">INVALID DIRECT PAYMENT GATEWAY PAYMENT FLOW</a>).
+  If an inactive or invalid payment gateway for whatever reasons was submitted, the payment process will land at Billplz page for payer to re-choose a payment option again. (refer to <a href="#direct-payment-gateway-bypass-billplz-bill-page-3d-secure-update-charge-card-invalid-direct-payment-gateway-payment-flow">INVALID DIRECT PAYMENT GATEWAY PAYMENT FLOW</a>).
   <br><br>
   So, do not worry if your internal Payment Gateways are not always up to date.
 </aside>
@@ -255,7 +256,7 @@ This version is not in active development state. No new feature will be introduc
 
 ## Collections
 
-Collections are where all of your [Bills](#bills) are belongs to. Collections can be useful to categorize your bill payment. As an example, you may use Collection to separate a Tuition Fee Collection for September and November collection.
+Collections are where all of your [Bills](#v3-bills) are belongs to. Collections can be useful to categorize your bill payment. As an example, you may use Collection to separate a Tuition Fee Collection for September and November collection.
 
 ### Create a Collection
 
@@ -356,13 +357,13 @@ curl https://www.billplz.com/api/v3/collections \
 | title | The collection's title in string format. |
 | logo[thumb_url] | The thumb dimension's (180x180) URL. |
 | logo[avatar_url] | The avatar dimension's (40x40) URL. |
-| split_payment[email] | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to [API#get-fpx-banks](#get-fpx-banks). |
+| split_payment[email] | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to V4 [Create a Collection](#v4-collections-create-a-collection). |
 | split_payment[fixed_cut] | The 1st recipient's fixed cut in smallest and positive currency unit. |
 | split_payment[variable_cut] | The 1st recipient's percentage cut in positive integer format. |
 | split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to true. |
 
 <aside class="notice">
-  API <code>V4</code> now supports Split Rule for 2 recipients. Please refer <a href="#v4-create-a-collection">API#v4-create-a-collection</a>.
+  API <code>V4</code> now supports Split Rule for 2 recipients. Please refer <a href="#v4-collections-create-a-collection">API#v4-create-a-collection</a>.
 </aside>
 
 ### Get a Collection
@@ -417,7 +418,7 @@ curl https://www.billplz.com/api/v3/collections/inbmmepb \
 | title | The collection's title in string format. |
 | logo[thumb_url] | The thumb dimension's (180x180) URL. |
 | logo[avatar_url] | The avatar dimension's (40x40) URL. |
-| split_payment[email] | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to [API#get-fpx-banks](#get-fpx-banks). |
+| split_payment[email] | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to V4 [Create a Collection](#v4-collections-create-a-collection). |
 | split_payment[fixed_cut] | The 1st recipient's fixed cut in smallest and positive currency unit. |
 | split_payment[variable_cut] | The 1st recipient's percentage cut in positive integer format. |
 | split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to true. |
@@ -654,7 +655,7 @@ curl https://www.billplz.com/api/v3/open_collections \
 | payment_button | Payment button's text.|
 | photo[retina_url] | The retina dimension's (960x960) URL.|
 | photo[avatar_url] | The avatar dimension's (180x180) URL.|
-| split_payment[email] | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to [API#v4-create-an-open-collection](#v4-create-an-open-collection).|
+| split_payment[email] | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to [API#v4-create-an-open-collection](#v4-collections-create-an-open-collection).|
 | split_payment[fixed_cut] | The 1st recipient's fixed cut in smallest and positive currency unit (cents).|
 | split_payment[variable_cut] | The 1st recipient's percentage cut in positive integer format.|
 | split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
@@ -735,7 +736,7 @@ curl https://www.billplz.com/api/v3/open_collections/0pp87t_6 \
 | payment_button | Payment button's text. |
 | photo[retina_url] | The retina dimension's (960x960) URL. |
 | photo[avatar_url] | The avatar dimension's (180x180) URL.|
-| split_payment[email] | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to [API#v4-create-an-open-collection](). |
+| split_payment[email] | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to [API#v4-create-an-open-collection](#v4-collections-create-an-open-collection). |
 | split_payment[fixed_cut] | The 1st recipient's fixed cut in smallest and positive currency unit.|
 | split_payment[variable_cut] | The 1st recipient's percentage cut in positive integer format. |
 | split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
@@ -913,7 +914,7 @@ https://www.billplz.com/api/v3/collections/qag4fe_o6/activate \
 
 ## Bills
 
-Bills need to be created inside a [collection](#collection). It must be either `Collection` or `Open Collection`. However, only `Collection` can be used to create a bill via API and `Open Collection` cannot be used to create a bill via API. 
+Bills need to be created inside a [collection](#collections35). It must be either `Collection` or `Open Collection`. However, only `Collection` can be used to create a bill via API and `Open Collection` cannot be used to create a bill via API. 
 
 ### Create a Bill
 
@@ -1062,7 +1063,7 @@ At any given time, you can request a bill to check on the status. It will return
 </aside>
 
 <aside class="success">
-  Use <a href="#x-signature-redirect">X Signature Redirect</a> and <a href="#x-signature-callback">X Signature Callback</a> to validate the response parameter.
+  Use <a href="#payment-completion-x-signature-redirect-url">X Signature Redirect</a> and <a href="#payment-completion-x-signature-callback-url">X Signature Callback</a> to validate the response parameter.
 </aside>
 
 > Example request:
@@ -1192,7 +1193,7 @@ curl https://www.billplz.com/api/v3/check/bank_account_number/1234567890 \
 | name | State that representing the bank account number's status, possible states are `verified`, `unverified` and `not found`. |
 
 <aside class="notice">
-   This registration check is only for checking the status for Company-Registered account. For Bank Direct Verification status, use <a href="#get-a-bank-account">Get a Bank Account</a> API instead.
+   This registration check is only for checking the status for Company-Registered account. For Bank Direct Verification status, use <a href="#v3-bank-account-direct-verification-get-a-bank-account">Get a Bank Account</a> API instead.
 </aside>
 
 ## Transactions
@@ -1582,11 +1583,11 @@ curl https://www.billplz.com/api/v3/bank_verification_services \
 | Standard Chartered Bank (Malaysia) Berhad | SCBLMYKX |
 | United Overseas Bank (Malaysia) Berhad | UOVBMYKL |
 
-### Get FPX Banks
+## Get FPX Banks
 
-Use this API to get a list of bank codes that need for setting reference_1 in <a href="#bypass">API#bypass-billplz-bill-page</a>.
+Use this API to get a list of bank codes that need for setting reference_1 in [API#bypass-billplz-bill-page](#direct-payment-gateway-bypass-billplz-bill-page)</a>.
 
-This API only return list of bank codes for online banking, if you looking for a complete payment gateways' bank code, please use <a href="#get-payment-gateways">API#get-payment-gateways</a> instead.
+This API only return list of bank codes for online banking, if you looking for a complete payment gateways' bank code, please use <a href="#v4-get-payment-gateways">API#get-payment-gateways</a> instead.
 
 <aside class="success">
   Pull the latest bank list on <strong>hourly</strong> basis.
@@ -1669,7 +1670,7 @@ This version is in active development state. New feature will be introduced in t
 
 ## Collections
 
-Collections are where all of your [Bills](#bills) are belongs to. Collections can be useful to categorize your bill payment. As an example, you may use Collection to separate a Tuition Fee Collection for September and November collection.
+Collections are where all of your [Bills](#v3-bills) are belongs to. Collections can be useful to categorize your bill payment. As an example, you may use Collection to separate a Tuition Fee Collection for September and November collection.
 
 ### Create a Collection
 
@@ -2255,8 +2256,8 @@ Before proceeding further, you need to ensure that you have enough payout limit 
 To start using the API, you would have to create a Payout Collection. Then the payout will kicks in as per below:
 
 1. Get bank information from the recipient.
-1. Execute [Create a Payout](#create-a-payout) API.
-1. If failed, perform one-time bank account registration using [Create a Bank Account](#create-a-bank-account);
+1. Execute [Create a Payout](#v4-payout-create-a-payout) API.
+1. If failed, perform one-time bank account registration using [Create a Bank Account](#v3-bank-account-direct-verification-create-a-bank-account);
 1. Then, execute Create a Payout API again after three working days.
 1. The payment will be settled to the receipient in one (1) working day except Thursday and public holidays.
 
@@ -2447,9 +2448,9 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | Parameter | Description |
 | --- | --- |
 | mass_payment_instruction_collection_id | The Payout Collection ID. A string. |
-| bank_code | Bank Code that represents bank, in string value. Case sensitive. <br><br> Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#get-a-bank-account). |
-| bank_account_number | Bank account number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#get-a-bank-account). |
-| identity_number | Bank account's IC Number/SSM Registration Number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#get-a-bank-account). |
+| bank_code | Bank Code that represents bank, in string value. Case sensitive. <br><br> Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#v3-bank-account-direct-verification-get-a-bank-account). |
+| bank_account_number | Bank account number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#v3-bank-account-direct-verification-get-a-bank-account). |
+| identity_number | Bank account's IC Number/SSM Registration Number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#v3-bank-account-direct-verification-get-a-bank-account). |
 | name | Payout’s recipient name. Useful for identification on recipient part. |
 | description | The Payout's description. Will be displayed on bill template. String format (Max of 200 characters). |
 | total | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
@@ -2572,9 +2573,9 @@ curl https://www.billplz.com/api/v4/webhook_rank \
 
 ## Get Payment Gateways
         
-Use this API to get a complete list of supported payment gateways' bank code that need for setting `reference_1` in [API#bypass-billplz-bill-page](#bypass-billplz-bill-page).
+Use this API to get a complete list of supported payment gateways' bank code that need for setting `reference_1` in [API#bypass-billplz-bill-page](#direct-payment-gateway-bypass-billplz-bill-page).
 
-This API returns not only online banking, but also all other payment gateways' bank code that are supported in [API#bypass-billplz-bill-page](#bypass-billplz-bill-page).
+This API returns not only online banking, but also all other payment gateways' bank code that are supported in [API#bypass-billplz-bill-page](#direct-payment-gateway-bypass-billplz-bill-page).
 
 <aside class="success">
   Pull payment gateway list on hourly basis.
@@ -2690,7 +2691,7 @@ This feature enables you to tokenize Non-3DS Visa / Mastercard cards to be charg
 ###### Card Tokenization Flow
 
 1. Merchant to collect card details from card holder. Card number, expiry date and CVV.
-1. Create card & token using this [API](#create-card-api).
+1. Create card & token using this [Create Card](#v4-tokenization-senangpay-create-card) API.
 1. Upon successful request, merchant is to store the response which includes CARD_ID and TOKEN.
 
 <aside class="notice">
@@ -2704,7 +2705,7 @@ This feature enables you to tokenize Non-3DS Visa / Mastercard cards to be charg
 
 Use this API to create a card token for Non-3DS Visa / Mastercard cards. Since this is a non-3DS tokenization, no 3DS verification is required by the card holder. Remember to store the response, as no card details nor tokens will be stored in Billplz's servers.
 
-To charge a card with the token generated, refer to this [API](#charge-card).
+To charge a card with the token generated, refer to this [API](#v4-tokenization-senangpay-charge-card).
 
 > Example request:
 
@@ -2792,13 +2793,13 @@ curl https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6 \
 
 #### Charge Card
 
-Use this API to make bill payment by charging a Visa / Mastercard card with [token generated](#token-generated).
+Use this API to make bill payment by charging a Visa / Mastercard card with [token generated](#v4-tokenization-senangpay-create-card).
 
 ###### REQUIREMENTS
 
 1. Collection without split recipients (split payment).
 1. Bill. Email and Mobile number are required during bill creation.
-[Card Token & ID](#card-token-id).
+[Card Token & ID](#v4-tokenization-senangpay-create-card).
 
 <aside class="notice">
   This function is only applicable for Visa / Mastercard cards. You won't be able to charge Amex cards.
@@ -2842,11 +2843,11 @@ This feature enables merchants with OCBC business account to tokenize 3DS Visa /
 
 ###### CARD TOKENIZATION FLOW
 1. Merchant to collect card details from card holder. Card number, expiry date and CVV.
-1. Create card & token using this [API](#create-card-token).
+1. Create card & token using this [API](#v4-tokenization-ocbc-create-card).
 1. Upon receiving the response, redirect card holder to the URL (authentication_redirect_url) given.
 1. Card holder is required to complete 3DSecure verification process within an hour.
 1. Billplz updates card status based on verification result.
-1. Billplz sends POST request to callback_url specified by merchant. If card holder fails to complete the verification process within an hour, Billplz will send a POST request with failed Card object. Merchants are expected to set up this callback_url to get and update the result of card's 3DSecure verification. [Click here to learn more](#click-here-to-learn-more).
+1. Billplz sends POST request to callback_url specified by merchant. If card holder fails to complete the verification process within an hour, Billplz will send a POST request with failed Card object. Merchants are expected to set up this callback_url to get and update the result of card's [3DSecure verification](#v4-tokenization-ocbc-3d-secure-update).
 
 <aside class="notice">
   This feature won't be enabled by default, and only applicable to members with OCBC business accounts. Email <a href="mailto:team@billplz.com?subject=OCBC_Tokenization">team@billplz.com</a> for assistance.
@@ -2858,7 +2859,7 @@ Use this API to create a card token for 3DS Visa / Mastercard. Remember to store
 
 After creating a card, the token can not be used yet as it is not active. To activate the token, redirect card holder to the `authentication_redirect_url` provided in the response, where the card holder will have to go through acquiring bank's 3DSecure authentication process.
 
-To charge a card with the token generated, refer to this [API](#this-api).
+To charge a card with the token generated, refer to this [API](#v4-tokenization-ocbc-charge-card).
 
 > Example request:
 
@@ -2949,7 +2950,7 @@ curl https://www.billplz.com/api/v4/ocbc_cards/8727fc3a-c04c-4c2b-9b67-947b5cfc2
 | --- | --- |
 | token | Card token. |
 
-### 3D Secure Update
+#### 3D Secure Update
 
 Billplz will send a POST request to `callback_url` provided within an hour, regardless the card holder has completed the 3DSecure verification or not. This callback_url will also serve as `redirect_url` on the client's side.
 
@@ -2988,7 +2989,7 @@ Based on the response code received as below, you can identify if this POST requ
 
 Checksum is a digital signature computed with posted data and shared XSignature Key, similar to the X Signature received on Payment Completion.
 
-For security purposes, checksum is inserted into this POST request so that merchants can verify this request comes from Billplz. To learn more on how to calculate this checksum, [click here](#click-here).
+For security purposes, checksum is inserted into this POST request so that merchants can verify this request comes from Billplz. To learn more on how to calculate this checksum, [click here](#x-signature).
 
 <aside class="success">
   Check the checksum value for better security.
@@ -2996,13 +2997,13 @@ For security purposes, checksum is inserted into this POST request so that merch
 
 #### Charge Card
 
-Use this API to make bill payment by charging a 3DS Visa / Mastercard card with [token generated](#token-generated).
+Use this API to make bill payment by charging a 3DS Visa / Mastercard card with [token generated](#v4-tokenization-ocbc-create-card).
 
 ###### REQUIREMENTS
 
 1. Collection without split recipients (split payment).
 1. Bill.
-1. [Card Token & ID](#create-a-ocbc-card).
+1. [Card Token & ID](#v4-tokenization-ocbc-create-card).
 
 > Example request:
 
@@ -3172,7 +3173,7 @@ Billplz will attempt for maximum of 5 times and the callback will be removed fro
 </aside>
 
 <aside class="warning">
-  YOU ARE STRONGLY ADVISED TO USE <a href="#x-signature-callback-url">X SIGNATURE CALLBACK URL</a>. USING X SIGNATURE ALLOWS YOU TO VALIDATE THE DATA INTEGRITY BY USING CHECKSUM.
+  YOU ARE STRONGLY ADVISED TO USE <a href="#payment-completion-x-signature-callback-url">X SIGNATURE CALLBACK URL</a>. USING X SIGNATURE ALLOWS YOU TO VALIDATE THE DATA INTEGRITY BY USING CHECKSUM.
 </aside>
 
 ## Basic Redirect Url
@@ -3206,7 +3207,7 @@ By default, `Basic Redirect URL` feature is disabled due to security reason.
 | billplz[id] | ID that represents bill. |
 
 <aside class="warning">
-  YOU ARE STRONGLY ADVISED TO USE <a href="#x-signature-redirect-url">X SIGNATURE REDIRECT URL</a>. USING X SIGNATURE ALLOWS YOU TO VALIDATE THE DATA INTEGRITY BY USING CHECKSUM.
+  YOU ARE STRONGLY ADVISED TO USE <a href="#payment-completion-x-signature-redirect-url">X SIGNATURE REDIRECT URL</a>. USING X SIGNATURE ALLOWS YOU TO VALIDATE THE DATA INTEGRITY BY USING CHECKSUM.
 </aside>
 
 ## X Signature Callback Url
@@ -3225,7 +3226,7 @@ X Signature Callback URL request created through the API by Billplz can be verif
 
 Each callback request includes a `x_signature` which is generated using HMAC-SHA256 algorithm and shared XSignature Key, along with the data sent in the request.
 
-To verify that the request came from Billplz, compute the HMAC-SHA256 digest according to the <a href="#x-signature-section">X Signature section</a> and compare it to the value in the `x_signature` parameter. If they match, you can be sure that the callback was sent from Billplz and the data has not been compromised.
+To verify that the request came from Billplz, compute the HMAC-SHA256 digest according to the <a href="#x-signature">X Signature section</a> and compare it to the value in the `x_signature` parameter. If they match, you can be sure that the callback was sent from Billplz and the data has not been compromised.
 
 A bill that catched payment failure will be in `due` state.
 
@@ -3414,7 +3415,7 @@ X Signature Redirect URL request created by Billplz can be verified by calculati
 
 Each redirect request includes a x_signature which is generated using HMAC-SHA256 algorithm and shared XSignature Key, along with the parameters passed in the request.
 
-To verify that the request came from Billplz, compute the HMAC-SHA256 digest according to the <a href="#x-signature-section">X Signature section</a> and compare it to the value in the `x_signature` parameter. If they match, you can be sure that the redirection was sent from Billplz and the data has not been compromised.
+To verify that the request came from Billplz, compute the HMAC-SHA256 digest according to the <a href="#x-signature">X Signature section</a> and compare it to the value in the `x_signature` parameter. If they match, you can be sure that the redirection was sent from Billplz and the data has not been compromised.
 
 <aside class="success">
   By default, X Signature Redirect URL feature is activated for account registered starting September 2018.
@@ -3533,7 +3534,7 @@ This table describes all API endpoints that are subjected to rate limit.
 ###### API ENDPOINTS LIST
 | Version | Name | Endpoint |
 | --- | --- | --- |
-| `V2`/`V3` | [Get a Bill](#get-a-bill) | api/:VERSION/bills/{BILL_ID} |
+| `V2`/`V3` | [Get a Bill](#v3-bills-get-a-bill) | api/:VERSION/bills/{BILL_ID} |
 
 ###### RESPONSE HEADER
 

@@ -37,16 +37,22 @@ activate :autoprefixer do |config|
 end
 
 # Github pages require relative links
-#activate :relative_assets
 set :relative_links, true
+
+# Comment for production build
+activate :relative_assets
+# End of Comment for production build
 
 # Build Configuration
 configure :build do
-  set :css_dir, '/api/stylesheets'
-  set :js_dir, '/api/javascripts'
-  set :images_dir, '/api/images'
-  set :fonts_dir, '/api/fonts'
-  activate :asset_hash
+  
+  # Uncomment for production build
+  # set :css_dir, '/api/stylesheets'
+  # set :js_dir, '/api/javascripts'
+  # set :images_dir, '/api/images'
+  # set :fonts_dir, '/api/fonts'
+  # # End of Uncomment for production build
+
   # If you're having trouble with Middleman hanging, commenting
   # out the following two lines has been known to help
   activate :minify_css

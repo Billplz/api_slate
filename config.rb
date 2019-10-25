@@ -37,11 +37,15 @@ activate :autoprefixer do |config|
 end
 
 # Github pages require relative links
-activate :relative_assets
+#activate :relative_assets
 set :relative_links, true
 
 # Build Configuration
 configure :build do
+  set :css_dir, '/api/stylesheets'
+  set :js_dir, '/api/javascripts'
+  set :images_dir, '/api/images'
+  set :fonts_dir, '/api/fonts'
   activate :asset_hash
   # If you're having trouble with Middleman hanging, commenting
   # out the following two lines has been known to help

@@ -14,7 +14,7 @@ toc_footers:
 
 includes:
   - errors
-  - changelogs
+  - changelog
 
 search: true
 ---
@@ -3521,7 +3521,7 @@ Content-Type: application/json;
 }
 ```
 
-This section lists all API Endpoints that are subjected to rate limit. All **API GET method** Endpoints are subject to rate limit.
+All **API GET method** Endpoints are subject to rate limit.
 
 The limit is **100 requests per request window (5 minutes period)**. The limit is cumulative either per IP address or account, and is not counted per API Endpoint Basis. Requesting for specific API Endpoint will reduce the limit for another API Endpoint within a request window.
 

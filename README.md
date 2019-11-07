@@ -53,6 +53,25 @@ You're going to need:
 # either run this to run locally
 bundle install
 bundle exec middleman server
+bundle exec middleman build --clean
+== Sprockets will render css with ruby sass
+   consider using Sprockets 4.x to render with SassC
+      create  build/stylesheets/print.css
+      create  build/stylesheets/screen.css
+      create  build/images/favicon.png
+      create  build/images/navbar.png
+      create  build/images/logo.png
+      create  build/images/payoutlimit.png
+      create  build/fonts/slate.ttf
+      create  build/fonts/slate.woff
+      create  build/fonts/slate.woff2
+      create  build/fonts/slate.eot
+      create  build/fonts/slate.svg
+      create  build/index.html
+      create  build/javascripts/all_nosearch.js
+      create  build/javascripts/all.js
+Project built successfully.
+
 
 # OR run this to run with vagrant
 vagrant up

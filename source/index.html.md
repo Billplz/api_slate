@@ -2761,7 +2761,7 @@ Use this API to deactivate or reactivate a card. Once deactivated, card cannot b
 
 ```shell
 # Deactivate an active card token
-curl https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6 \
+curl -X PUT https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6 \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
   -d token="77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740" \
   -d active=false
@@ -3497,16 +3497,16 @@ Content-Type: application/json;
 > Example response header with rate limit:
 
 ```
-RateLimit-Limit: 300
-RateLimit-Remaining: 299
-RateLimit-Reset: 899
+RateLimit-Limit: 100
+RateLimit-Remaining: 99
+RateLimit-Reset: 299
 Content-Type: application/json;
 ```
 
 > Example response after exceeding limit:
 
 ```
-RateLimit-Limit: 300
+RateLimit-Limit: 100
 RateLimit-Remaining: 0
 RateLimit-Reset: 299
 Content-Type: application/json;
@@ -3521,28 +3521,21 @@ Content-Type: application/json;
 }
 ```
 
-This section lists all API Endpoints that are subjected to rate limit. API Endpoints not listed here are not subject to rate limit.
+This section lists all API Endpoints that are subjected to rate limit. All **API GET method** Endpoints are subject to rate limit.
 
-The limit is **300 request per request window (15 minutes period)**. The limit is cumulative per IP address and is not counted per API Endpoint Basis. Requesting for specific API Endpoint will reduce the limit for another API Endpoint within a request window.
+The limit is **100 requests per request window (5 minutes period)**. The limit is cumulative either per IP address or account, and is not counted per API Endpoint Basis. Requesting for specific API Endpoint will reduce the limit for another API Endpoint within a request window.
 
 <aside class="notice">
-  We will set a rate limit for specific IP Address if the request appears to be abusive. We reserve the rights, at our sole discretion to set this rate-limit.
+  We will set a rate limit for specific IP Address or account if the request appears to be abusive. We reserve the rights, at our sole discretion to set this rate-limit without any further notices.
 </aside>
-
-This table describes all API endpoints that are subjected to rate limit.
-
-###### API ENDPOINTS LIST
-| Version | Name | Endpoint |
-| --- | --- | --- |
-| `V2`/`V3` | [Get a Bill](#v3-bills-get-a-bill) | api/:VERSION/bills/{BILL_ID} |
 
 ###### RESPONSE HEADER
 
 | Parameter | Description |
 | --- | --- |
-| RateLimit-Limit | Total requests allowed per request window. It's either `unlimited`, or `300`.|
+| RateLimit-Limit | Total requests allowed per request window. It's either `unlimited`, or `100`.|
 | RateLimit-Remaining | Total available requests allowed per request window. It's either `unlimited`, or less than or equal to `RateLimit-Limit` parameter. |
-| RateLimit-Reset | Time remaining (in seconds) for next request window restart. It's either `unlimited`, or less than or equal to `900`. |
+| RateLimit-Reset | Time remaining (in seconds) for next request window restart. It's either `unlimited`, or less than or equal to `300`. |
 
 <aside class="notice">
   Exceeding the rate limit will result to <code>429</code> Too Many Requests.

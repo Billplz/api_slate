@@ -40,17 +40,17 @@ end
 set :relative_links, true
 
 # Comment for production build
-activate :relative_assets
+# activate :relative_assets
 # End of Comment for production build
 
 # Build Configuration
 configure :build do
   
   # Uncomment for production build
-  # set :css_dir, '/api/stylesheets'
-  # set :js_dir, '/api/javascripts'
-  # set :images_dir, '/api/images'
-  # set :fonts_dir, '/api/fonts'
+  set :css_dir, '/api/stylesheets'
+  set :js_dir, '/api/javascripts'
+  set :images_dir, '/api/images'
+  set :fonts_dir, '/api/fonts'
   # # End of Uncomment for production build
 
   # If you're having trouble with Middleman hanging, commenting

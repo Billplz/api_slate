@@ -2578,7 +2578,7 @@ Use this API to get a complete list of supported payment gateways' bank code tha
 This API returns not only online banking, but also all other payment gateways' bank code that are supported in [API#bypass-billplz-bill-page](#direct-payment-gateway-bypass-billplz-bill-page).
 
 <aside class="success">
-  Pull payment gateway list on hourly basis.
+  Pull payment gateway list on <strong>hourly</strong> basis.
 </aside>
 
 > Example request:

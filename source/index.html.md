@@ -3523,17 +3523,17 @@ Content-Type: application/json;
 
 All **API GET method** Endpoints are subject to rate limit.
 
-The limit is **100 requests per request window (5 minutes period)**. The limit is cumulative either per IP address or account, and is not counted per API Endpoint Basis. Requesting for specific API Endpoint will reduce the limit for another API Endpoint within a request window.
+The limit can be either **100 requests per request window (5 minutes period)** or **10 requests per request window (5 minutes period)**, depending on the level of abusion. The limit is cumulative either per IP address or account, and is not counted per API Endpoint Basis. Requesting for specific API Endpoint will reduce the limit for another API Endpoint within a request window.
 
 <aside class="notice">
-  We will set a rate limit for specific IP Address or account if the request appears to be abusive. We reserve the rights, at our sole discretion to set this rate-limit without any further notices.
+  We will set a rate limit for specific IP Address or per account basis if the usage appears to be abusive. We reserve the rights, at our sole discretion to set this rate-limit without any further notices.
 </aside>
 
 ###### RESPONSE HEADER
 
 | Parameter | Description |
 | --- | --- |
-| RateLimit-Limit | Total requests allowed per request window. It's either `unlimited`, or `100`.|
+| RateLimit-Limit | Total requests allowed per request window. It's either `unlimited`, or `100` or `10`.|
 | RateLimit-Remaining | Total available requests allowed per request window. It's either `unlimited`, or less than or equal to `RateLimit-Limit` parameter. |
 | RateLimit-Reset | Time remaining (in seconds) for next request window restart. It's either `unlimited`, or less than or equal to `300`. |
 

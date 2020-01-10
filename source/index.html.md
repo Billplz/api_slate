@@ -158,7 +158,7 @@ Billplz integration with XERO has been deprecated and pending removal.
 Billplz provides a solution for a platform owner to connect merchants with Billplz easily. With OAuth integration, a merchant can easily integrate with Billplz by Signing In using their Billplz account. That's means; they don't have to manually copy `API Secret Key`, `Collection ID`, and `X Signature Key` to your platform.
 
 <aside class="notice">
-  OAuth 2.0 integration is an exclusive feature offered to Billplz's partner. Get in touch with our team for further details. 
+  OAuth 2.0 integration is an exclusive feature offered to Billplz's partner. Get in touch with our team for further details.
 </aside>
 
 # Direct Payment Gateway
@@ -281,12 +281,12 @@ curl https://www.billplz.com/api/v3/collections \
 {
   "id": "inbmmepb",
   "title": "My First API Collection",
-  "logo": 
+  "logo":
   {
     "thumb_url": null,
     "avatar_url": null
   },
-  "split_payment": 
+  "split_payment":
   {
     "email": null,
     "fixed_cut": null,
@@ -319,7 +319,7 @@ curl https://www.billplz.com/api/v3/collections \
     "thumb_url": "https://sample.net/assets/uploadPhoto.png",
     "avatar_url": "https://sample.net/assets/uploadPhoto.png"
   },
-  "split_payment": 
+  "split_payment":
   {
     "email": "verified@account.com",
     "fixed_cut": 100,
@@ -384,12 +384,12 @@ curl https://www.billplz.com/api/v3/collections/inbmmepb \
 {
   "id": "inbmmepb",
   "title": "My First API Collection",
-  "logo": 
+  "logo":
   {
     "thumb_url": null,
     "avatar_url": null
   },
-  "split_payment": 
+  "split_payment":
   {
     "email": null,
     "fixed_cut": null,
@@ -444,12 +444,12 @@ curl https://www.billplz.com/api/v3/collections \
   [{
     "id": "inbmmepb",
     "title": "My First API Collection",
-    "logo": 
+    "logo":
     {
       "thumb_url": null,
       "avatar_url": null
     },
-    "split_payment": 
+    "split_payment":
     {
       "email": null,
       "fixed_cut": null,
@@ -478,12 +478,12 @@ curl https://www.billplz.com/api/v3/collections?page=2&status=active \
   [{
     "id": "inbmmepb",
     "title": "My First API Collection",
-    "logo": 
+    "logo":
     {
       "thumb_url": null,
       "avatar_url": null
     },
-    "split_payment": 
+    "split_payment":
     {
       "email": null,
       "fixed_cut": null,
@@ -546,7 +546,7 @@ curl https://www.billplz.com/api/v3/open_collections \
     "retina_url":  null,
     "avatar_url":  null
   },
-  "split_payment": 
+  "split_payment":
   {
     "email": null,
     "fixed_cut": null,
@@ -598,7 +598,7 @@ curl https://www.billplz.com/api/v3/open_collections \
     "retina_url":  "https://sample.net/assets/uploadPhoto.png",
     "avatar_url":  "https://sample.net/assets/uploadPhoto.png"
   },
-  "split_payment": 
+  "split_payment":
   {
     "email": "verified@account.com",
     "fixed_cut": null,
@@ -697,7 +697,7 @@ curl https://www.billplz.com/api/v3/open_collections/0pp87t_6 \
     "retina_url":  null,
     "avatar_url":  null
   },
-  "split_payment": 
+  "split_payment":
   {
     "email": null,
     "fixed_cut": null,
@@ -777,7 +777,7 @@ curl https://www.billplz.com/api/v3/open_collections \
       "retina_url":  "https://sample.net/assets/uploadPhoto.png",
       "avatar_url":  "https://sample.net/assets/uploadPhoto.png"
     },
-    "split_payment": 
+    "split_payment":
     {
       "email": "verified@account.com",
       "fixed_cut": null,
@@ -821,7 +821,7 @@ curl https://www.billplz.com/api/v3/open_collections?page=2&status=active \
       "retina_url":  "https://sample.net/assets/uploadPhoto.png",
       "avatar_url":  "https://sample.net/assets/uploadPhoto.png"
     },
-    "split_payment": 
+    "split_payment":
     {
       "email": "verified@account.com",
       "fixed_cut": null,
@@ -1071,7 +1071,7 @@ At any given time, you can request a bill to check on the status. It will return
 ```shell
 # Get a bill
 curl https://www.billplz.com/api/v3/bills/8X0Iyzaw \
-  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: 
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
 ```
 
 > Response:
@@ -1803,7 +1803,7 @@ curl https://www.billplz.com/api/v4/collections/inbmmepb \
 {
   "id": "inbmmepb",
   "title": "My First API Collection",
-  "logo": 
+  "logo":
   {
     "thumb_url": null,
     "avatar_url": null
@@ -2681,29 +2681,28 @@ This feature allows you to exchange for a card’s tokenization from our provide
 
 | Provider | Type | Eligibility |
 | --- | --- | --- |
-| Senangpay | Non-3DS | Priority & Ultimate Members |
+| Senangpay | 3DS | Priority & Ultimate Members |
 | OCBC | 3DS | Any membership plan including Standard |
 
 ### Senangpay
 
-This feature enables you to tokenize Non-3DS Visa / Mastercard cards to be charged later, which will be stored in Senangpay's PCI DSS certified servers.
+This feature enables you to tokenize 3DS Visa / Mastercard cards to be charged later, which will be stored in Senangpay's PCI DSS certified servers.
 
 ###### Card Tokenization Flow
 
-1. Merchant to collect card details from card holder. Card number, expiry date and CVV.
 1. Create card & token using this [Create Card](#v4-tokenization-senangpay-create-card) API.
-1. Upon successful request, merchant is to store the response which includes CARD_ID and TOKEN.
+1. Merchant redirects card holder to Senangpay's 3DS authentication page.
+1. Card holder inputs credit/debit card details and submits the form.
+1. Billplz will send a POST request to merchant's callback_url containing masked card details together with CARD_ID and TOKEN.
+1. Merchant compares the checksum sent, and store card details if they match.
 
 <aside class="notice">
   This feature won't be enabled by default, and only applicable to Priority & Ultimate members. Email <a href="mailto:team@billplz.com?subject=Senangpay_Tokenization">team@billplz.com</a> for assistance.
 </aside>
-<aside class="warning">
-  You will need to comply with PCI-DSS to be able to store card details. If you store without meeting the PCI-DSS compliance, you do it at your own risk of being sued.
-</aside>
 
 #### Create Card
 
-Use this API to create a card token for Non-3DS Visa / Mastercard cards. Since this is a non-3DS tokenization, no 3DS verification is required by the card holder. Remember to store the response, as no card details nor tokens will be stored in Billplz's servers.
+Use this API to create a card token for 3DS Visa / Mastercard cards. Remember to store the response, as no card details nor tokens will be stored in Billplz's servers.
 
 To charge a card with the token generated, refer to this [API](#v4-tokenization-senangpay-charge-card).
 
@@ -2716,9 +2715,7 @@ curl https://www.billplz.com/api/v4/cards \
   -d name="Michael" \
   -d email="api@billplz.com" \
   -d phone="60122345678" \
-  -d card_number="5111111111111118" \
-  -d expiry="0521" \
-  -d cvv="100"
+  -d callback_url="https://example.com/callback_url"
 ```
 
 > Response:
@@ -2730,7 +2727,9 @@ curl https://www.billplz.com/api/v4/cards \
     "expiry": "0521",
     "provider": "mastercard",
     "token": "77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740",
-    "active": true
+    "status": "active",
+    "authentication_redirect_url": "https://senangpay.my/some_link",
+    "callback_url": "https://example.com/callback_url"
   }
 ```
 
@@ -2745,26 +2744,23 @@ curl https://www.billplz.com/api/v4/cards \
 | name | Name on the card / name of the card owner. |
 | email | Email of the card owner. |
 | phone | Contact number of card owner. |
-| card_number | Card number, only numbers. |
-| cvv | Card CVV number (3 digits). |
-| expiry | Card expiry in `MMYY` format, without spaces, slashes or dashes.(e.g. Dec 2021 should be written as `1221`).|
+| callback_url | Web hook URL to be called after card token is created. It will POST a Card object. |
 
 <aside class="notice">
   This tokenization function can only tokenize Visa / Mastercard cards. You won't be able to tokenize Amex cards.
 </aside>
 
-#### Deactivate / Reactivate Card
+#### Delete Card
 
 Use this API to deactivate or reactivate a card. Once deactivated, card cannot be charged until it is reactivated.
 
 > Example request:
 
 ```shell
-# Deactivate an active card token
-curl -X PUT https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6 \
+# Delete an active card token
+curl -X DELETE https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6 \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
-  -d token="77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740" \
-  -d active=false
+  -d token="77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740"
 ```
 
 > Response:
@@ -2773,10 +2769,9 @@ curl -X PUT https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b5cf
 {
   "id": "8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6",
   "card_number": "xxxx1118",
-  "expiry": "0521",
   "provider": "mastercard",
   "token": "77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740",
-  "active": false
+  "status": "deleted"
 }
 ```
 
@@ -2789,7 +2784,6 @@ curl -X PUT https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b5cf
 | Parameter | Description |
 | --- | --- |
 | token | Card's token. |
-| active | Boolean value to be set for card token active status. Set `false` to deactivate an active card token, or set `true` to reactivate a deactivated card token. |
 
 #### Charge Card
 
@@ -2851,6 +2845,9 @@ This feature enables merchants with OCBC business account to tokenize 3DS Visa /
 
 <aside class="notice">
   This feature won't be enabled by default, and only applicable to members with OCBC business accounts. Email <a href="mailto:team@billplz.com?subject=OCBC_Tokenization">team@billplz.com</a> for assistance.
+</aside>
+<aside class="warning">
+  You will need to comply with PCI-DSS to be able to store card details. If you store without meeting the PCI-DSS compliance, you do it at your own risk of being sued.
 </aside>
 
 #### Create Card
@@ -2920,7 +2917,7 @@ curl https://www.billplz.com/api/v4/ocbc_cards \
 
 #### Delete Card
 
-Use this API to delete a tokenized card.
+Use this API to delete a card.
 
 > Example request:
 
@@ -3513,7 +3510,7 @@ Content-Type: application/json;
 ```
 ```json 
 {
-  "error": 
+  "error":
   {
     "type": "RateLimit",
     "message": "Too many requests"

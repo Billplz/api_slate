@@ -2752,7 +2752,7 @@ curl https://www.billplz.com/api/v4/cards \
 
 #### Delete Card
 
-Use this API to deactivate or reactivate a card. Once deactivated, card cannot be charged until it is reactivated.
+Use this API to delete a card.
 
 > Example request:
 
@@ -2777,7 +2777,7 @@ curl -X DELETE https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b
 
 ###### HTTP REQUEST
 
-`PUT https://www.billplz.com/api/v4/cards/{CARD_ID}`
+`DELETE https://www.billplz.com/api/v4/cards/{CARD_ID}`
 
 ###### REQUIRED ARGUMENTS
 

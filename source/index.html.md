@@ -2917,7 +2917,7 @@ curl https://www.billplz.com/api/v4/ocbc_cards \
 
 #### Delete Card
 
-Use this API to delete a card.
+Use this API to delete a tokenized card.
 
 > Example request:
 

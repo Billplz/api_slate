@@ -196,21 +196,21 @@
   color: #f92672;
 }
     </style>
-    <link href="stylesheets/screen-c672e00c.css" rel="stylesheet" media="screen" />
-    <link href="stylesheets/print-bccf8c07.css" rel="stylesheet" media="print" />
-      <script src="javascripts/all-721d054c.js"></script>
-    <link href="images/favicon-18999605.png" rel="icon" type="image/png" />
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+    <link href="images/favicon.png" rel="icon" type="image/png" />
   </head>
 
   <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;php&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
-        <img src="images/navbar-cad8cdcb.png" alt="Navbar" />
+        <img src="images/navbar.png" alt="Navbar" />
       </span>
     </a>
     <div class="toc-wrapper">
-      <img src="images/logo-445cbd8f.png" class="logo" alt="Logo" />
+      <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
               <a href="#" data-language-name="ruby">ruby</a>
@@ -426,7 +426,7 @@
                                     <a href="#v4-tokenization-senangpay-create-card" class="toc-h4 toc-link" data-title="Create Card">Create Card</a>
                                   </li>
                                   <li>
-                                    <a href="#v4-tokenization-senangpay-deactivate-reactivate-card" class="toc-h4 toc-link" data-title="Deactivate / Reactivate Card">Deactivate / Reactivate Card</a>
+                                    <a href="#v4-tokenization-senangpay-delete-card" class="toc-h4 toc-link" data-title="Delete Card">Delete Card</a>
                                   </li>
                                   <li>
                                     <a href="#v4-tokenization-senangpay-charge-card" class="toc-h4 toc-link" data-title="Charge Card">Charge Card</a>
@@ -481,7 +481,7 @@
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
           <li>
-            <a href="#changelogs" class="toc-h1 toc-link" data-title="Changelogs">Changelogs</a>
+            <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
           </li>
       </ul>
         <ul class="toc-footer">
@@ -619,7 +619,7 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <p>Billplz provides a solution for a platform owner to connect merchants with Billplz easily. With OAuth integration, a merchant can easily integrate with Billplz by Signing In using their Billplz account. That&#39;s means; they don&#39;t have to manually copy <code>API Secret Key</code>, <code>Collection ID</code>, and <code>X Signature Key</code> to your platform.</p>
 
 <aside class="notice">
-  OAuth 2.0 integration is an exclusive feature offered to Billplz's partner. Get in touch with our team for further details. 
+  OAuth 2.0 integration is an exclusive feature offered to Billplz's partner. Get in touch with our team for further details.
 </aside>
 <h1 id='direct-payment-gateway'>Direct Payment Gateway</h1><h2 id='direct-payment-gateway-bypass-billplz-bill-page'>Bypass Billplz Bill Page</h2>
 <blockquote>
@@ -738,12 +738,12 @@ curl https://www.billplz.com/api/v3/collections <span class="se">\</span>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inbmmepb"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My First API Collection"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"logo"</span><span class="p">:</span><span class="w"> 
+  </span><span class="s2">"logo"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w"> 
+  </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="s2">"fixed_cut"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -774,7 +774,7 @@ curl https://www.billplz.com/api/v3/collections <span class="se">\</span>
     </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://sample.net/assets/uploadPhoto.png"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://sample.net/assets/uploadPhoto.png"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w"> 
+  </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"verified@account.com"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"fixed_cut"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
@@ -884,12 +884,12 @@ curl https://www.billplz.com/api/v3/collections/inbmmepb <span class="se">\</spa
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inbmmepb"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My First API Collection"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"logo"</span><span class="p">:</span><span class="w"> 
+  </span><span class="s2">"logo"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w"> 
+  </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="s2">"fixed_cut"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -974,12 +974,12 @@ curl https://www.billplz.com/api/v3/collections <span class="se">\</span>
   </span><span class="p">[{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inbmmepb"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My First API Collection"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"logo"</span><span class="p">:</span><span class="w"> 
+    </span><span class="s2">"logo"</span><span class="p">:</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w"> 
+    </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="s2">"fixed_cut"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -1006,12 +1006,12 @@ curl https://www.billplz.com/api/v3/collections?page<span class="o">=</span>2&am
   </span><span class="p">[{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inbmmepb"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My First API Collection"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"logo"</span><span class="p">:</span><span class="w"> 
+    </span><span class="s2">"logo"</span><span class="p">:</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w"> 
+    </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="s2">"fixed_cut"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -1077,7 +1077,7 @@ curl https://www.billplz.com/api/v3/open_collections <span class="se">\</span>
     </span><span class="s2">"retina_url"</span><span class="p">:</span><span class="w">  </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w">  </span><span class="kc">null</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w"> 
+  </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="s2">"fixed_cut"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -1127,7 +1127,7 @@ curl https://www.billplz.com/api/v3/open_collections <span class="se">\</span>
     </span><span class="s2">"retina_url"</span><span class="p">:</span><span class="w">  </span><span class="s2">"https://sample.net/assets/uploadPhoto.png"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w">  </span><span class="s2">"https://sample.net/assets/uploadPhoto.png"</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w"> 
+  </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"verified@account.com"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"fixed_cut"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -1328,7 +1328,7 @@ curl https://www.billplz.com/api/v3/open_collections/0pp87t_6 <span class="se">\
     </span><span class="s2">"retina_url"</span><span class="p">:</span><span class="w">  </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w">  </span><span class="kc">null</span><span class="w">
   </span><span class="p">},</span><span class="w">
-  </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w"> 
+  </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="s2">"fixed_cut"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -1468,7 +1468,7 @@ curl https://www.billplz.com/api/v3/open_collections <span class="se">\</span>
       </span><span class="s2">"retina_url"</span><span class="p">:</span><span class="w">  </span><span class="s2">"https://sample.net/assets/uploadPhoto.png"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w">  </span><span class="s2">"https://sample.net/assets/uploadPhoto.png"</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w"> 
+    </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"verified@account.com"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"fixed_cut"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -1510,7 +1510,7 @@ curl https://www.billplz.com/api/v3/open_collections?page<span class="o">=</span
       </span><span class="s2">"retina_url"</span><span class="p">:</span><span class="w">  </span><span class="s2">"https://sample.net/assets/uploadPhoto.png"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w">  </span><span class="s2">"https://sample.net/assets/uploadPhoto.png"</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w"> 
+    </span><span class="s2">"split_payment"</span><span class="p">:</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"verified@account.com"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"fixed_cut"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -1812,7 +1812,7 @@ curl https://www.billplz.com/api/v3/bills <span class="se">\</span>
 </blockquote>
 <pre class="highlight shell tab-shell"><code><span class="c"># Get a bill</span>
 curl https://www.billplz.com/api/v3/bills/8X0Iyzaw <span class="se">\</span>
-  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: 
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
 </code></pre>
 <blockquote>
 <p>Response:</p>
@@ -2893,7 +2893,7 @@ curl https://www.billplz.com/api/v4/collections/inbmmepb <span class="se">\</spa
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inbmmepb"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My First API Collection"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"logo"</span><span class="p">:</span><span class="w"> 
+  </span><span class="s2">"logo"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
@@ -3507,7 +3507,7 @@ curl https://www.billplz.com/api/v4/open_collections?page<span class="o">=</span
 
 <p>Before proceeding further, you need to ensure that you have enough payout limit to perform Payout. To increase payout limit, navigate to Payout tab and you will notice the Payout Limit at the top.</p>
 
-<p><img src="images/payoutlimit-e9e8ef63.png" alt="Payout Limit Interface Screenshot." /></p>
+<p><img src="images/payoutlimit.png" alt="Payout Limit Interface Screenshot." /></p>
 
 <p>To start using the API, you would have to create a Payout Collection. Then the payout will kicks in as per below:</p>
 
@@ -3973,7 +3973,7 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <p>This API returns not only online banking, but also all other payment gateways&#39; bank code that are supported in <a href="#direct-payment-gateway-bypass-billplz-bill-page">API#bypass-billplz-bill-page</a>.</p>
 
 <aside class="success">
-  Pull payment gateway list on hourly basis.
+  Pull payment gateway list on <strong>hourly</strong> basis.
 </aside>
 
 <blockquote>
@@ -4193,7 +4193,7 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 </thead><tbody>
 <tr>
 <td>Senangpay</td>
-<td>Non-3DS</td>
+<td>3DS</td>
 <td>Priority &amp; Ultimate Members</td>
 </tr>
 <tr>
@@ -4203,23 +4203,21 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 </tr>
 </tbody></table>
 <h3 id='v4-tokenization-senangpay'>Senangpay</h3>
-<p>This feature enables you to tokenize Non-3DS Visa / Mastercard cards to be charged later, which will be stored in Senangpay&#39;s PCI DSS certified servers.</p>
+<p>This feature enables you to tokenize 3DS Visa / Mastercard cards to be charged later, which will be stored in Senangpay&#39;s PCI DSS certified servers.</p>
 <h6 id='v4-tokenization-senangpay-payment-gateway-abbreviations-card-tokenization-flow'>Card Tokenization Flow</h6>
 <ol>
-<li>Merchant to collect card details from card holder. Card number, expiry date and CVV.</li>
 <li>Create card &amp; token using this <a href="#v4-tokenization-senangpay-create-card">Create Card</a> API.</li>
-<li>Upon successful request, merchant is to store the response which includes CARD_ID and TOKEN.</li>
+<li>Merchant redirects card holder to Senangpay&#39;s 3DS authentication page.</li>
+<li>Card holder inputs credit/debit card details and submits the form.</li>
+<li>Billplz will send a POST request to merchant&#39;s callback_url containing masked card details together with CARD_ID and TOKEN.</li>
+<li>Merchant compares the checksum sent, and store card details if they match.</li>
 </ol>
 
 <aside class="notice">
   This feature won't be enabled by default, and only applicable to Priority & Ultimate members. Email <a href="mailto:team@billplz.com?subject=Senangpay_Tokenization">team@billplz.com</a> for assistance.
 </aside>
-
-<aside class="warning">
-  You will need to comply with PCI-DSS to be able to store card details. If you store without meeting the PCI-DSS compliance, you do it at your own risk of being sued.
-</aside>
 <h4 id='v4-tokenization-senangpay-create-card'>Create Card</h4>
-<p>Use this API to create a card token for Non-3DS Visa / Mastercard cards. Since this is a non-3DS tokenization, no 3DS verification is required by the card holder. Remember to store the response, as no card details nor tokens will be stored in Billplz&#39;s servers.</p>
+<p>Use this API to create a card token for 3DS Visa / Mastercard cards. Remember to store the response, as no card details nor tokens will be stored in Billplz&#39;s servers.</p>
 
 <p>To charge a card with the token generated, refer to this <a href="#v4-tokenization-senangpay-charge-card">API</a>.</p>
 
@@ -4232,9 +4230,7 @@ curl https://www.billplz.com/api/v4/cards <span class="se">\</span>
   -d <span class="nv">name</span><span class="o">=</span><span class="s2">"Michael"</span> <span class="se">\</span>
   -d <span class="nv">email</span><span class="o">=</span><span class="s2">"api@billplz.com"</span> <span class="se">\</span>
   -d <span class="nv">phone</span><span class="o">=</span><span class="s2">"60122345678"</span> <span class="se">\</span>
-  -d <span class="nv">card_number</span><span class="o">=</span><span class="s2">"5111111111111118"</span> <span class="se">\</span>
-  -d <span class="nv">expiry</span><span class="o">=</span><span class="s2">"0521"</span> <span class="se">\</span>
-  -d <span class="nv">cvv</span><span class="o">=</span><span class="s2">"100"</span>
+  -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"https://example.com/callback_url"</span>
 </code></pre>
 <blockquote>
 <p>Response:</p>
@@ -4245,7 +4241,9 @@ curl https://www.billplz.com/api/v4/cards <span class="se">\</span>
     </span><span class="s2">"expiry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0521"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mastercard"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"authentication_redirect_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://senangpay.my/some_link"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.com/callback_url"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span></code></pre><h6 id='v4-tokenization-senangpay-create-card-http-request'>HTTP REQUEST</h6>
 <p><code>POST https://www.billplz.com/api/v4/cards</code></p>
@@ -4269,33 +4267,24 @@ curl https://www.billplz.com/api/v4/cards <span class="se">\</span>
 <td>Contact number of card owner.</td>
 </tr>
 <tr>
-<td>card_number</td>
-<td>Card number, only numbers.</td>
-</tr>
-<tr>
-<td>cvv</td>
-<td>Card CVV number (3 digits).</td>
-</tr>
-<tr>
-<td>expiry</td>
-<td>Card expiry in <code>MMYY</code> format, without spaces, slashes or dashes.(e.g. Dec 2021 should be written as <code>1221</code>).</td>
+<td>callback_url</td>
+<td>Web hook URL to be called after card token is created. It will POST a Card object.</td>
 </tr>
 </tbody></table>
 
 <aside class="notice">
   This tokenization function can only tokenize Visa / Mastercard cards. You won't be able to tokenize Amex cards.
 </aside>
-<h4 id='v4-tokenization-senangpay-deactivate-reactivate-card'>Deactivate / Reactivate Card</h4>
-<p>Use this API to deactivate or reactivate a card. Once deactivated, card cannot be charged until it is reactivated.</p>
+<h4 id='v4-tokenization-senangpay-delete-card'>Delete Card</h4>
+<p>Use this API to delete a card.</p>
 
 <blockquote>
 <p>Example request:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Deactivate an active card token</span>
-curl https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6 <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code><span class="c"># Delete an active card token</span>
+curl -X DELETE https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6 <span class="se">\</span>
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: <span class="se">\</span>
-  -d <span class="nv">token</span><span class="o">=</span><span class="s2">"77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740"</span> <span class="se">\</span>
-  -d <span class="nv">active</span><span class="o">=</span><span class="nb">false</span>
+  -d <span class="nv">token</span><span class="o">=</span><span class="s2">"77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740"</span>
 </code></pre>
 <blockquote>
 <p>Response:</p>
@@ -4303,14 +4292,13 @@ curl https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6 <
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"card_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xxxx1118"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"expiry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0521"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mastercard"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"deleted"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h6 id='v4-tokenization-senangpay-deactivate-reactivate-card-http-request'>HTTP REQUEST</h6>
-<p><code>PUT https://www.billplz.com/api/v4/cards/{CARD_ID}</code></p>
-<h6 id='v4-tokenization-senangpay-deactivate-reactivate-card-required-arguments'>REQUIRED ARGUMENTS</h6>
+</span></code></pre><h6 id='v4-tokenization-senangpay-delete-card-http-request'>HTTP REQUEST</h6>
+<p><code>DELETE https://www.billplz.com/api/v4/cards/{CARD_ID}</code></p>
+<h6 id='v4-tokenization-senangpay-delete-card-required-arguments'>REQUIRED ARGUMENTS</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -4320,10 +4308,6 @@ curl https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6 <
 <tr>
 <td>token</td>
 <td>Card&#39;s token.</td>
-</tr>
-<tr>
-<td>active</td>
-<td>Boolean value to be set for card token active status. Set <code>false</code> to deactivate an active card token, or set <code>true</code> to reactivate a deactivated card token.</td>
 </tr>
 </tbody></table>
 <h4 id='v4-tokenization-senangpay-charge-card'>Charge Card</h4>
@@ -4390,6 +4374,10 @@ curl https://www.billplz.com/api/v4/bills/awyzmy0m/charge <span class="se">\</sp
 
 <aside class="notice">
   This feature won't be enabled by default, and only applicable to members with OCBC business accounts. Email <a href="mailto:team@billplz.com?subject=OCBC_Tokenization">team@billplz.com</a> for assistance.
+</aside>
+
+<aside class="warning">
+  You will need to comply with PCI-DSS to be able to store card details. If you store without meeting the PCI-DSS compliance, you do it at your own risk of being sued.
 </aside>
 <h4 id='v4-tokenization-ocbc-create-card'>Create Card</h4>
 <p>Use this API to create a card token for 3DS Visa / Mastercard. Remember to store the responses for future use.</p>
@@ -5114,49 +5102,33 @@ Content-Type: application/json;
 <blockquote>
 <p>Example response header with rate limit:</p>
 </blockquote>
-<pre class="highlight plaintext"><code>RateLimit-Limit: 300
-RateLimit-Remaining: 299
-RateLimit-Reset: 899
+<pre class="highlight plaintext"><code>RateLimit-Limit: 100
+RateLimit-Remaining: 99
+RateLimit-Reset: 299
 Content-Type: application/json;
 </code></pre>
 <blockquote>
 <p>Example response after exceeding limit:</p>
 </blockquote>
-<pre class="highlight plaintext"><code>RateLimit-Limit: 300
+<pre class="highlight plaintext"><code>RateLimit-Limit: 100
 RateLimit-Remaining: 0
 RateLimit-Reset: 299
 Content-Type: application/json;
 </code></pre><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"error"</span><span class="p">:</span><span class="w"> 
+  </span><span class="s2">"error"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RateLimit"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Too many requests"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This section lists all API Endpoints that are subjected to rate limit. API Endpoints not listed here are not subject to rate limit.</p>
+<p>All <strong>API GET method</strong> Endpoints are subject to rate limit.</p>
 
-<p>The limit is <strong>300 request per request window (15 minutes period)</strong>. The limit is cumulative per IP address and is not counted per API Endpoint Basis. Requesting for specific API Endpoint will reduce the limit for another API Endpoint within a request window.</p>
+<p>The limit can be either <strong>100 requests per request window (5 minutes period)</strong> or <strong>10 requests per request window (5 minutes period)</strong>, depending on the level of abusion. The limit is cumulative either per IP address or account, and is not counted per API Endpoint Basis. Requesting for specific API Endpoint will reduce the limit for another API Endpoint within a request window.</p>
 
 <aside class="notice">
-  We will set a rate limit for specific IP Address if the request appears to be abusive. We reserve the rights, at our sole discretion to set this rate-limit.
+  We will set a rate limit for specific IP Address or per account basis if the usage appears to be abusive. We reserve the rights, at our sole discretion to set this rate-limit without any further notices.
 </aside>
-
-<p>This table describes all API endpoints that are subjected to rate limit.</p>
-<h6 id='rate-limit-x-signature-redirect-url-ocbc-charge-card-api-endpoints-list'>API ENDPOINTS LIST</h6>
-<table><thead>
-<tr>
-<th>Version</th>
-<th>Name</th>
-<th>Endpoint</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>V2</code>/<code>V3</code></td>
-<td><a href="#v3-bills-get-a-bill">Get a Bill</a></td>
-<td>api/:VERSION/bills/{BILL_ID}</td>
-</tr>
-</tbody></table>
 <h6 id='rate-limit-x-signature-redirect-url-ocbc-charge-card-response-header'>RESPONSE HEADER</h6>
 <table><thead>
 <tr>
@@ -5166,7 +5138,7 @@ Content-Type: application/json;
 </thead><tbody>
 <tr>
 <td>RateLimit-Limit</td>
-<td>Total requests allowed per request window. It&#39;s either <code>unlimited</code>, or <code>300</code>.</td>
+<td>Total requests allowed per request window. It&#39;s either <code>unlimited</code>, or <code>100</code> or <code>10</code>.</td>
 </tr>
 <tr>
 <td>RateLimit-Remaining</td>
@@ -5174,7 +5146,7 @@ Content-Type: application/json;
 </tr>
 <tr>
 <td>RateLimit-Reset</td>
-<td>Time remaining (in seconds) for next request window restart. It&#39;s either <code>unlimited</code>, or less than or equal to <code>900</code>.</td>
+<td>Time remaining (in seconds) for next request window restart. It&#39;s either <code>unlimited</code>, or less than or equal to <code>300</code>.</td>
 </tr>
 </tbody></table>
 
@@ -5237,34 +5209,8 @@ Content-Type: application/json;
 <td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
 </tr>
 </tbody></table>
-<h1 id='changelogs'>Changelogs</h1>
-<p>This section will list all changes by date in descending order. Date format is <code>DD/MM/YYYY</code>.</p>
-
-<!--- Build with: http://www.tablesgenerator.com/markdown_tables --->
-
-<table><thead>
-<tr>
-<th>Date</th>
-<th>Description</th>
-<th>API</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>17/10/2019</td>
-<td>Introduced Tokenization for 3DS.</td>
-<td><a href="#v4-tokenization-senangpay">Senangpay Tokenization</a></td>
-</tr>
-<tr>
-<td>01/10/2019</td>
-<td>Introduced Rate Limiter</td>
-<td><a href="#rate-limit">Rate Limit</a></td>
-</tr>
-<tr>
-<td>24/9/2019</td>
-<td>Introduced Tokenization for non 3DS.</td>
-<td><a href="#v4-tokenization-ocbc">OCBC Tokenization</a></td>
-</tr>
-</tbody></table>
+<h1 id='changelog'>Changelog</h1>
+<p>Refer to our <a href="https://help.billplz.com/hc/en-us/sections/360003364213">Knowledgebase</a> for changelog.</p>
 
       </div>
       <div class="dark-box">

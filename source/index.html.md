@@ -117,7 +117,7 @@ curl https://www.billplz.com/api/v4/webhook_rank \
 $host = 'https://www.billplz.com/api/v4/webhook_rank';
 $api_key = '73eb57f0-7d4e-42b9-a544-aeac6e4b0f81';
 $process = curl_init($host);
-curl_setopt($process, CURLOPT_USERPWD, $api_key . ":"); 
+curl_setopt($process, CURLOPT_USERPWD, $api_key . ":");
 $return = curl_exec($process);
 echo $return;
 ```
@@ -275,7 +275,7 @@ curl https://www.billplz.com/api/v3/collections \
   -F title="My First API Collection"
 ```
 
-> Response: 
+> Response:
 
 ```json
 {
@@ -914,7 +914,7 @@ https://www.billplz.com/api/v3/collections/qag4fe_o6/activate \
 
 ## Bills
 
-Bills need to be created inside a [collection](#v4-collections). It must be either `Collection` or `Open Collection`. However, only `Collection` can be used to create a bill via API and `Open Collection` cannot be used to create a bill via API. 
+Bills need to be created inside a [collection](#v4-collections). It must be either `Collection` or `Open Collection`. However, only `Collection` can be used to create a bill via API and `Open Collection` cannot be used to create a bill via API.
 
 ### Create a Bill
 
@@ -1388,7 +1388,7 @@ curl 'https://www.billplz.com/api/v3/bank_verification_services?account_numbers\
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
 ```
 
-> Response: 
+> Response:
 
 ```json
 {
@@ -1453,7 +1453,7 @@ curl https://www.billplz.com/api/v3/bank_verification_services/1234567890 \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
 ```
 
-> Response: 
+> Response:
 
 ```json
 {
@@ -1695,7 +1695,7 @@ curl https://www.billplz.com/api/v4/collections \
 {
   "id": "inbmmepb",
   "title": "My First V4 API Collection",
-  "logo": 
+  "logo":
   {
     "thumb_url": null,
     "avatar_url": null
@@ -1796,7 +1796,7 @@ Use this API to query your collection record.
 curl https://www.billplz.com/api/v4/collections/inbmmepb \
 -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
 ```
-        
+
 > Response:
 
 ```json
@@ -1867,7 +1867,7 @@ curl https://www.billplz.com/api/v4/collections \
   [{
     "id": "inbmmepb",
     "title": "My First API Collection",
-    "logo": 
+    "logo":
     {
       "thumb_url": null,
       "avatar_url": null
@@ -1896,7 +1896,7 @@ curl https://www.billplz.com/api/v4/collections?page=2&status=active \
   [{
     "id": "inbmmepb",
     "title": "My First API Collection",
-    "logo": 
+    "logo":
     {
       "thumb_url": null,
       "avatar_url": null
@@ -2359,7 +2359,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections/4po8no8
 ## Payout
 
 ### Create a Payout
-       
+
 To make a payment transfer to another bank account, simply create a Payout.
 
 To create a Payout, you would need the Payout collection’s ID. Each Payout must be created within a Payout Collection.
@@ -2481,7 +2481,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>A standard `RM1.50` or `RM0.50` or `RM0.00` fee would be charged from your credits when you successfully created a Payout request;<br>while the total of each Payout will be deducted from your Payout limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
 
 ### Get a Payout
-        
+
 Use this API to query your Payout record.
 
 > Example request:
@@ -2539,7 +2539,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf \
 | total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
 
 ## Webhook Rank
-        
+
 Webhook Rank has been introduced to ensure callback is running at it's best. The higher the ranking, the higher priority for the callback to be executed. Use this API to query your current Account Ranking. `0.0` indicate highest ranking (default) and `10.0` lowest ranking.
 
 <aside class="notice">
@@ -2572,7 +2572,7 @@ curl https://www.billplz.com/api/v4/webhook_rank \
 | rank | Ranking Number (0.0 - 10.0) |
 
 ## Get Payment Gateways
-        
+
 Use this API to get a complete list of supported payment gateways' bank code that need for setting `reference_1` in [API#bypass-billplz-bill-page](#direct-payment-gateway-bypass-billplz-bill-page).
 
 This API returns not only online banking, but also all other payment gateways' bank code that are supported in [API#bypass-billplz-bill-page](#direct-payment-gateway-bypass-billplz-bill-page).
@@ -2723,11 +2723,10 @@ curl https://www.billplz.com/api/v4/cards \
 ```json
   {
     "id": "8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6",
-    "card_number": "xxxx1118",
-    "expiry": "0521",
-    "provider": "mastercard",
-    "token": "77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740",
-    "status": "active",
+    "card_number": null,
+    "provider": null,
+    "token": null,
+    "status": "pending",
     "authentication_redirect_url": "https://senangpay.my/some_link",
     "callback_url": "https://example.com/callback_url"
   }
@@ -2784,6 +2783,56 @@ curl -X DELETE https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b
 | Parameter | Description |
 | --- | --- |
 | token | Card's token. |
+
+#### 3D Secure Update
+
+Billplz will send a POST request to `callback_url` provided within an hour, regardless the card holder has completed the 3DSecure verification or not. This callback_url will also serve as `redirect_url` on the client's side.
+
+> Example request to callback_url:
+
+```shell
+# POST request sent to callback_url
+curl https://www.example.com/callback \
+  -d id="a35296ad-b50c-4179-8024-036da00c1aee" \
+  -d card_number="xxxx1118" \
+  -d provider="mastercard" \
+  -d token="77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740" \
+  -d status="active" \
+  -d checksum="ef5e54a22af0925cba88fab467119742e90262e3646eea1dee3949938daf3a38"
+```
+
+###### HTTP REQUEST
+
+`POST {CALLBACK_URL}`
+
+###### POST PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents card. |
+| card_number | Last 4 digits of card's number. |
+| token | Card's token. |
+| status | Status that represents the card's status, possible values are `pending`, `active`, `failed`, and `deleted`. |
+| checksum | Digital signature computed with posted data and shared XSignature Key. |
+
+###### RESPONSE CODES
+
+Based on the response code received as below, you can identify if this POST request to `callback_url` is a client-side or server-side request. For better user experience, you are expected to redirect the card holder to your success page.
+
+| Response Code | Description |
+| --- | --- |
+| 200 - 300 | Server-side - You should update the card's status. |
+| 301 - 307 | Client-side - You should update the card's status, and redirect card holder to a success page. |
+
+###### CHECKSUM
+
+Checksum is a digital signature computed with posted data and shared XSignature Key, similar to the X Signature received on Payment Completion.
+
+For security purposes, checksum is inserted into this POST request so that merchants can verify this request comes from Billplz. To learn more on how to calculate this checksum, [click here](#x-signature).
+
+<aside class="success">
+  Check the checksum value for better security.
+</aside>
 
 #### Charge Card
 
@@ -3508,7 +3557,7 @@ RateLimit-Remaining: 0
 RateLimit-Reset: 299
 Content-Type: application/json;
 ```
-```json 
+```json
 {
   "error":
   {

@@ -2770,7 +2770,7 @@ curl -X DELETE https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b
 ```json
 {
   "id": "8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6",
-  "card_number": "xxxx1118",
+  "card_number": "1118",
   "provider": "mastercard",
   "token": "77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740",
   "status": "deleted"
@@ -2797,7 +2797,7 @@ Billplz will send a POST request to `callback_url` provided within an hour, rega
 # POST request sent to callback_url
 curl https://www.example.com/callback \
   -d id="a35296ad-b50c-4179-8024-036da00c1aee" \
-  -d card_number="xxxx1118" \
+  -d card_number="1118" \
   -d provider="mastercard" \
   -d token="77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740" \
   -d status="active" \

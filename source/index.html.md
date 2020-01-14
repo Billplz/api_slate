@@ -125,7 +125,7 @@ echo $return;
 
 > curl uses the -u flag to pass basic auth credentials (adding a colon after your API key will prevent it from asking you for a password).
 
-You authenticate to the Billplz API by providing your API Secret Keys in the request. You can get your API keys from your account’s settings page.
+You authenticate to the Billplz API by providing your API Secret Keys in the request. You can get your API keys from your account's settings page.
 
 Authentication to the API occurs via HTTP Basic Auth. Provide your API key as the basic auth username. You do not need to provide a password.
 
@@ -260,7 +260,7 @@ Collections are where all of your [Bills](#v3-bills) are belongs to. Collections
 
 ### Create a Collection
 
-Billplz API now supports the creation of collection with a split rule feature. The response will contain the collection’s ID that is needed in Bill API, split rule info and fields.
+Billplz API now supports the creation of collection with a split rule feature. The response will contain the collection's ID that is needed in Bill API, split rule info and fields.
 
 <aside class="notice">
   You can choose to upload a logo to display on your bill template. It will use your company logo otherwise.
@@ -509,7 +509,7 @@ curl https://www.billplz.com/api/v3/collections?page=2&status=active \
 
 ### Create an Open Collection
 
-Billplz API now supports the creation of open collections (Payment Form) with a split rule feature. The response contains the collection’s attributes, including the payment form URL.
+Billplz API now supports the creation of open collections (Payment Form) with a split rule feature. The response contains the collection's attributes, including the payment form URL.
 
 <aside class="notice">
   You can choose to upload a photo to display on your payment form. It uses your company logo otherwise.
@@ -918,12 +918,12 @@ Bills need to be created inside a [collection](#v4-collections). It must be eith
 
 ### Create a Bill
 
-To create a bill, you would need the collection’s ID. Each bill must be created within a collection. To get your collection ID, visit the collection page on your Billplz account.
+To create a bill, you would need the collection's ID. Each bill must be created within a collection. To get your collection ID, visit the collection page on your Billplz account.
 
 The bill's collection will be set to `active` automatically.
 
 <aside class="notice">
-  You can choose to redirect the customer to bill’s URL returned to you.
+  You can choose to redirect the customer to bill's URL returned to you.
 </aside>
 
 > Example request:
@@ -1020,11 +1020,11 @@ curl https://www.billplz.com/api/v3/bills \
 | Parameter | Description |
 | --- | --- |
 | collection_id | The collection ID. A string. |
-| email | The email address of the bill’s recipient (Email is required if mobile is not present). |
-| mobile | Recipient’s mobile number. Be sure that all mobile numbers include country code, area code and number without spaces or dashes. (e.g., `+60122345678` or `60122345678`). Use Google libphonenumber library to help. Mobile is required if email is not present. |
-| name | Bill’s recipient name. Useful for identification on recipient part. (Max of 255 characters). |
+| email | The email address of the bill's recipient (Email is required if mobile is not present). |
+| mobile | Recipient's mobile number. Be sure that all mobile numbers include country code, area code and number without spaces or dashes. (e.g., `+60122345678` or `60122345678`). Use Google libphonenumber library to help. Mobile is required if email is not present. |
+| name | Bill's recipient name. Useful for identification on recipient part. (Max of 255 characters). |
 | amount | A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
-| callback_url | Web hook URL to be called after payment’s transaction completed. It will POST a Bill object. |
+| callback_url | Web hook URL to be called after payment's transaction completed. It will POST a Bill object. |
 | description | The bill's description. Will be displayed on bill template. String format (Max of 200 characters). |
 
 ###### OPTIONAL ARGUMENTS
@@ -1032,7 +1032,7 @@ curl https://www.billplz.com/api/v3/bills \
 | Parameter | Description |
 | --- | --- |
 | due_at | Due date for the bill. The format `YYYY-MM-DD`, default value is today. Year range is **19xx** to **2xxx** |
-| redirect_url | URL to redirect the customer after payment completed. It will do a GET to `redirect_url` together with bill’s status and ID.|
+| redirect_url | URL to redirect the customer after payment completed. It will do a GET to `redirect_url` together with bill's status and ID.|
 | deliver | Boolean value to set email and SMS (if mobile is present) delivery. Default value is `false`. ___SMS is subjected to charges depending on subscribed plan___. |
 | reference_1_label | Label #1 to reconcile payments (Max of 20 characters). <br> Default value is `Reference 1`. |
 | reference_1 | Value for `reference_1_label` (Max of 120 characters). |
@@ -1122,7 +1122,7 @@ curl https://www.billplz.com/api/v3/bills/8X0Iyzaw \
 
 ### Delete a Bill
 
-Only due bill can be deleted. Paid bill can’t be deleted. Deleting a bill is useful in a scenario where there’s a time limitation to payment.
+Only due bill can be deleted. Paid bill can't be deleted. Deleting a bill is useful in a scenario where there's a time limitation to payment.
 
 Example usage would be to show a timer for customer to complete payment within 10 minutes with a grace period of 5 minutes. After 15 minutes of bill creation, get bill status and delete if bill is still due.
 
@@ -1674,7 +1674,7 @@ Collections are where all of your [Bills](#v3-bills) are belongs to. Collections
 
 ### Create a Collection
 
-Billplz API now support creation of collection with 2 split rules feature, the response will contain the collection’s ID that is needed in Bill API, split rules info and fields
+Billplz API now support creation of collection with 2 split rules feature, the response will contain the collection's ID that is needed in Bill API, split rules info and fields
 
 <aside class="warning">
   Collection with custom logo support are removed starting in <code>V4</code>
@@ -1922,7 +1922,7 @@ curl https://www.billplz.com/api/v4/collections?page=2&status=active \
 
 ### Create an Open Collection
 
-Billplz API now support creation of open collections (Payment Form) with 2 split rule recipients feature, the response will contain the collection’s attributes, including the payment form URL.
+Billplz API now support creation of open collections (Payment Form) with 2 split rule recipients feature, the response will contain the collection's attributes, including the payment form URL.
 
 > Example request:
 
@@ -2362,7 +2362,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections/4po8no8
 
 To make a payment transfer to another bank account, simply create a Payout.
 
-To create a Payout, you would need the Payout collection’s ID. Each Payout must be created within a Payout Collection.
+To create a Payout, you would need the Payout collection's ID. Each Payout must be created within a Payout Collection.
 
 <aside class="warning">
   It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout Limit</strong>.
@@ -2451,7 +2451,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | bank_code | Bank Code that represents bank, in string value. Case sensitive. <br><br> Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#v3-bank-account-direct-verification-get-a-bank-account). |
 | bank_account_number | Bank account number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#v3-bank-account-direct-verification-get-a-bank-account). |
 | identity_number | Bank account's IC Number/SSM Registration Number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#v3-bank-account-direct-verification-get-a-bank-account). |
-| name | Payout’s recipient name. Useful for identification on recipient part. |
+| name | Payout's recipient name. Useful for identification on recipient part. |
 | description | The Payout's description. Will be displayed on bill template. String format (Max of 200 characters). |
 | total | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
 
@@ -2472,7 +2472,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | bank_code | Bank Code that represents bank, in string value. Case sensitive. |
 | bank_account_number | Bank account number, in string value. |
 | identity_number | Bank account's IC Number/SSM Registration Number, in string value. |
-| name | Payout’s recipient name. |
+| name | Payout's recipient name. |
 | description | The Payout's description. |
 | email | The email address of recipient (it default to sender's email if not present). |
 | status | Payout status. It is either `processing` or `completed` or `refunded`. |
@@ -2530,7 +2530,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf \
 | bank_code | Bank Code that represents bank, in string value. Case sensitive. |
 | bank_account_number | Bank account number, in string value. |
 | identity_number | Bank account's IC Number/ROC/ROB/ROS Number, in string value. |
-| name | Payout’s recipient name. |
+| name | Payout's recipient name. |
 | description | The Payout's description. |
 | email | The email address of recipient (it default to sender's email if not present). |
 | status | Payout status. It is either `processing` or `completed` or `refunded`. |
@@ -2675,7 +2675,7 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 
 ## Tokenization
 
-This feature allows you to exchange for a card’s tokenization from our provider’s PCI DSS certified vault, and use the token to charge your customer later.
+This feature allows you to exchange for a card's tokenization from our provider's PCI DSS certified vault, and use the token to charge your customer later.
 
 ###### Providers
 
@@ -2706,7 +2706,7 @@ Use this API to create a card token for 3DS Visa / Mastercard cards. Remember to
 
 To charge a card with the token generated, refer to this [API](#v4-tokenization-senangpay-charge-card).
 
-> Example request:
+> Example request with optional arguments:
 
 ```shell
 # Creates a card token
@@ -2737,13 +2737,16 @@ curl https://www.billplz.com/api/v4/cards \
 `POST https://www.billplz.com/api/v4/cards`
 
 ###### REQUIRED ARGUMENTS
+| Parameter | Description |
+| --- | --- |
+| callback_url | Web hook URL to be called after card token is created. It will POST a Card object. |
 
+###### OPTIONAL ARGUMENTS
 | Parameter | Description |
 | --- | --- |
 | name | Name on the card / name of the card owner. |
 | email | Email of the card owner. |
 | phone | Contact number of card owner. |
-| callback_url | Web hook URL to be called after card token is created. It will POST a Card object. |
 
 <aside class="notice">
   This tokenization function can only tokenize Visa / Mastercard cards. You won't be able to tokenize Amex cards.

@@ -2706,7 +2706,7 @@ Use this API to create a card token for 3DS Visa / Mastercard cards. Remember to
 
 To charge a card with the token generated, refer to this [API](#v4-tokenization-senangpay-charge-card).
 
-> Example request with optional arguments:
+> Example request:
 
 ```shell
 # Creates a card token
@@ -2739,14 +2739,10 @@ curl https://www.billplz.com/api/v4/cards \
 ###### REQUIRED ARGUMENTS
 | Parameter | Description |
 | --- | --- |
-| callback_url | Web hook URL to be called after card token is created. It will POST a Card object. |
-
-###### OPTIONAL ARGUMENTS
-| Parameter | Description |
-| --- | --- |
 | name | Name on the card / name of the card owner. |
 | email | Email of the card owner. |
 | phone | Contact number of card owner. |
+| callback_url | Web hook URL to be called after card token is created. It will POST a Card object. |
 
 <aside class="notice">
   This tokenization function can only tokenize Visa / Mastercard cards. You won't be able to tokenize Amex cards.

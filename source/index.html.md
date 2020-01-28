@@ -14,7 +14,6 @@ toc_footers:
 
 includes:
   - errors
-  - changelog
 
 search: true
 ---
@@ -142,12 +141,12 @@ https://github.com/billplz
 > Knowledgebase:
 
 ```
-https://help.billplz.com/hc/en-us/articles/360015833913
+https://help.billplz.com/article/53-list-of-system-with-production-ready-integration
 ```
 
 Billplz has been integrated with many systems available in the market and always working to integrate with more platforms.
 
-For a self-hosted system, you may download a production-ready module to integrate with your e-commerce system. Please refer to our [GitHub](https://github.com/billplz) or [Knowledgebase](https://help.billplz.com/hc/en-us/articles/360015833913-List-of-system-with-production-ready-integration) for the list of the available module.
+For a self-hosted system, you may download a production-ready module to integrate with your e-commerce system. Please refer to our [GitHub](https://github.com/billplz) or [Knowledgebase](https://help.billplz.com/article/53-list-of-system-with-production-ready-integration) for the list of the available module.
 
 ## Xero
 
@@ -2785,7 +2784,11 @@ curl -X DELETE https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b
 
 #### 3D Secure Update
 
-Billplz will send a POST request to `callback_url` provided within an hour, regardless the card holder has completed the 3DSecure verification or not. This callback_url will also serve as `redirect_url` on the client's side.
+Billplz will send a POST request to `callback_url` provided within an hour, regardless the card holder has completed the 3DSecure verification or not. This callback_url will also serve as `redirect_url` on the client's side. You are required to redirect every time the 3D secure update is being given regardless of callback or redirect.
+
+<aside class="notice">
+  Acceptable HTTP response status code is within the range of <code>200</code> - <code>308</code>. Responding with other than acceptable range will be considered as failure. 
+</aside>
 
 > Example request to callback_url:
 
@@ -2813,15 +2816,6 @@ curl https://www.example.com/callback \
 | token | Card's token. |
 | status | Status that represents the card's status, possible values are `pending`, `active`, `failed`, and `deleted`. |
 | checksum | Digital signature computed with posted data and shared XSignature Key. |
-
-###### RESPONSE CODES
-
-Based on the response code received as below, you can identify if this POST request to `callback_url` is a client-side or server-side request. For better user experience, you are expected to redirect the card holder to your success page.
-
-| Response Code | Description |
-| --- | --- |
-| 200 - 300 | Server-side - You should update the card's status. |
-| 301 - 307 | Client-side - You should update the card's status, and redirect card holder to a success page. |
 
 ###### CHECKSUM
 
@@ -2997,7 +2991,11 @@ curl https://www.billplz.com/api/v4/ocbc_cards/8727fc3a-c04c-4c2b-9b67-947b5cfc2
 
 #### 3D Secure Update
 
-Billplz will send a POST request to `callback_url` provided within an hour, regardless the card holder has completed the 3DSecure verification or not. This callback_url will also serve as `redirect_url` on the client's side.
+Billplz will send a POST request to `callback_url` provided within an hour, regardless the card holder has completed the 3DSecure verification or not. This callback_url will also serve as `redirect_url` on the client's side. You are required to redirect every time the 3D secure update is being given regardless of callback or redirect.
+
+<aside class="notice">
+  Acceptable HTTP response status code is within the range of <code>200</code> - <code>308</code>. Responding with other than acceptable range will be considered as failure. 
+</aside>
 
 > Example request to callback_url:
 
@@ -3020,15 +3018,6 @@ curl https://www.example.com/callback \
 | id | ID that represents card. |
 | status | Status that represents the card's status, possible values are `pending`, `active`, `failed`, and `deleted`. |
 | checksum | Digital signature computed with posted data and shared XSignature Key. |
-
-###### RESPONSE CODES
-
-Based on the response code received as below, you can identify if this POST request to `callback_url` is a client-side or server-side request. For better user experience, you are expected to redirect the card holder to your success page.
-
-| Response Code | Description |
-| --- | --- |
-| 200 - 300 | Server-side - You should update the card's status. |
-| 301 - 307 | Client-side - You should update the card's status, and redirect card holder to a success page. |
 
 ###### CHECKSUM
 

@@ -3180,8 +3180,8 @@ By default, `Basic Callback URL` feature is disabled due to security reason.
 | --- | --- |
 | id | ID that represents bill. |
 | collection_id | ID that represents the collection where the bill belongs to. |
-| paid | Boolean value to tell if a bill has paid. It will return `false` for `due` and `hidden` bills; `true` for paid bills. |
-| state | State that representing the bill's status, possible states are `due`, `hidden`, and `paid`. |
+| paid | Boolean value to tell if a bill has paid. It will return `false` for `due` and `deleted` bills; `true` for paid bills. |
+| state | State that representing the bill's status, possible states are `due`, `deleted`, and `paid`. |
 | amount | Bill's amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00). |
 | paid_amount | Bill's paid amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00). |
 | due_at | Due date for the bill, in format `YYYY-MM-DD`. Example, `2020-12-31`. |
@@ -3304,8 +3304,8 @@ Content-Type: application/x-www-form-urlencoded
 | --- | --- |
 | id | ID that represents bill. |
 | collection_id | ID that represents the collection where the bill belongs to. |
-| paid | Boolean value to tell if a bill has paid. It will return `false` for `due` and `hidden` bills; `true` for `paid` bills. |
-| state | State that representing the bill's status, possible states are `due`, `hidden` and `paid`. |
+| paid | Boolean value to tell if a bill has paid. It will return `false` for `due` and `deleted` bills; `true` for `paid` bills. |
+| state | State that representing the bill's status, possible states are `due`, `deleted` and `paid`. |
 | amount | Bill's amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00). |
 | paid_amount | Bill's paid amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00). |
 | due_at | Due date for the bill, in format `YYYY-MM-DD`. Example, `2020-12-31`. |
@@ -3464,7 +3464,7 @@ To verify that the request came from Billplz, compute the HMAC-SHA256 digest acc
 | Parameter | Description |
 | --- | --- |
 | billplz[id] | ID that represents bill. |
-| billplz[paid] | Boolean value to tell if a bill has paid. It will return `false` for `due` and `hidden` bills; `true` for paid bills. |
+| billplz[paid] | Boolean value to tell if a bill has paid. It will return `false` for `due` and `deleted` bills; `true` for paid bills. |
 | billplz[paid_at] | Date time when the bill was paid, in format `YYYY-MM-DD HH:MM:SS TimeZone`. Example, `2017-01-04 13:10:45 +0800`. |
 | billplz[x_signature] | Digital signature computed with passing parameters and shared XSignature Key. |
 

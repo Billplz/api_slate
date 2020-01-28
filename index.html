@@ -429,6 +429,9 @@
                                     <a href="#v4-tokenization-senangpay-delete-card" class="toc-h4 toc-link" data-title="Delete Card">Delete Card</a>
                                   </li>
                                   <li>
+                                    <a href="#v4-tokenization-senangpay-3d-secure-update" class="toc-h4 toc-link" data-title="3D Secure Update">3D Secure Update</a>
+                                  </li>
+                                  <li>
                                     <a href="#v4-tokenization-senangpay-charge-card" class="toc-h4 toc-link" data-title="Charge Card">Charge Card</a>
                                   </li>
                               </ul>
@@ -479,9 +482,6 @@
           </li>
           <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
-          </li>
-          <li>
-            <a href="#changelog" class="toc-h1 toc-link" data-title="Changelog">Changelog</a>
           </li>
       </ul>
         <ul class="toc-footer">
@@ -584,7 +584,7 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <span class="nv">$host</span> <span class="o">=</span> <span class="s1">'https://www.billplz.com/api/v4/webhook_rank'</span><span class="p">;</span>
 <span class="nv">$api_key</span> <span class="o">=</span> <span class="s1">'73eb57f0-7d4e-42b9-a544-aeac6e4b0f81'</span><span class="p">;</span>
 <span class="nv">$process</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="nv">$host</span><span class="p">);</span>
-<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$process</span><span class="p">,</span> <span class="nx">CURLOPT_USERPWD</span><span class="p">,</span> <span class="nv">$api_key</span> <span class="o">.</span> <span class="s2">":"</span><span class="p">);</span> 
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$process</span><span class="p">,</span> <span class="nx">CURLOPT_USERPWD</span><span class="p">,</span> <span class="nv">$api_key</span> <span class="o">.</span> <span class="s2">":"</span><span class="p">);</span>
 <span class="nv">$return</span> <span class="o">=</span> <span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$process</span><span class="p">);</span>
 <span class="k">echo</span> <span class="nv">$return</span><span class="p">;</span>
 </code></pre>
@@ -594,7 +594,7 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <p>curl uses the -u flag to pass basic auth credentials (adding a colon after your API key will prevent it from asking you for a password).</p>
 </blockquote>
 
-<p>You authenticate to the Billplz API by providing your API Secret Keys in the request. You can get your API keys from your account’s settings page.</p>
+<p>You authenticate to the Billplz API by providing your API Secret Keys in the request. You can get your API keys from your account&#39;s settings page.</p>
 
 <p>Authentication to the API occurs via HTTP Basic Auth. Provide your API key as the basic auth username. You do not need to provide a password.</p>
 
@@ -608,11 +608,11 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <blockquote>
 <p>Knowledgebase:</p>
 </blockquote>
-<pre class="highlight plaintext"><code>https://help.billplz.com/hc/en-us/articles/360015833913
+<pre class="highlight plaintext"><code>https://help.billplz.com/article/53-list-of-system-with-production-ready-integration
 </code></pre>
 <p>Billplz has been integrated with many systems available in the market and always working to integrate with more platforms.</p>
 
-<p>For a self-hosted system, you may download a production-ready module to integrate with your e-commerce system. Please refer to our <a href="https://github.com/billplz">GitHub</a> or <a href="https://help.billplz.com/hc/en-us/articles/360015833913-List-of-system-with-production-ready-integration">Knowledgebase</a> for the list of the available module.</p>
+<p>For a self-hosted system, you may download a production-ready module to integrate with your e-commerce system. Please refer to our <a href="https://github.com/billplz">GitHub</a> or <a href="https://help.billplz.com/article/53-list-of-system-with-production-ready-integration">Knowledgebase</a> for the list of the available module.</p>
 <h2 id='integration-xero'>Xero</h2>
 <p>Billplz integration with XERO has been deprecated and pending removal.</p>
 <h2 id='integration-oauth-2-0'>OAuth 2.0</h2>
@@ -718,7 +718,7 @@ curl https://www.billplz.com/api/v3/bills <span class="se">\</span>
 <h2 id='v3-collections'>Collections</h2>
 <p>Collections are where all of your <a href="#v3-bills">Bills</a> are belongs to. Collections can be useful to categorize your bill payment. As an example, you may use Collection to separate a Tuition Fee Collection for September and November collection.</p>
 <h3 id='v3-collections-create-a-collection'>Create a Collection</h3>
-<p>Billplz API now supports the creation of collection with a split rule feature. The response will contain the collection’s ID that is needed in Bill API, split rule info and fields.</p>
+<p>Billplz API now supports the creation of collection with a split rule feature. The response will contain the collection&#39;s ID that is needed in Bill API, split rule info and fields.</p>
 
 <aside class="notice">
   You can choose to upload a logo to display on your bill template. It will use your company logo otherwise.
@@ -733,7 +733,7 @@ curl https://www.billplz.com/api/v3/collections <span class="se">\</span>
   -F <span class="nv">title</span><span class="o">=</span><span class="s2">"My First API Collection"</span>
 </code></pre>
 <blockquote>
-<p>Response: </p>
+<p>Response:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inbmmepb"</span><span class="p">,</span><span class="w">
@@ -1041,7 +1041,7 @@ curl https://www.billplz.com/api/v3/collections?page<span class="o">=</span>2&am
 </tr>
 </tbody></table>
 <h3 id='v3-collections-create-an-open-collection'>Create an Open Collection</h3>
-<p>Billplz API now supports the creation of open collections (Payment Form) with a split rule feature. The response contains the collection’s attributes, including the payment form URL.</p>
+<p>Billplz API now supports the creation of open collections (Payment Form) with a split rule feature. The response contains the collection&#39;s attributes, including the payment form URL.</p>
 
 <aside class="notice">
   You can choose to upload a photo to display on your payment form. It uses your company logo otherwise.
@@ -1607,14 +1607,14 @@ https://www.billplz.com/api/v3/collections/qag4fe_o6/activate <span class="se">\
 </tr>
 </tbody></table>
 <h2 id='v3-bills'>Bills</h2>
-<p>Bills need to be created inside a <a href="#v4-collections">collection</a>. It must be either <code>Collection</code> or <code>Open Collection</code>. However, only <code>Collection</code> can be used to create a bill via API and <code>Open Collection</code> cannot be used to create a bill via API. </p>
+<p>Bills need to be created inside a <a href="#v4-collections">collection</a>. It must be either <code>Collection</code> or <code>Open Collection</code>. However, only <code>Collection</code> can be used to create a bill via API and <code>Open Collection</code> cannot be used to create a bill via API.</p>
 <h3 id='v3-bills-create-a-bill'>Create a Bill</h3>
-<p>To create a bill, you would need the collection’s ID. Each bill must be created within a collection. To get your collection ID, visit the collection page on your Billplz account.</p>
+<p>To create a bill, you would need the collection&#39;s ID. Each bill must be created within a collection. To get your collection ID, visit the collection page on your Billplz account.</p>
 
 <p>The bill&#39;s collection will be set to <code>active</code> automatically.</p>
 
 <aside class="notice">
-  You can choose to redirect the customer to bill’s URL returned to you.
+  You can choose to redirect the customer to bill's URL returned to you.
 </aside>
 
 <blockquote>
@@ -1713,15 +1713,15 @@ curl https://www.billplz.com/api/v3/bills <span class="se">\</span>
 </tr>
 <tr>
 <td>email</td>
-<td>The email address of the bill’s recipient (Email is required if mobile is not present).</td>
+<td>The email address of the bill&#39;s recipient (Email is required if mobile is not present).</td>
 </tr>
 <tr>
 <td>mobile</td>
-<td>Recipient’s mobile number. Be sure that all mobile numbers include country code, area code and number without spaces or dashes. (e.g., <code>+60122345678</code> or <code>60122345678</code>). Use Google libphonenumber library to help. Mobile is required if email is not present.</td>
+<td>Recipient&#39;s mobile number. Be sure that all mobile numbers include country code, area code and number without spaces or dashes. (e.g., <code>+60122345678</code> or <code>60122345678</code>). Use Google libphonenumber library to help. Mobile is required if email is not present.</td>
 </tr>
 <tr>
 <td>name</td>
-<td>Bill’s recipient name. Useful for identification on recipient part. (Max of 255 characters).</td>
+<td>Bill&#39;s recipient name. Useful for identification on recipient part. (Max of 255 characters).</td>
 </tr>
 <tr>
 <td>amount</td>
@@ -1729,7 +1729,7 @@ curl https://www.billplz.com/api/v3/bills <span class="se">\</span>
 </tr>
 <tr>
 <td>callback_url</td>
-<td>Web hook URL to be called after payment’s transaction completed. It will POST a Bill object.</td>
+<td>Web hook URL to be called after payment&#39;s transaction completed. It will POST a Bill object.</td>
 </tr>
 <tr>
 <td>description</td>
@@ -1749,7 +1749,7 @@ curl https://www.billplz.com/api/v3/bills <span class="se">\</span>
 </tr>
 <tr>
 <td>redirect_url</td>
-<td>URL to redirect the customer after payment completed. It will do a GET to <code>redirect_url</code> together with bill’s status and ID.</td>
+<td>URL to redirect the customer after payment completed. It will do a GET to <code>redirect_url</code> together with bill&#39;s status and ID.</td>
 </tr>
 <tr>
 <td>deliver</td>
@@ -1872,7 +1872,7 @@ curl https://www.billplz.com/api/v3/bills/8X0Iyzaw <span class="se">\</span>
   ABUSING THIS API WILL RESULT TO YOUR IP ADDRESS WILL BE BLOCKED.
 </aside>
 <h3 id='v3-bills-delete-a-bill'>Delete a Bill</h3>
-<p>Only due bill can be deleted. Paid bill can’t be deleted. Deleting a bill is useful in a scenario where there’s a time limitation to payment.</p>
+<p>Only due bill can be deleted. Paid bill can&#39;t be deleted. Deleting a bill is useful in a scenario where there&#39;s a time limitation to payment.</p>
 
 <p>Example usage would be to show a timer for customer to complete payment within 10 minutes with a grace period of 5 minutes. After 15 minutes of bill creation, get bill status and delete if bill is still due.</p>
 
@@ -2182,7 +2182,7 @@ curl <span class="s1">'https://www.billplz.com/api/v3/bank_verification_services
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
 </code></pre>
 <blockquote>
-<p>Response: </p>
+<p>Response:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"bank_verification_services"</span><span class="p">:</span><span class="w">
@@ -2277,7 +2277,7 @@ curl https://www.billplz.com/api/v3/bank_verification_services/1234567890 <span 
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
 </code></pre>
 <blockquote>
-<p>Response: </p>
+<p>Response:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sara"</span><span class="p">,</span><span class="w">
@@ -2716,7 +2716,7 @@ curl https://www.billplz.com/api/v3/fpx_banks <span class="se">\</span>
 <h2 id='v4-collections'>Collections</h2>
 <p>Collections are where all of your <a href="#v3-bills">Bills</a> are belongs to. Collections can be useful to categorize your bill payment. As an example, you may use Collection to separate a Tuition Fee Collection for September and November collection.</p>
 <h3 id='v4-collections-create-a-collection'>Create a Collection</h3>
-<p>Billplz API now support creation of collection with 2 split rules feature, the response will contain the collection’s ID that is needed in Bill API, split rules info and fields</p>
+<p>Billplz API now support creation of collection with 2 split rules feature, the response will contain the collection&#39;s ID that is needed in Bill API, split rules info and fields</p>
 
 <aside class="warning">
   Collection with custom logo support are removed starting in <code>V4</code>
@@ -2736,7 +2736,7 @@ curl https://www.billplz.com/api/v4/collections <span class="se">\</span>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inbmmepb"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My First V4 API Collection"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"logo"</span><span class="p">:</span><span class="w"> 
+  </span><span class="s2">"logo"</span><span class="p">:</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
     </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
@@ -2975,7 +2975,7 @@ curl https://www.billplz.com/api/v4/collections <span class="se">\</span>
   </span><span class="p">[{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inbmmepb"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My First API Collection"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"logo"</span><span class="p">:</span><span class="w"> 
+    </span><span class="s2">"logo"</span><span class="p">:</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
@@ -3002,7 +3002,7 @@ curl https://www.billplz.com/api/v4/collections?page<span class="o">=</span>2&am
   </span><span class="p">[{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inbmmepb"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My First API Collection"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"logo"</span><span class="p">:</span><span class="w"> 
+    </span><span class="s2">"logo"</span><span class="p">:</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"thumb_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
@@ -3032,7 +3032,7 @@ curl https://www.billplz.com/api/v4/collections?page<span class="o">=</span>2&am
 </tr>
 </tbody></table>
 <h3 id='v4-collections-create-an-open-collection'>Create an Open Collection</h3>
-<p>Billplz API now support creation of open collections (Payment Form) with 2 split rule recipients feature, the response will contain the collection’s attributes, including the payment form URL.</p>
+<p>Billplz API now support creation of open collections (Payment Form) with 2 split rule recipients feature, the response will contain the collection&#39;s attributes, including the payment form URL.</p>
 
 <blockquote>
 <p>Example request:</p>
@@ -3650,7 +3650,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections/4po8no8
 <h2 id='v4-payout'>Payout</h2><h3 id='v4-payout-create-a-payout'>Create a Payout</h3>
 <p>To make a payment transfer to another bank account, simply create a Payout.</p>
 
-<p>To create a Payout, you would need the Payout collection’s ID. Each Payout must be created within a Payout Collection.</p>
+<p>To create a Payout, you would need the Payout collection&#39;s ID. Each Payout must be created within a Payout Collection.</p>
 
 <aside class="warning">
   It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout Limit</strong>.
@@ -3749,7 +3749,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
 </tr>
 <tr>
 <td>name</td>
-<td>Payout’s recipient name. Useful for identification on recipient part.</td>
+<td>Payout&#39;s recipient name. Useful for identification on recipient part.</td>
 </tr>
 <tr>
 <td>description</td>
@@ -3809,7 +3809,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
 </tr>
 <tr>
 <td>name</td>
-<td>Payout’s recipient name.</td>
+<td>Payout&#39;s recipient name.</td>
 </tr>
 <tr>
 <td>description</td>
@@ -3906,7 +3906,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf <span cla
 </tr>
 <tr>
 <td>name</td>
-<td>Payout’s recipient name.</td>
+<td>Payout&#39;s recipient name.</td>
 </tr>
 <tr>
 <td>description</td>
@@ -4182,7 +4182,7 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 
 <p>* Only applicable in staging environment.</p>
 <h2 id='v4-tokenization'>Tokenization</h2>
-<p>This feature allows you to exchange for a card’s tokenization from our provider’s PCI DSS certified vault, and use the token to charge your customer later.</p>
+<p>This feature allows you to exchange for a card&#39;s tokenization from our provider&#39;s PCI DSS certified vault, and use the token to charge your customer later.</p>
 <h6 id='v4-tokenization-get-a-payout-payment-gateway-abbreviations-providers'>Providers</h6>
 <table><thead>
 <tr>
@@ -4237,11 +4237,10 @@ curl https://www.billplz.com/api/v4/cards <span class="se">\</span>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="w">  </span><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"card_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xxxx1118"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"expiry"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0521"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mastercard"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"card_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"token"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"authentication_redirect_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://senangpay.my/some_link"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.com/callback_url"</span><span class="w">
   </span><span class="p">}</span><span class="w">
@@ -4291,7 +4290,7 @@ curl -X DELETE https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"card_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xxxx1118"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"card_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1118"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mastercard"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"deleted"</span><span class="w">
@@ -4310,6 +4309,62 @@ curl -X DELETE https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b
 <td>Card&#39;s token.</td>
 </tr>
 </tbody></table>
+<h4 id='v4-tokenization-senangpay-3d-secure-update'>3D Secure Update</h4>
+<p>Billplz will send a POST request to <code>callback_url</code> provided within an hour, regardless the card holder has completed the 3DSecure verification or not. This callback_url will also serve as <code>redirect_url</code> on the client&#39;s side. You are required to redirect every time the 3D secure update is being given regardless of callback or redirect.</p>
+
+<aside class="notice">
+  Acceptable HTTP response status code is within the range of <code>200</code> - <code>308</code>. Responding with other than acceptable range will be considered as failure. 
+</aside>
+
+<blockquote>
+<p>Example request to callback_url:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># POST request sent to callback_url</span>
+curl https://www.example.com/callback <span class="se">\</span>
+  -d <span class="nv">id</span><span class="o">=</span><span class="s2">"a35296ad-b50c-4179-8024-036da00c1aee"</span> <span class="se">\</span>
+  -d <span class="nv">card_number</span><span class="o">=</span><span class="s2">"1118"</span> <span class="se">\</span>
+  -d <span class="nv">provider</span><span class="o">=</span><span class="s2">"mastercard"</span> <span class="se">\</span>
+  -d <span class="nv">token</span><span class="o">=</span><span class="s2">"77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740"</span> <span class="se">\</span>
+  -d <span class="nv">status</span><span class="o">=</span><span class="s2">"active"</span> <span class="se">\</span>
+  -d <span class="nv">checksum</span><span class="o">=</span><span class="s2">"ef5e54a22af0925cba88fab467119742e90262e3646eea1dee3949938daf3a38"</span>
+</code></pre><h6 id='v4-tokenization-senangpay-3d-secure-update-http-request'>HTTP REQUEST</h6>
+<p><code>POST {CALLBACK_URL}</code></p>
+<h6 id='v4-tokenization-senangpay-3d-secure-update-post-parameter'>POST PARAMETER</h6>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>ID that represents card.</td>
+</tr>
+<tr>
+<td>card_number</td>
+<td>Last 4 digits of card&#39;s number.</td>
+</tr>
+<tr>
+<td>token</td>
+<td>Card&#39;s token.</td>
+</tr>
+<tr>
+<td>status</td>
+<td>Status that represents the card&#39;s status, possible values are <code>pending</code>, <code>active</code>, <code>failed</code>, and <code>deleted</code>.</td>
+</tr>
+<tr>
+<td>checksum</td>
+<td>Digital signature computed with posted data and shared XSignature Key.</td>
+</tr>
+</tbody></table>
+<h6 id='v4-tokenization-senangpay-3d-secure-update-checksum'>CHECKSUM</h6>
+<p>Checksum is a digital signature computed with posted data and shared XSignature Key, similar to the X Signature received on Payment Completion.</p>
+
+<p>For security purposes, checksum is inserted into this POST request so that merchants can verify this request comes from Billplz. To learn more on how to calculate this checksum, <a href="#x-signature">click here</a>.</p>
+
+<aside class="success">
+  Check the checksum value for better security.
+</aside>
 <h4 id='v4-tokenization-senangpay-charge-card'>Charge Card</h4>
 <p>Use this API to make bill payment by charging a Visa / Mastercard card with <a href="#v4-tokenization-senangpay-create-card">token generated</a>.</p>
 <h6 id='v4-tokenization-senangpay-charge-card-requirements'>REQUIREMENTS</h6>
@@ -4488,7 +4543,11 @@ curl https://www.billplz.com/api/v4/ocbc_cards/8727fc3a-c04c-4c2b-9b67-947b5cfc2
 </tr>
 </tbody></table>
 <h4 id='v4-tokenization-ocbc-3d-secure-update'>3D Secure Update</h4>
-<p>Billplz will send a POST request to <code>callback_url</code> provided within an hour, regardless the card holder has completed the 3DSecure verification or not. This callback_url will also serve as <code>redirect_url</code> on the client&#39;s side.</p>
+<p>Billplz will send a POST request to <code>callback_url</code> provided within an hour, regardless the card holder has completed the 3DSecure verification or not. This callback_url will also serve as <code>redirect_url</code> on the client&#39;s side. You are required to redirect every time the 3D secure update is being given regardless of callback or redirect.</p>
+
+<aside class="notice">
+  Acceptable HTTP response status code is within the range of <code>200</code> - <code>308</code>. Responding with other than acceptable range will be considered as failure. 
+</aside>
 
 <blockquote>
 <p>Example request to callback_url:</p>
@@ -4518,24 +4577,6 @@ curl https://www.example.com/callback <span class="se">\</span>
 <tr>
 <td>checksum</td>
 <td>Digital signature computed with posted data and shared XSignature Key.</td>
-</tr>
-</tbody></table>
-<h6 id='v4-tokenization-ocbc-3d-secure-update-response-codes'>RESPONSE CODES</h6>
-<p>Based on the response code received as below, you can identify if this POST request to <code>callback_url</code> is a client-side or server-side request. For better user experience, you are expected to redirect the card holder to your success page.</p>
-
-<table><thead>
-<tr>
-<th>Response Code</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>200 - 300</td>
-<td>Server-side - You should update the card&#39;s status.</td>
-</tr>
-<tr>
-<td>301 - 307</td>
-<td>Client-side - You should update the card&#39;s status, and redirect card holder to a success page.</td>
 </tr>
 </tbody></table>
 <h6 id='v4-tokenization-ocbc-3d-secure-update-checksum'>CHECKSUM</h6>
@@ -5209,8 +5250,6 @@ Content-Type: application/json;
 <td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
 </tr>
 </tbody></table>
-<h1 id='changelog'>Changelog</h1>
-<p>Refer to our <a href="https://help.billplz.com/hc/en-us/sections/360003364213">Knowledgebase</a> for changelog.</p>
 
       </div>
       <div class="dark-box">

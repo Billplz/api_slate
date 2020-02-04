@@ -107,7 +107,7 @@ curl https://www.billplz.com/api/v4/webhook_rank \
 
 # Alternatively, you may use header with base64 encoded API Secret Key
 curl https://www.billplz.com/api/v4/webhook_rank \
-  -H "Authorization: NzNlYjU3ZjAtN2Q0ZS00MmI5LWE1NDQtYWVhYzZlNGIwZjgxOg=="
+  -H "Authorization: Basic NzNlYjU3ZjAtN2Q0ZS00MmI5LWE1NDQtYWVhYzZlNGIwZjgxOg=="
 
 ```
 
@@ -2548,7 +2548,7 @@ Webhook Rank has been introduced to ensure callback is running at it's best. The
 > Example request:
 
 ```shell
-# Get a Payout
+# Webhook Rank
 curl https://www.billplz.com/api/v4/webhook_rank \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
 ```

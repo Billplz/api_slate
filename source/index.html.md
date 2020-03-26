@@ -2669,6 +2669,7 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | BP-2C2PU  | UnionPay |
 | BP-OCBC1  | Visa / Mastercard |
 | BP-BST01  | Boost |
+| BP-SGP01  | Senangpay |
 
 \* Only applicable in staging environment.
 
@@ -2680,8 +2681,8 @@ This feature allows you to exchange for a card's tokenization from our provider'
 
 | Provider | Type | Eligibility |
 | --- | --- | --- |
-| Senangpay | 3DS | Priority & Ultimate Members |
-| OCBC | 3DS | Any membership plan including Standard |
+| Senangpay | 3DS | Any paid membership plan |
+| OCBC | 3DS | Any paid membership plan |
 
 ### Senangpay
 
@@ -2696,7 +2697,7 @@ This feature enables you to tokenize 3DS Visa / Mastercard cards to be charged l
 1. Merchant compares the checksum sent, and store card details if they match.
 
 <aside class="notice">
-  This feature won't be enabled by default, and only applicable to Priority & Ultimate members. Email <a href="mailto:team@billplz.com?subject=Senangpay_Tokenization">team@billplz.com</a> for assistance.
+  This feature won't be enabled by default, and only applicable to paid plan members. Email <a href="mailto:team@billplz.com?subject=Senangpay_Tokenization">team@billplz.com</a> for assistance.
 </aside>
 
 #### Create Card
@@ -2787,7 +2788,7 @@ curl -X DELETE https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b
 Billplz will send a POST request to `callback_url` provided within an hour, regardless the card holder has completed the 3DSecure verification or not. This callback_url will also serve as `redirect_url` on the client's side. You are required to redirect every time the 3D secure update is being given regardless of callback or redirect.
 
 <aside class="notice">
-  Acceptable HTTP response status code is within the range of <code>200</code> - <code>308</code>. Responding with other than acceptable range will be considered as failure. 
+  Acceptable HTTP response status code is within the range of <code>200</code> - <code>308</code>. Responding with other than acceptable range will be considered as failure.
 </aside>
 
 > Example request to callback_url:
@@ -2886,7 +2887,7 @@ This feature enables merchants with OCBC business account to tokenize 3DS Visa /
 1. Billplz sends POST request to callback_url specified by merchant. If card holder fails to complete the verification process within an hour, Billplz will send a POST request with failed Card object. Merchants are expected to set up this callback_url to get and update the result of card's [3DSecure verification](#v4-tokenization-ocbc-3d-secure-update).
 
 <aside class="notice">
-  This feature won't be enabled by default, and only applicable to members with OCBC business accounts. Email <a href="mailto:team@billplz.com?subject=OCBC_Tokenization">team@billplz.com</a> for assistance.
+  This feature won't be enabled by default, and only applicable to members with OCBC business accounts and with paid membership plans. Email <a href="mailto:team@billplz.com?subject=OCBC_Tokenization">team@billplz.com</a> for assistance.
 </aside>
 <aside class="warning">
   You will need to comply with PCI-DSS to be able to store card details. If you store without meeting the PCI-DSS compliance, you do it at your own risk of being sued.
@@ -2994,7 +2995,7 @@ curl https://www.billplz.com/api/v4/ocbc_cards/8727fc3a-c04c-4c2b-9b67-947b5cfc2
 Billplz will send a POST request to `callback_url` provided within an hour, regardless the card holder has completed the 3DSecure verification or not. This callback_url will also serve as `redirect_url` on the client's side. You are required to redirect every time the 3D secure update is being given regardless of callback or redirect.
 
 <aside class="notice">
-  Acceptable HTTP response status code is within the range of <code>200</code> - <code>308</code>. Responding with other than acceptable range will be considered as failure. 
+  Acceptable HTTP response status code is within the range of <code>200</code> - <code>308</code>. Responding with other than acceptable range will be considered as failure.
 </aside>
 
 > Example request to callback_url:

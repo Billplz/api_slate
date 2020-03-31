@@ -3044,7 +3044,7 @@ Use this API to make bill payment by charging a 3DS Visa / Mastercard card with 
 
 ```shell
 # Make bill payment with token
-curl https://www.billplz.com/api/v4/bills/awyzmy0m/charge \
+curl https://www.billplz.com/api/v4/bills/awyzmy0m/ocbc_charge \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
   -d token="77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740" \
   -d card_id="8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6"

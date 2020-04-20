@@ -617,7 +617,7 @@ curl https://www.billplz.com/api/v3/open_collections \
 | Parameter | Description |
 | --- | --- |
 | title | The collection title. It's showing up on the payment form. String format. (Max of 50 characters) |
-| description | The collection description. Will be displayed on payment form. String format. (Max of 200 characters) |
+| description | The collection description. Will be displayed on payment form. String format. (Max of 250 characters) |
 |amount | A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00) <br> Required if fixed_amount is true; Ignored if fixed_amount is false|
 
 ###### OPTIONAL ARGUMENTS
@@ -1024,7 +1024,7 @@ curl https://www.billplz.com/api/v3/bills \
 | name | Bill's recipient name. Useful for identification on recipient part. (Max of 255 characters). |
 | amount | A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
 | callback_url | Web hook URL to be called after payment's transaction completed. It will POST a Bill object. |
-| description | The bill's description. Will be displayed on bill template. String format (Max of 200 characters). |
+| description | The bill's description. Will be displayed on bill template. String format (Max of 250 characters). |
 
 ###### OPTIONAL ARGUMENTS
 
@@ -2024,7 +2024,7 @@ curl https://www.billplz.com/api/v4/open_collections \
 | Parameter | Description |
 | --- | --- |
 | title | The collection title. Will be displayed on payment form. String format (Max of 50 characters). |
-| description | The collection description. Will be displayed on payment form. String format (Max of 200 characters). |
+| description | The collection description. Will be displayed on payment form. String format (Max of 250 characters). |
 | amount | A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br>Required if `fixed_amount` is `true`; Ignored if `fixed_amount` is `false`. |
 
 ###### OPTIONAL ARGUMENTS

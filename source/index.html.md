@@ -69,7 +69,7 @@ To start using the API, you would have to create a Collection. Then the payment 
 1. Billplz API returns Bill's URL.
 1. Your site redirects the customer to Bill's URL.
 1. The customer makes payment via payment option of choice.
-1. Billplz sends a server-side update \*\***at best effort** (Payment Completion) to your site upon payment failure or success. (Basic Callback URL / X Signature Callback URL depending on your configuration) ***[your backend server should capture the transaction update at this point]*** *refer to [X Signature Callback Url](#payment-completion-x-signature-callback-url)*.
+1. Billplz sends a server-side update to your site upon payment failure or success. (Basic Callback URL / X Signature Callback URL depending on your configuration) ***[your backend server should capture the transaction update at this point]*** *refer to [X Signature Callback Url](#payment-completion-x-signature-callback-url)*.
 1. Billplz redirects (Payment Completion) the customer back to your site if `redirect_url` is not empty (Basic Redirect URL / X Signature Redirect URL depending on your configuration)
 ***[your server should capture the transaction update at this point and give your user an instant reflection on the page loaded]*** *refer to [X Signature Redirect Url](#payment-completion-x-signature-redirect-url)*
 or,
@@ -82,7 +82,7 @@ The customer will see Billplz receipt if `redirect_url` is not present.
 1. Billplz API returns Bill's URL.
 1. Your site redirects the customer to Bill's URL.
 1. The customer makes payment via payment option of choice.
-1. Billplz sends a server-side update \*\*at best effort (Payment Completion) to your site upon payment failure or success. (Basic Callback URL / X Signature Callback URL depending on your configuration)
+1. Billplz sends a server-side update to your site upon payment failure or success. (Basic Callback URL / X Signature Callback URL depending on your configuration)
 ***[your backend server should capture the transaction update at this point]*** *refer to [X Signature Callback Url](#payment-completion-x-signature-callback-url)*.
 Billplz does not redirects (Payment Completion) the customer back to your site, `redirect_url` (due to many possibilities, app hang, browser closed, disconnected, etc)
 
@@ -3199,7 +3199,7 @@ Billplz server also expecting the end point server responds with status code of 
 
 In a case of either the end point server does not able to respond within the limit seconds (20 secs) or does not respond with 200 status code, the callback will consider as failure.
 
-On failure, the job is scheduled again in 15 minutes * N, where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours after 4th attempt.
+On failure, the job is scheduled again in 15 minutes * N + (random 0-300 seconds), where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours + randome (0-300 seconds) after 4th attempt.
 
 Billplz will attempt for maximum of 5 times and the callback will be removed from the system queue permanently after that.
 
@@ -3323,7 +3323,7 @@ Billplz server also expecting the end point server responds with status code of 
 
 In a case of either the end point server does not able to respond within the limit seconds (20 secs) or does not respond with 200 status code, the callback will consider as failure.
 
-On failure, the job is scheduled again in 15 minutes \* N, where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours after 4th attempt.
+On failure, the job is scheduled again in 15 minutes * N + (random 0-300 seconds), where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours + randome (0-300 seconds) after 4th attempt.
 
 Assuming the first callback is initiated at 1300. The second attempt will be at 1315. The third attempt will be at 1330. The fourth attempt will be at 1345. The fifth attempt will be at 1345 next day.
 

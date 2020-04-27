@@ -3201,6 +3201,8 @@ In a case of either the end point server does not able to respond within the lim
 
 On failure, the job is scheduled again in 15 minutes * N + (random 0-300 seconds), where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours + random (0-300 seconds) after 4th attempt.
 
+Assuming the first callback is initiated at 13:00:00. The second attempt will be at 13:15:00 + N seconds. The third attempt will be at 13:30:02 + N seconds. The fourth attempt will be at 13:45:05 + N seconds. The fifth attempt will be at 13:45:07+ N seconds next day.
+
 Billplz will attempt for maximum of 5 times and the callback will be removed from the system queue permanently after that.
 
 <aside class="warning">
@@ -3325,7 +3327,7 @@ In a case of either the end point server does not able to respond within the lim
 
 On failure, the job is scheduled again in 15 minutes * N + (random 0-300 seconds), where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours + random (0-300 seconds) after 4th attempt.
 
-Assuming the first callback is initiated at 1300. The second attempt will be at 1315. The third attempt will be at 1330. The fourth attempt will be at 1345. The fifth attempt will be at 1345 next day.
+Assuming the first callback is initiated at 13:00:00. The second attempt will be at 13:15:00 + N seconds. The third attempt will be at 13:30:02 + N seconds. The fourth attempt will be at 13:45:05 + N seconds. The fifth attempt will be at 13:45:07+ N seconds next day.
 
 Billplz will attempt for maximum of 5 times and the callback will be removed from the system queue permanently after that.
 

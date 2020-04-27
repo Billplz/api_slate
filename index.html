@@ -538,7 +538,7 @@
 <li>Billplz API returns Bill&#39;s URL.</li>
 <li>Your site redirects the customer to Bill&#39;s URL.</li>
 <li>The customer makes payment via payment option of choice.</li>
-<li>Billplz sends a server-side update **<strong>at best effort</strong> (Payment Completion) to your site upon payment failure or success. (Basic Callback URL / X Signature Callback URL depending on your configuration) <strong><em>[your backend server should capture the transaction update at this point]</em></strong> <em>refer to <a href="#payment-completion-x-signature-callback-url">X Signature Callback Url</a></em>.</li>
+<li>Billplz sends a server-side update to your site upon payment failure or success. (Basic Callback URL / X Signature Callback URL depending on your configuration) <strong><em>[your backend server should capture the transaction update at this point]</em></strong> <em>refer to <a href="#payment-completion-x-signature-callback-url">X Signature Callback Url</a></em>.</li>
 <li>Billplz redirects (Payment Completion) the customer back to your site if <code>redirect_url</code> is not empty (Basic Redirect URL / X Signature Redirect URL depending on your configuration)
 <strong><em>[your server should capture the transaction update at this point and give your user an instant reflection on the page loaded]</em></strong> <em>refer to <a href="#payment-completion-x-signature-redirect-url">X Signature Redirect Url</a></em>
 or,
@@ -552,7 +552,7 @@ The customer will see Billplz receipt if <code>redirect_url</code> is not presen
 <li>Billplz API returns Bill&#39;s URL.</li>
 <li>Your site redirects the customer to Bill&#39;s URL.</li>
 <li>The customer makes payment via payment option of choice.</li>
-<li>Billplz sends a server-side update **at best effort (Payment Completion) to your site upon payment failure or success. (Basic Callback URL / X Signature Callback URL depending on your configuration)
+<li>Billplz sends a server-side update to your site upon payment failure or success. (Basic Callback URL / X Signature Callback URL depending on your configuration)
 <strong><em>[your backend server should capture the transaction update at this point]</em></strong> <em>refer to <a href="#payment-completion-x-signature-callback-url">X Signature Callback Url</a></em>.
 Billplz does not redirects (Payment Completion) the customer back to your site, <code>redirect_url</code> (due to many possibilities, app hang, browser closed, disconnected, etc)</li>
 </ol>
@@ -4800,7 +4800,7 @@ Content-Type: application/x-www-form-urlencoded
 
 <p>In a case of either the end point server does not able to respond within the limit seconds (20 secs) or does not respond with 200 status code, the callback will consider as failure.</p>
 
-<p>On failure, the job is scheduled again in 15 minutes * N, where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours after 4th attempt.</p>
+<p>On failure, the job is scheduled again in 15 minutes * N + (random 0-300 seconds), where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours + randome (0-300 seconds) after 4th attempt.</p>
 
 <p>Billplz will attempt for maximum of 5 times and the callback will be removed from the system queue permanently after that.</p>
 
@@ -4961,7 +4961,7 @@ Content-Type: application/x-www-form-urlencoded
 
 <p>In a case of either the end point server does not able to respond within the limit seconds (20 secs) or does not respond with 200 status code, the callback will consider as failure.</p>
 
-<p>On failure, the job is scheduled again in 15 minutes * N, where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours after 4th attempt.</p>
+<p>On failure, the job is scheduled again in 15 minutes * N + (random 0-300 seconds), where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours + randome (0-300 seconds) after 4th attempt.</p>
 
 <p>Assuming the first callback is initiated at 1300. The second attempt will be at 1315. The third attempt will be at 1330. The fourth attempt will be at 1345. The fifth attempt will be at 1345 next day.</p>
 

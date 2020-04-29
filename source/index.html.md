@@ -2242,6 +2242,132 @@ curl https://www.billplz.com/api/v4/open_collections?page=2&status=active \
 | page | Up to 15 open collections will be returned in a single API call per specified page. Default to **1** if not present. |
 | status | Parameter to filter open collection's status, valid value are `active` and `inactive`. |
 
+### Customer Receipt Delivery
+By default, all collections follow the Global Customer Receipt Notification configuration in your Account settings.
+
+You can override the Global configuration on individual collections by calling [activate](#v4-collections-customer-receipt-delivery-activate) and [deactivate](#v4-collections-customer-receipt-delivery-deactivate).
+
+#### Activate
+If you wish to ignore the Global configuration and always send a receipt email to your customers, you may activate it per individual collection by calling to this API.
+
+> Example request:
+
+```shell
+# Activate a collection's customer receipt delivery
+curl -X POST \
+https://www.billplz.com/api/v4/collections/qag4fe_o6/customer_receipt_delivery/activate \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/collections/{COLLECTION_ID}/customer_receipt_delivery/activate`
+
+###### URL PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| COLLECTION_ID | Collection ID returned in Collection object. |
+
+#### Deactivate
+If you wish to ignore the Global configuration and always not to send a receipt email to your customers, you may deactivate it per individual collection by calling to this API.
+
+> Example request:
+
+```shell
+# Deactivate a collection's customer receipt delivery
+curl -X POST \
+https://www.billplz.com/api/v4/collections/qag4fe_o6/customer_receipt_delivery/deactivate \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/collections/{COLLECTION_ID}/customer_receipt_delivery/deactivate`
+
+###### URL PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| COLLECTION_ID | Collection ID returned in Collection object. |
+
+#### Set Global
+Use this API to set your individual collections to follow Global Customer Receipt Notification configuration if you want your collection to send the email base on Global configuration. By default, all collections are following Global configuration.
+
+> Example request:
+
+```shell
+# Set a collection's customer receipt delivery to Global
+curl -X POST \
+https://www.billplz.com/api/v4/collections/qag4fe_o6/customer_receipt_delivery/global \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/collections/{COLLECTION_ID}/customer_receipt_delivery/global`
+
+###### URL PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| COLLECTION_ID | Collection ID returned in Collection object. |
+
+#### Get Status
+Use this API to get a Collection's Customer Receipt Notification status.
+
+> Example request:
+
+```shell
+# Get a collection's customer receipt delivery
+curl https://www.billplz.com/api/v4/collections/qag4fe_o6/customer_receipt_delivery \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{
+  "id": "qag4fe_o6",
+  "customer_receipt_delivery": "global"
+}
+```
+
+###### HTTP REQUEST
+
+`GET https://www.billplz.com/api/v4/collections/{COLLECTION_ID}/customer_receipt_delivery`
+
+###### URL PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| COLLECTION_ID | Collection ID returned in Collection object. |
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents a collection. |
+| customer_receipt_delivery | Collection's Customer Receipt Notification status, it is either `active`, `inactive` or `global`. |
+
 ## Payout Flow
 
 Payout allows you to make payment to any account bank registered in Malaysia. Since Bank doesn't provide way to programatically make payment to bank account, you can achieve that by using our Payout API.

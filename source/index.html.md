@@ -2047,7 +2047,7 @@ curl https://www.billplz.com/api/v4/open_collections \
 | split_payments[][variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present. |
 | split_payments[][stack_order] | Integer format that defines the sequence of the split rule recipients. <br>This field is required and must be in correct order starts from 0 and increment by 1 subsequently if you want to set a split rule. <br>This input is crucial to determine a precise recipient's order. |
 | split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
-| redirect_uri | URL to redirect the customer after payment completed. It will do a GET to redirect_uri together with bill's status and ID. |
+| redirect_uri | URL to redirect the customer after payment <i>(completed or failed)</i>. Billplz will do a GET to redirect_uri, with bill's `ID` appended to the URL <i>(additional `paid`, `paid_at` and `x_signature` if <a href="#x-signature">x_signature</a> is enabled)</i>. |
 
 ###### RESPONSE PARAMETER
 
@@ -2069,7 +2069,7 @@ tax | Tax rate in positive integer format. |
 | split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`.|
 | split_payments | Array that contains all split rule recipients in hash format. <br>`email` in hash represents the recipient's email. <br>`fixed_cut` in hash represents the recipient's fixed cut in smallest and positive currency unit. <br>`variable_cut` is the recipient's percentage cut in positive integer format. <br>`stack_order` is the order of the recipient defined in split rules. |
 | url | URL to the collection. |
-| redirect_uri | URL to redirect the customer after payment completed. It will do a GET to redirect_uri together with bill's status and ID. |
+| redirect_uri | URL to redirect the customer after payment <i>(completed or failed)</i>. Billplz will do a GET to redirect_uri, with bill's `ID` appended to the URL <i>(additional `paid`, `paid_at` and `x_signature` if <a href="#x-signature">x_signature</a> is enabled)</i>. |
 
 ### Get an Open Collection
 
@@ -2136,7 +2136,7 @@ curl https://www.billplz.com/api/v4/open_collections/0pp87t_6 \
 | split_payments | Array that contains all split rule recipients in hash format. <br>`email` in hash represents the recipient's email. <br>`fixed_cut` in hash represents the recipient's fixed cut in smallest and positive currency unit. <br>`variable_cut` is the recipient's percentage cut in positive integer format. <br>`stack_order` is the order of the recipient defined in split rules.
 | url | URL to the collection. |
 | status | Collection's status, it is either `active` and `inactive`.|
-| redirect_uri | URL to redirect the customer after payment completed. It will do a GET to redirect_uri together with bill's status and ID. |
+| redirect_uri | URL to redirect the customer after payment <i>(completed or failed)</i>. Billplz will do a GET to redirect_uri, with bill's `ID` appended to the URL <i>(additional `paid`, `paid_at` and `x_signature` if <a href="#x-signature">x_signature</a> is enabled)</i>. |
 
 <aside class="notice">
   It will return 404 status code, and a message of RecordNotFound if the open collection you trying to query is not exists.

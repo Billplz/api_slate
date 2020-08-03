@@ -1641,7 +1641,7 @@ curl https://www.billplz.com/api/v3/fpx_banks \
 | BKRM0602 | Bank Rakyat |
 | BMMB0341 | Bank Muamalat |
 | BSN0601 | BSN |
-| CIT0217 | Citibank Berhad |
+| CIT0219 | Citibank Berhad |
 | HLB0224 | Hong Leong Bank |
 | HSBC0223 | HSBC Bank |
 | KFH0346 | Kuwait Finance House |
@@ -1653,6 +1653,7 @@ curl https://www.billplz.com/api/v3/fpx_banks \
 | RHB0218 | RHB Now |
 | SCB0216 | Standard Chartered |
 | UOB0226 | UOB Bank |
+| UOB0229* | UOB Bank |
 | TEST0001\* | Test 0001 |
 | TEST0002\* | Test 0002 |
 | TEST0003\* | Test 0003 |
@@ -2772,13 +2773,14 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | --- | --- |
 | ABMB0212 | Alliance Bank |
 | ABB0233 | Affin Bank |
+| ABB0234* | Affin Bank |
 | AMBB0209 | AmBank |
 | BCBB0235 | CIMB Clicks |
 | BIMB0340 | Bank Islam |
 | BKRM0602 | Bank Rakyat |
 | BMMB0341 | Bank Muamalat |
 | BSN0601 | BSN |
-| CIT0217 | Citibank Berhad |
+| CIT0219 | Citibank |
 | HLB0224 | Hong Leong Bank |
 | HSBC0223 | HSBC Bank |
 | KFH0346 | Kuwait Finance House |
@@ -2790,6 +2792,7 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | RHB0218 | RHB Now |
 | SCB0216 | Standard Chartered |
 | UOB0226 | UOB Bank |
+| UOB0229* | UOB Bank |
 | TEST0001* | Test 0001 |
 | TEST0002* | Test 0002 |
 | TEST0003* | Test 0003 |

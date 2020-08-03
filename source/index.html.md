@@ -1635,6 +1635,7 @@ curl https://www.billplz.com/api/v3/fpx_banks \
 | --- | --- |
 | ABMB0212 | Alliance Bank |
 | ABB0233 | Affin Bank |
+| ABB0234* | Affin Bank |
 | AMBB0209 | AmBank |
 | BCBB0235 | CIMB Clicks |
 | BIMB0340 | Bank Islam |

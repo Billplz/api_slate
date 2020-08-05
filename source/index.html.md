@@ -2532,7 +2532,8 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
   "status": "processing",
   "notification": false,
   "recipient_notification": true,
-  "total": "2000"
+  "total": "2000",
+  "reference_id": null
 }
 ```
 
@@ -2551,7 +2552,8 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
   -d total=2000 \
   -d email="recipient@email.com" \
   -d notification=true \
-  -d recipient_notification=false
+  -d recipient_notification=false \
+  -d reference_id="payout123123"
 ```
 
 > Response:
@@ -2565,11 +2567,12 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
   "identity_number": 820808062202 ,
   "name": "Michael Yap",
   "description": "Maecenas eu placerat ante.",
-  "email" :"recipient@email.com",
+  "email":"recipient@email.com",
   "status": "processing",
   "notification": true,
   "recipient_notification": false,
-  "total": "2000"
+  "total": "2000",
+  "reference_id": "payout123123"
 }
 ```
 
@@ -2596,6 +2599,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | email | The email address of recipient (it default to sender's email if not present). <br>A receipt will be sent to this email once the Payout has been processed. |
 | notification | Boolean value. As a sender, you can opt-in for email notification by setting this to `true`. Sender will receive email once a Payout has been processed. Default value is `false`. |
 | recipient_notification | Boolean value. If this is set to `true`, recipient of the Payout will receive email notification once the Payout has been processed. Default value is `true`. Set to false if you do not like the recipient to receive any email notifications. |
+| reference_id | Payout's unique reference ID scoped by [Payout Collection](#v4-payout-collections). This helps maintain data integrity by ensuring that no two rows of data in a payout collection have identical reference_id value. Useful to prevent unintentional payout creation. (Max of 255 characters).|
 
 ###### RESPONSE PARAMETER
 
@@ -2613,6 +2617,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | notification | Boolean value. Sender will receive email notification if this is `true`. |
 | recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
 | total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>A standard `RM1.50` or `RM0.50` or `RM0.00` fee would be charged from your credits when you successfully created a Payout request;<br>while the total of each Payout will be deducted from your Payout limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
+| reference_id | Payout's reference ID. Useful for identification on recipient part.|
 
 ### Get a Payout
 
@@ -2641,7 +2646,8 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf \
   "status": "processing",
   "notification": false,
   "recipient_notification": true,
-  "total": "2000"
+  "total": "2000",
+  "reference_id": null
 }
 ```
 
@@ -2671,6 +2677,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf \
 | notification | Boolean value. Sender will receive email notification if this is `true`. |
 | recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
 | total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| reference_id | Payout's reference ID. Useful for identification on recipient part.|
 
 ## Webhook Rank
 

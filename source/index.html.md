@@ -3264,6 +3264,16 @@ Below is the final x_signature value using above source string with 'abc123cde45
   Elements in the source string should not contain <code>x_signature</code>.
 </aside>
 
+### Extra Payment Completion Information
+
+To get `transaction_id` and `transaction_state`, enable **Extra Payment Completion Information**.
+
+![Activate the extra payment completion information.](x_spc_transaction_setting.png)
+
+<aside class="notice">
+  You are advised to activate this option when integrating with FPX B2B banks for better user experience.
+</aside>
+
 # Payment Completion
 
 ## Basic Callback Url
@@ -3439,6 +3449,34 @@ Content-Type: application/x-www-form-urlencoded
 
 > Body formatted for readability.
 
+> Example Server Side Request with transaction from Billplz:
+
+```
+POST /webhook/ HTTP/1.1
+Connection: close
+Host: 127.0.0.1
+Content-Length: 376
+Content-Type: application/x-www-form-urlencoded
+
+  id="nzewyfqi"
+  &collection_id="bvgo7ueb"
+  &paid="true"
+  &state="paid"
+  &amount="100"
+  &paid_amount="100"
+  &due_at="2020-8-7"
+  &email="api@billplz.com"
+  &mobile=""
+  &name="WILL"
+  &url="http://www.billplz.test:3000/bills/nzewyfqi"
+  &paid_at="2020-08-07 13:52:39 +0800"
+  &transaction_id="A1DC3EDF1EAC"
+  &transaction_state="completed"
+  &x_signature="4e700afbb04d4fb370aa338a28ea7e1c57de907ee49ad486f564524963bea8a9"
+```
+
+> Body formatted for readability.
+
 ###### HTTP REQUEST
 
 `POST {CALLBACK_URL}`
@@ -3459,6 +3497,8 @@ Content-Type: application/x-www-form-urlencoded
 | name | Recipient's name. |
 | URL | URL to the bill page. |
 | paid_at | Date time when the bill was paid, in format `YYYY-MM-DD HH:MM:SS TimeZone`. Example, `2015-03-09 16:23:59 +0800`. |
+| transaction_id |  ID that represent the transaction. (Enable `Extra Payment Completion Information` option to receive this parameter) |
+| transaction_status | Status that representing the transaction's status, possible statuses are `pending`, `completed` and `failed`. (Enable `Extra Payment Completion Information` option to receive this parameter) |
 | x_signature | Digital signature computed with posted data and shared XSignature Key. |
 
 Callback request will be timeout in 20 seconds.
@@ -3611,6 +3651,8 @@ To verify that the request came from Billplz, compute the HMAC-SHA256 digest acc
 | billplz[id] | ID that represents bill. |
 | billplz[paid] | Boolean value to tell if a bill has paid. It will return `false` for `due` and `deleted` bills; `true` for paid bills. |
 | billplz[paid_at] | Date time when the bill was paid, in format `YYYY-MM-DD HH:MM:SS TimeZone`. Example, `2017-01-04 13:10:45 +0800`. |
+| billplz[transaction_id] |  ID that represent the transaction. (Enable `Extra Payment Completion Information` option to receive this parameter) |
+| billplz[transaction_status] | Status that representing the transaction's status, possible statuses are `pending`, `completed` and `failed`. (Enable `Extra Payment Completion Information` option to receive this parameter) |
 | billplz[x_signature] | Digital signature computed with passing parameters and shared XSignature Key. |
 
 ###### SAMPLE HTTP REQUEST FROM X SIGNATURE REDIRECT URL FEATURE

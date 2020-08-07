@@ -3266,7 +3266,7 @@ Below is the final x_signature value using above source string with 'abc123cde45
 
 ### Extra Payment Completion Information
 
-To get `transaction_id` and `transaction_state`, enable **Extra Payment Completion Information**.
+To get `transaction_id` and `transaction_status`, enable **Extra Payment Completion Information**.
 
 ![Activate the extra payment completion information.](x_spc_transaction_setting.png)
 
@@ -3458,7 +3458,7 @@ Host: 127.0.0.1
 Content-Length: 376
 Content-Type: application/x-www-form-urlencoded
 
-  id="nzewyfqi"
+  id="pjpetpdy"
   &collection_id="bvgo7ueb"
   &paid="true"
   &state="paid"
@@ -3468,11 +3468,11 @@ Content-Type: application/x-www-form-urlencoded
   &email="api@billplz.com"
   &mobile=""
   &name="WILL"
-  &url="http://www.billplz.test:3000/bills/nzewyfqi"
-  &paid_at="2020-08-07 13:52:39 +0800"
-  &transaction_id="A1DC3EDF1EAC"
-  &transaction_state="completed"
-  &x_signature="4e700afbb04d4fb370aa338a28ea7e1c57de907ee49ad486f564524963bea8a9"
+  &url="http://www.billplz.test:3000/bills/pjpetpdy"
+  &paid_at="2020-08-07 15:08:19 +0800"
+  &transaction_id="711044E05418"
+  &transaction_status="completed"
+  &x_signature="b5ca81d0f1b87ab3b17580236735c68af92936de9aaa588751a4371ac4944a56"
 ```
 
 > Body formatted for readability.

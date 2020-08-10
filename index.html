@@ -378,6 +378,23 @@
                           <li>
                             <a href="#v4-collections-get-open-collection-index" class="toc-h3 toc-link" data-title="Get Open Collection Index">Get Open Collection Index</a>
                           </li>
+                          <li>
+                            <a href="#v4-collections-customer-receipt-delivery" class="toc-h3 toc-link" data-title="Customer Receipt Delivery">Customer Receipt Delivery</a>
+                              <ul class="toc-list-h4">
+                                  <li>
+                                    <a href="#v4-collections-customer-receipt-delivery-activate" class="toc-h4 toc-link" data-title="Activate">Activate</a>
+                                  </li>
+                                  <li>
+                                    <a href="#v4-collections-customer-receipt-delivery-deactivate" class="toc-h4 toc-link" data-title="Deactivate">Deactivate</a>
+                                  </li>
+                                  <li>
+                                    <a href="#v4-collections-customer-receipt-delivery-set-global" class="toc-h4 toc-link" data-title="Set Global">Set Global</a>
+                                  </li>
+                                  <li>
+                                    <a href="#v4-collections-customer-receipt-delivery-get-status" class="toc-h4 toc-link" data-title="Get Status">Get Status</a>
+                                  </li>
+                              </ul>
+                          </li>
                       </ul>
                   </li>
                   <li>
@@ -2609,6 +2626,10 @@ curl https://www.billplz.com/api/v3/fpx_banks <span class="se">\</span>
 <td>Affin Bank</td>
 </tr>
 <tr>
+<td>ABB0234*</td>
+<td>Affin Bank</td>
+</tr>
+<tr>
 <td>AMBB0209</td>
 <td>AmBank</td>
 </tr>
@@ -2633,7 +2654,7 @@ curl https://www.billplz.com/api/v3/fpx_banks <span class="se">\</span>
 <td>BSN</td>
 </tr>
 <tr>
-<td>CIT0217</td>
+<td>CIT0219</td>
 <td>Citibank Berhad</td>
 </tr>
 <tr>
@@ -2678,6 +2699,10 @@ curl https://www.billplz.com/api/v3/fpx_banks <span class="se">\</span>
 </tr>
 <tr>
 <td>UOB0226</td>
+<td>UOB Bank</td>
+</tr>
+<tr>
+<td>UOB0229*</td>
 <td>UOB Bank</td>
 </tr>
 <tr>
@@ -3066,7 +3091,8 @@ curl https://www.billplz.com/api/v4/open_collections <span class="se">\</span>
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"split_header"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"split_payments"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-  </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.billplz.com/0pp87t_6"</span><span class="w">
+  </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.billplz.com/0pp87t_6"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"redirect_uri"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
@@ -3088,7 +3114,8 @@ curl https://www.billplz.com/api/v4/open_collections <span class="se">\</span>
   -F <span class="nv">split_header</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
   -F split_payments[][email]<span class="o">=</span><span class="s2">"verified@account.com"</span> <span class="se">\</span>
   -F split_payments[][variable_cut]<span class="o">=</span>20 <span class="se">\</span>
-  -F split_payments[][stack_order]<span class="o">=</span>0
+  -F split_payments[][stack_order]<span class="o">=</span>0 <span class="se">\</span>
+  -F <span class="nv">redirect_uri</span><span class="o">=</span><span class="s2">"http://www.test.com"</span>
 </code></pre>
 <blockquote>
 <p>Response:</p>
@@ -3119,7 +3146,8 @@ curl https://www.billplz.com/api/v4/open_collections <span class="se">\</span>
       </span><span class="s2">"stack_order"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.billplz.com/0pp87t_6"</span><span class="w">
+  </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.billplz.com/0pp87t_6"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"redirect_uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://www.test.com"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h6 id='v4-collections-create-an-open-collection-fpx-bank-abbreviations-http-request'>HTTP REQUEST</h6>
 <p><code>POST https://www.billplz.com/api/v4/open_collections</code></p>
@@ -3202,6 +3230,10 @@ curl https://www.billplz.com/api/v4/open_collections <span class="se">\</span>
 <td>split_header</td>
 <td>Boolean value. All bill and receipt templates will show split rule recipient&#39;s infographic if this was set to <code>true</code>.</td>
 </tr>
+<tr>
+<td>redirect_uri</td>
+<td>URL to redirect the customer after payment <i>(completed or failed)</i>. Billplz will do a GET to redirect_uri, with bill&#39;s <code>ID</code> appended to the URL <i>(additional <code>paid</code>, <code>paid_at</code> and <code>x_signature</code> if <a href="#x-signature">x_signature</a> is enabled)</i>.</td>
+</tr>
 </tbody></table>
 <h6 id='v4-collections-create-an-open-collection-fpx-bank-abbreviations-response-parameter'>RESPONSE PARAMETER</h6>
 <table><thead>
@@ -3274,6 +3306,10 @@ curl https://www.billplz.com/api/v4/open_collections <span class="se">\</span>
 <td>url</td>
 <td>URL to the collection.</td>
 </tr>
+<tr>
+<td>redirect_uri</td>
+<td>URL to redirect the customer after payment <i>(completed or failed)</i>. Billplz will do a GET to redirect_uri, with bill&#39;s <code>ID</code> appended to the URL <i>(additional <code>paid</code>, <code>paid_at</code> and <code>x_signature</code> if <a href="#x-signature">x_signature</a> is enabled)</i>.</td>
+</tr>
 </tbody></table>
 <h3 id='v4-collections-get-an-open-collection'>Get an Open Collection</h3>
 <p>Use this API to query your open collection record.</p>
@@ -3308,7 +3344,8 @@ curl https://www.billplz.com/api/v4/open_collections/0pp87t_6 <span class="se">\
   </span><span class="s2">"split_header"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"split_payments"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
   </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.billplz.com/0pp87t_6"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"redirect_uri"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h6 id='v4-collections-get-an-open-collection-fpx-bank-abbreviations-http-request'>HTTP REQUEST</h6>
 <p><code>GET https://www.billplz.com/api/v4/open_collections/{COLLECTION_ID}</code></p>
@@ -3387,6 +3424,10 @@ curl https://www.billplz.com/api/v4/open_collections/0pp87t_6 <span class="se">\
 <td>status</td>
 <td>Collection&#39;s status, it is either <code>active</code> and <code>inactive</code>.</td>
 </tr>
+<tr>
+<td>redirect_uri</td>
+<td>URL to redirect the customer after payment <i>(completed or failed)</i>. Billplz will do a GET to redirect_uri, with bill&#39;s <code>ID</code> appended to the URL <i>(additional <code>paid</code>, <code>paid_at</code> and <code>x_signature</code> if <a href="#x-signature">x_signature</a> is enabled)</i>.</td>
+</tr>
 </tbody></table>
 
 <aside class="notice">
@@ -3434,7 +3475,8 @@ curl https://www.billplz.com/api/v4/open_collections <span class="se">\</span>
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.billplz.com/0pp87t_6"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"redirect_uri"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
   </span><span class="p">}],</span><span class="w">
   </span><span class="s2">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -3478,7 +3520,8 @@ curl https://www.billplz.com/api/v4/open_collections?page<span class="o">=</span
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
     </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.billplz.com/0pp87t_6"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"redirect_uri"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
   </span><span class="p">}],</span><span class="w">
   </span><span class="s2">"page"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -3498,6 +3541,144 @@ curl https://www.billplz.com/api/v4/open_collections?page<span class="o">=</span
 <tr>
 <td>status</td>
 <td>Parameter to filter open collection&#39;s status, valid value are <code>active</code> and <code>inactive</code>.</td>
+</tr>
+</tbody></table>
+<h3 id='v4-collections-customer-receipt-delivery'>Customer Receipt Delivery</h3>
+<p>By default, all collections follow the Global Customer Receipt Notification configuration in your Account settings.</p>
+
+<p>You can override the Global configuration on individual collections by calling <a href="#v4-collections-customer-receipt-delivery-activate">activate</a> and <a href="#v4-collections-customer-receipt-delivery-deactivate">deactivate</a>.</p>
+<h4 id='v4-collections-customer-receipt-delivery-activate'>Activate</h4>
+<p>If you wish to ignore the Global configuration and always send a receipt email to your customers, you may activate it per individual collection by calling to this API.</p>
+
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Activate a collection's customer receipt delivery</span>
+curl -X POST <span class="se">\</span>
+https://www.billplz.com/api/v4/collections/qag4fe_o6/customer_receipt_delivery/activate <span class="se">\</span>
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{}</span><span class="w">
+</span></code></pre><h6 id='v4-collections-customer-receipt-delivery-activate-http-request'>HTTP REQUEST</h6>
+<p><code>POST https://www.billplz.com/api/v4/collections/{COLLECTION_ID}/customer_receipt_delivery/activate</code></p>
+<h6 id='v4-collections-customer-receipt-delivery-activate-url-parameter'>URL PARAMETER</h6>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>COLLECTION_ID</td>
+<td>Collection ID returned in Collection object.</td>
+</tr>
+</tbody></table>
+<h4 id='v4-collections-customer-receipt-delivery-deactivate'>Deactivate</h4>
+<p>If you wish to ignore the Global configuration and always not to send a receipt email to your customers, you may deactivate it per individual collection by calling to this API.</p>
+
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Deactivate a collection's customer receipt delivery</span>
+curl -X POST <span class="se">\</span>
+https://www.billplz.com/api/v4/collections/qag4fe_o6/customer_receipt_delivery/deactivate <span class="se">\</span>
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{}</span><span class="w">
+</span></code></pre><h6 id='v4-collections-customer-receipt-delivery-deactivate-http-request'>HTTP REQUEST</h6>
+<p><code>POST https://www.billplz.com/api/v4/collections/{COLLECTION_ID}/customer_receipt_delivery/deactivate</code></p>
+<h6 id='v4-collections-customer-receipt-delivery-deactivate-url-parameter'>URL PARAMETER</h6>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>COLLECTION_ID</td>
+<td>Collection ID returned in Collection object.</td>
+</tr>
+</tbody></table>
+<h4 id='v4-collections-customer-receipt-delivery-set-global'>Set Global</h4>
+<p>Use this API to set your individual collections to follow Global Customer Receipt Notification configuration if you want your collection to send the email base on Global configuration. By default, all collections are following Global configuration.</p>
+
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Set a collection's customer receipt delivery to Global</span>
+curl -X POST <span class="se">\</span>
+https://www.billplz.com/api/v4/collections/qag4fe_o6/customer_receipt_delivery/global <span class="se">\</span>
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{}</span><span class="w">
+</span></code></pre><h6 id='v4-collections-customer-receipt-delivery-set-global-http-request'>HTTP REQUEST</h6>
+<p><code>POST https://www.billplz.com/api/v4/collections/{COLLECTION_ID}/customer_receipt_delivery/global</code></p>
+<h6 id='v4-collections-customer-receipt-delivery-set-global-url-parameter'>URL PARAMETER</h6>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>COLLECTION_ID</td>
+<td>Collection ID returned in Collection object.</td>
+</tr>
+</tbody></table>
+<h4 id='v4-collections-customer-receipt-delivery-get-status'>Get Status</h4>
+<p>Use this API to get a Collection&#39;s Customer Receipt Notification status.</p>
+
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Get a collection's customer receipt delivery</span>
+curl https://www.billplz.com/api/v4/collections/qag4fe_o6/customer_receipt_delivery <span class="se">\</span>
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qag4fe_o6"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customer_receipt_delivery"</span><span class="p">:</span><span class="w"> </span><span class="s2">"global"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h6 id='v4-collections-customer-receipt-delivery-get-status-http-request'>HTTP REQUEST</h6>
+<p><code>GET https://www.billplz.com/api/v4/collections/{COLLECTION_ID}/customer_receipt_delivery</code></p>
+<h6 id='v4-collections-customer-receipt-delivery-get-status-url-parameter'>URL PARAMETER</h6>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>COLLECTION_ID</td>
+<td>Collection ID returned in Collection object.</td>
+</tr>
+</tbody></table>
+<h6 id='v4-collections-customer-receipt-delivery-get-status-response-parameter'>RESPONSE PARAMETER</h6>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>ID that represents a collection.</td>
+</tr>
+<tr>
+<td>customer_receipt_delivery</td>
+<td>Collection&#39;s Customer Receipt Notification status, it is either <code>active</code>, <code>inactive</code> or <code>global</code>.</td>
 </tr>
 </tbody></table>
 <h2 id='v4-payout-flow'>Payout Flow</h2>
@@ -3543,9 +3724,9 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections <span c
   </span><span class="s2">"paid_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h6 id='v4-payout-collections-create-a-payout-collection-fpx-bank-abbreviations-http-request'>HTTP REQUEST</h6>
+</span></code></pre><h6 id='v4-payout-collections-create-a-payout-collection-get-status-http-request'>HTTP REQUEST</h6>
 <p><code>POST https://www.billplz.com/api/v4/mass_payment_instruction_collections</code></p>
-<h6 id='v4-payout-collections-create-a-payout-collection-fpx-bank-abbreviations-required-arguments'>REQUIRED ARGUMENTS</h6>
+<h6 id='v4-payout-collections-create-a-payout-collection-get-status-required-arguments'>REQUIRED ARGUMENTS</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3557,7 +3738,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections <span c
 <td>The collection title. Will be displayed on bill template. String format.</td>
 </tr>
 </tbody></table>
-<h6 id='v4-payout-collections-create-a-payout-collection-fpx-bank-abbreviations-response-parameter'>RESPONSE PARAMETER</h6>
+<h6 id='v4-payout-collections-create-a-payout-collection-get-status-response-parameter'>RESPONSE PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3605,9 +3786,9 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections/4po8no8
   </span><span class="s2">"paid_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h6 id='v4-payout-collections-get-a-payout-collection-fpx-bank-abbreviations-http-request'>HTTP REQUEST</h6>
+</span></code></pre><h6 id='v4-payout-collections-get-a-payout-collection-get-status-http-request'>HTTP REQUEST</h6>
 <p><code>GET https://www.billplz.com/api/v4/mass_payment_instruction_collections/{PAYOUT_COLLECTION_ID}</code></p>
-<h6 id='v4-payout-collections-get-a-payout-collection-fpx-bank-abbreviations-required-arguments'>REQUIRED ARGUMENTS</h6>
+<h6 id='v4-payout-collections-get-a-payout-collection-get-status-required-arguments'>REQUIRED ARGUMENTS</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3619,7 +3800,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections/4po8no8
 <td>Collection ID returned in Payout Collection object.</td>
 </tr>
 </tbody></table>
-<h6 id='v4-payout-collections-get-a-payout-collection-fpx-bank-abbreviations-response-parameter'>RESPONSE PARAMETER</h6>
+<h6 id='v4-payout-collections-get-a-payout-collection-get-status-response-parameter'>RESPONSE PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3685,7 +3866,8 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"processing"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"notification"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"recipient_notification"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"reference_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
@@ -3703,7 +3885,8 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
   -d <span class="nv">total</span><span class="o">=</span>2000 <span class="se">\</span>
   -d <span class="nv">email</span><span class="o">=</span><span class="s2">"recipient@email.com"</span> <span class="se">\</span>
   -d <span class="nv">notification</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
-  -d <span class="nv">recipient_notification</span><span class="o">=</span><span class="nb">false</span>
+  -d <span class="nv">recipient_notification</span><span class="o">=</span><span class="nb">false</span> <span class="se">\</span>
+  -d <span class="nv">reference_id</span><span class="o">=</span><span class="s2">"payout123123"</span>
 </code></pre>
 <blockquote>
 <p>Response:</p>
@@ -3716,15 +3899,16 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
   </span><span class="s2">"identity_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">820808062202</span><span class="w"> </span><span class="p">,</span><span class="w">
   </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Michael Yap"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Maecenas eu placerat ante."</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"email"</span><span class="w"> </span><span class="p">:</span><span class="s2">"recipient@email.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="s2">"recipient@email.com"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"processing"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"notification"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"recipient_notification"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"reference_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"payout123123"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h6 id='v4-payout-create-a-payout-fpx-bank-abbreviations-http-request'>HTTP REQUEST</h6>
+</span></code></pre><h6 id='v4-payout-create-a-payout-get-status-http-request'>HTTP REQUEST</h6>
 <p><code>POST https://www.billplz.com/api/v4/mass_payment_instructions</code></p>
-<h6 id='v4-payout-create-a-payout-fpx-bank-abbreviations-required-arguments'>REQUIRED ARGUMENTS</h6>
+<h6 id='v4-payout-create-a-payout-get-status-required-arguments'>REQUIRED ARGUMENTS</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3760,7 +3944,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
 <td>Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00).</td>
 </tr>
 </tbody></table>
-<h6 id='v4-payout-create-a-payout-fpx-bank-abbreviations-optional-arguments'>OPTIONAL ARGUMENTS</h6>
+<h6 id='v4-payout-create-a-payout-get-status-optional-arguments'>OPTIONAL ARGUMENTS</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3779,8 +3963,12 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
 <td>recipient_notification</td>
 <td>Boolean value. If this is set to <code>true</code>, recipient of the Payout will receive email notification once the Payout has been processed. Default value is <code>true</code>. Set to false if you do not like the recipient to receive any email notifications.</td>
 </tr>
+<tr>
+<td>reference_id</td>
+<td>Payout&#39;s unique reference ID scoped by <a href="#v4-payout-collections">Payout Collection</a>. This helps maintain data integrity by ensuring that no two rows of data in a payout collection have identical reference_id value. Useful to prevent unintentional payout creation. (Max of 255 characters).</td>
+</tr>
 </tbody></table>
-<h6 id='v4-payout-create-a-payout-fpx-bank-abbreviations-response-parameter'>RESPONSE PARAMETER</h6>
+<h6 id='v4-payout-create-a-payout-get-status-response-parameter'>RESPONSE PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3835,6 +4023,10 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
 <td>total</td>
 <td>Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>A standard <code>RM1.50</code> or <code>RM0.50</code> or <code>RM0.00</code> fee would be charged from your credits when you successfully created a Payout request;<br>while the total of each Payout will be deducted from your Payout limit. <br><br>Status code of <code>422</code> with <code>Bank account not verified</code> message will be returned if the matching bank account is pending for verification. <br><br>Status code of <code>422</code> with <code>Bank account rejected</code> message will be returned if the matching bank account is rejected.</td>
 </tr>
+<tr>
+<td>reference_id</td>
+<td>Payout&#39;s reference ID. Useful for identification on recipient part.</td>
+</tr>
 </tbody></table>
 <h3 id='v4-payout-get-a-payout'>Get a Payout</h3>
 <p>Use this API to query your Payout record.</p>
@@ -3861,11 +4053,12 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf <span cla
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"processing"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"notification"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"recipient_notification"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="w">
+  </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"reference_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h6 id='v4-payout-get-a-payout-fpx-bank-abbreviations-http-request'>HTTP REQUEST</h6>
+</span></code></pre><h6 id='v4-payout-get-a-payout-get-status-http-request'>HTTP REQUEST</h6>
 <p><code>GET https://www.billplz.com/api/v4/mass_payment_instructions/{PAYOUT_ID}</code></p>
-<h6 id='v4-payout-get-a-payout-fpx-bank-abbreviations-required-arguments'>REQUIRED ARGUMENTS</h6>
+<h6 id='v4-payout-get-a-payout-get-status-required-arguments'>REQUIRED ARGUMENTS</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3877,7 +4070,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf <span cla
 <td>The Payout ID. A string.</td>
 </tr>
 </tbody></table>
-<h6 id='v4-payout-get-a-payout-fpx-bank-abbreviations-response-parameter'>RESPONSE PARAMETER</h6>
+<h6 id='v4-payout-get-a-payout-get-status-response-parameter'>RESPONSE PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3932,6 +4125,10 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf <span cla
 <td>total</td>
 <td>Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00).</td>
 </tr>
+<tr>
+<td>reference_id</td>
+<td>Payout&#39;s reference ID. Useful for identification on recipient part.</td>
+</tr>
 </tbody></table>
 <h2 id='v4-webhook-rank'>Webhook Rank</h2>
 <p>Webhook Rank has been introduced to ensure callback is running at it&#39;s best. The higher the ranking, the higher priority for the callback to be executed. Use this API to query your current Account Ranking. <code>0.0</code> indicate highest ranking (default) and <code>10.0</code> lowest ranking.</p>
@@ -3953,9 +4150,9 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"rank"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h6 id='v4-webhook-rank-get-a-payout-fpx-bank-abbreviations-http-request'>HTTP REQUEST</h6>
+</span></code></pre><h6 id='v4-webhook-rank-get-a-payout-get-status-http-request'>HTTP REQUEST</h6>
 <p><code>GET https://www.billplz.com/api/v4/webhook_rank</code></p>
-<h6 id='v4-webhook-rank-get-a-payout-fpx-bank-abbreviations-response-parameter'>RESPONSE PARAMETER</h6>
+<h6 id='v4-webhook-rank-get-a-payout-get-status-response-parameter'>RESPONSE PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -4013,9 +4210,9 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
     </span><span class="s2">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ocbc"</span><span class="w">
   </span><span class="p">}]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h6 id='v4-get-payment-gateways-get-a-payout-fpx-bank-abbreviations-http-request'>HTTP REQUEST</h6>
+</span></code></pre><h6 id='v4-get-payment-gateways-get-a-payout-get-status-http-request'>HTTP REQUEST</h6>
 <p><code>GET https://www.billplz.com/api/v4/payment_gateways</code></p>
-<h6 id='v4-get-payment-gateways-get-a-payout-fpx-bank-abbreviations-response-parameter'>RESPONSE PARAMETER</h6>
+<h6 id='v4-get-payment-gateways-get-a-payout-get-status-response-parameter'>RESPONSE PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -4051,6 +4248,10 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <td>Affin Bank</td>
 </tr>
 <tr>
+<td>ABB0234*</td>
+<td>Affin Bank</td>
+</tr>
+<tr>
 <td>AMBB0209</td>
 <td>AmBank</td>
 </tr>
@@ -4075,8 +4276,8 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <td>BSN</td>
 </tr>
 <tr>
-<td>CIT0217</td>
-<td>Citibank Berhad</td>
+<td>CIT0219</td>
+<td>Citibank</td>
 </tr>
 <tr>
 <td>HLB0224</td>
@@ -4120,6 +4321,10 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 </tr>
 <tr>
 <td>UOB0226</td>
+<td>UOB Bank</td>
+</tr>
+<tr>
+<td>UOB0229*</td>
 <td>UOB Bank</td>
 </tr>
 <tr>
@@ -4173,6 +4378,18 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <tr>
 <td>BP-OCBC1</td>
 <td>Visa / Mastercard</td>
+</tr>
+<tr>
+<td>BP-2C2PGRB</td>
+<td>Grab</td>
+</tr>
+<tr>
+<td>BP-2C2PBST</td>
+<td>Boost</td>
+</tr>
+<tr>
+<td>BP-2C2PTNG</td>
+<td>TnG</td>
 </tr>
 <tr>
 <td>BP-BST01</td>

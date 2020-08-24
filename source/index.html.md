@@ -1662,6 +1662,33 @@ curl https://www.billplz.com/api/v3/fpx_banks \
 | TEST0021\* | Test 0021 |
 | TEST0022\* | Test 0022 |
 | TEST0023\* | Test 0023 |
+| B2B1-ABB0232 | Affin Bank |
+| B2B1-ABB0235 | AFFINMAX |
+| B2B1-ABMB0213 | Alliance Bank (Business) |
+| B2B1-AGRO02 | Agro Bank |
+| B2B1-AMBB0208 | AmBank |
+| B2B1-AMBB0208 | AmBank |
+| B2B1-BCBB0235 | CIMB Bank |
+| B2B1-BIMB0340 | Bank Islam |
+| B2B1-BKRM0602 | i-bizRAKYAT |
+| B2B1-BMMB0342 | Bank Muamalat |
+| B2B1-BNP003 | BNP Paribas |
+| B2B1-CIT0218 | Citibank Corporate Banking |
+| B2B1-DBB0199 | Deutsche Bank |
+| B2B1-HLB0224 | Hong Leong Bank |
+| B2B1-HSBC0223 | HSBC Bank |
+| B2B1-KFH0346 | KFH |
+| B2B1-MBB0228 | Maybank2E |
+| B2B1-OCBC0229 | OCBC Bank |
+| B2B1-PBB0233 | Public Bank |
+| B2B1-PBB0234 | PB Enterprise |
+| B2B1-RHB0218 | RHB Bank |
+| B2B1-SCB0215 | Standard Chartered |
+| B2B1-TEST0021 | SBI Bank A |
+| B2B1-TEST0022 | SBI Bank B |
+| B2B1-TEST0023 | SBI Bank C |
+| B2B1-UOB0227 | UOB Bank |
+| B2B1-UOB0228 | UOB Regional |
 
 \* Only applicable in staging environment.
 

@@ -1377,6 +1377,10 @@ curl -X PUT -d payment_methods[][code]='fpx' -d payment_methods[][code]='paypal'
 
 ### Get Bank Account Index
 
+<aside class="warning">
+  Deprecated and will be removed in a future version!
+</aside>
+
 Query Billplz Bank Account Direct Verification Service by passing list of account numbers arguement. This API will only return latest, matched bank accounts.
 
 > Example Request:
@@ -1442,6 +1446,10 @@ curl 'https://www.billplz.com/api/v3/bank_verification_services?account_numbers\
 
 ### Get a Bank Account
 
+<aside class="warning">
+  Deprecated and will be removed in a future version!
+</aside>
+
 Query Billplz Bank Account Direct Verification Service by passing single account number arguement. This API will only return latest, single matched bank account.
 
 > Example Request:
@@ -1493,7 +1501,9 @@ curl https://www.billplz.com/api/v3/bank_verification_services/1234567890 \
 | reject_desc | Reason why the authorization was rejected, in string value. |
 
 ### Create a Bank Account
-
+<aside class="warning">
+  Deprecated and will be removed in a future version!
+</aside>
 Request Bank Account Direct Verification Service by creating bank records through this API. You need to wait for 3 working days after this request for the account to be verified.
 
 <aside class="notice">
@@ -2418,15 +2428,24 @@ Before proceeding further, you need to ensure that you have enough payout limit 
 
 To start using the API, you would have to create a Payout Collection. Then the payout will kicks in as per below:
 
+<aside class="notice">
+  New flow!
+</aside>
+
+1. Get bank information from the recipient.
+1. Execute [Create a Payout](#v4-payout-create-a-payout) API.
+1. If failed, payout amount will be refunded to your Payout Limit.
+1. The payment will be settled to the receipient at almost instant timeframe (<i>best effort</i>).
+
+<aside class="warning">
+  Deprecated, and will be out of support.
+</aside>
+
 1. Get bank information from the recipient.
 1. Execute [Create a Payout](#v4-payout-create-a-payout) API.
 1. If failed, perform one-time bank account registration using [Create a Bank Account](#v3-bank-account-direct-verification-create-a-bank-account);
 1. Then, execute Create a Payout API again after three working days.
 1. The payment will be settled to the receipient in one (1) working day except Thursday and public holidays.
-
-<aside class="notice">
-  Get a Bank Account API will pass the latest record from Create a Bank Account API. Merchant is expected to store the recipient details on their own and not relying on details provided by Get a Bank Account API.
-</aside>
 
 ## Payout Collections
 

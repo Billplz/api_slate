@@ -2633,9 +2633,9 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | Parameter | Description |
 | --- | --- |
 | mass_payment_instruction_collection_id | The Payout Collection ID. A string. |
-| bank_code | Bank Code that represents bank, in string value. Case sensitive. <br><br> Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#v3-bank-account-direct-verification-get-a-bank-account). |
-| bank_account_number | Bank account number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#v3-bank-account-direct-verification-get-a-bank-account). |
-| identity_number | Bank account's IC Number/SSM Registration Number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#v3-bank-account-direct-verification-get-a-bank-account). |
+| bank_code | Bank Code that represents bank, in string value. Case sensitive. <br><br>Please refer to [API#bank-code-table](#v3-bank-account-direct-verification-create-a-bank-account-bank-code-table). |
+| bank_account_number | Bank account number, in string value. |
+| identity_number | Bank account's IC Number/SSM Registration Number, in string value. |
 | name | Payout's recipient name. Useful for identification on recipient part. |
 | description | The Payout's description. Will be displayed on bill template. String format (Max of 200 characters). |
 | total | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
@@ -2664,8 +2664,12 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | status | Payout status. It is either `processing` or `completed` or `refunded`. |
 | notification | Boolean value. Sender will receive email notification if this is `true`. |
 | recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
-| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>A standard `RM1.50` or `RM0.50` or `RM0.00` fee would be charged from your credits when you successfully created a Payout request;<br>while the total of each Payout will be deducted from your Payout limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>A standard `RM1.50` or `RM0.50` or `RM0.00` fee would be charged from your credits when you successfully created a Payout request;<br>while the total of each Payout will be deducted from your Payout Limit. <br><br>Payout that failed to process will be refunded back to your Payout Limit. |
 | reference_id | Payout's reference ID. Useful for identification on recipient part.|
+
+<aside class="notice">
+  For <b>Sandbox</b> environment, by default all payout will <b>fail</b> and the amount will be <b>refunded</b> back to your Payout Limit. To simulate a <b>success</b> payout, please use <i>bank_account_number <b>8011408168</b></i> and <i>bank_code <b>OCBCMYKL</b></i>.
+</aside>
 
 ### Get a Payout
 

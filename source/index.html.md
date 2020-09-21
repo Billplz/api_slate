@@ -1377,10 +1377,6 @@ curl -X PUT -d payment_methods[][code]='fpx' -d payment_methods[][code]='paypal'
 
 ### Get Bank Account Index
 
-<aside class="warning">
-  Deprecated and will be removed in a future version!
-</aside>
-
 Query Billplz Bank Account Direct Verification Service by passing list of account numbers arguement. This API will only return latest, matched bank accounts.
 
 > Example Request:
@@ -1446,10 +1442,6 @@ curl 'https://www.billplz.com/api/v3/bank_verification_services?account_numbers\
 
 ### Get a Bank Account
 
-<aside class="warning">
-  Deprecated and will be removed in a future version!
-</aside>
-
 Query Billplz Bank Account Direct Verification Service by passing single account number arguement. This API will only return latest, single matched bank account.
 
 > Example Request:
@@ -1501,9 +1493,7 @@ curl https://www.billplz.com/api/v3/bank_verification_services/1234567890 \
 | reject_desc | Reason why the authorization was rejected, in string value. |
 
 ### Create a Bank Account
-<aside class="warning">
-  Deprecated and will be removed in a future version!
-</aside>
+
 Request Bank Account Direct Verification Service by creating bank records through this API. You need to wait for 3 working days after this request for the account to be verified.
 
 <aside class="notice">
@@ -2428,24 +2418,15 @@ Before proceeding further, you need to ensure that you have enough payout limit 
 
 To start using the API, you would have to create a Payout Collection. Then the payout will kicks in as per below:
 
-<aside class="notice">
-  New flow!
-</aside>
-
-1. Get bank information from the recipient.
-1. Execute [Create a Payout](#v4-payout-create-a-payout) API.
-1. If failed, payout amount will be refunded to your Payout Limit.
-1. The payment will be settled to the receipient at almost instant timeframe (<i>best effort</i>).
-
-<aside class="warning">
-  Deprecated, and will be out of support.
-</aside>
-
 1. Get bank information from the recipient.
 1. Execute [Create a Payout](#v4-payout-create-a-payout) API.
 1. If failed, perform one-time bank account registration using [Create a Bank Account](#v3-bank-account-direct-verification-create-a-bank-account);
 1. Then, execute Create a Payout API again after three working days.
 1. The payment will be settled to the receipient in one (1) working day except Thursday and public holidays.
+
+<aside class="notice">
+  Get a Bank Account API will pass the latest record from Create a Bank Account API. Merchant is expected to store the recipient details on their own and not relying on details provided by Get a Bank Account API.
+</aside>
 
 ## Payout Collections
 
@@ -2633,9 +2614,9 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | Parameter | Description |
 | --- | --- |
 | mass_payment_instruction_collection_id | The Payout Collection ID. A string. |
-| bank_code | Bank Code that represents bank, in string value. Case sensitive. <br><br>Please refer to [API#bank-code-table](#v3-bank-account-direct-verification-create-a-bank-account-bank-code-table). |
-| bank_account_number | Bank account number, in string value. |
-| identity_number | Bank account's IC Number/SSM Registration Number, in string value. |
+| bank_code | Bank Code that represents bank, in string value. Case sensitive. <br><br> Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#v3-bank-account-direct-verification-get-a-bank-account). |
+| bank_account_number | Bank account number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#v3-bank-account-direct-verification-get-a-bank-account). |
+| identity_number | Bank account's IC Number/SSM Registration Number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#v3-bank-account-direct-verification-get-a-bank-account). |
 | name | Payout's recipient name. Useful for identification on recipient part. |
 | description | The Payout's description. Will be displayed on bill template. String format (Max of 200 characters). |
 | total | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
@@ -2664,12 +2645,8 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | status | Payout status. It is either `processing` or `completed` or `refunded`. |
 | notification | Boolean value. Sender will receive email notification if this is `true`. |
 | recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
-| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>A standard `RM1.50` or `RM0.50` or `RM0.00` fee would be charged from your credits when you successfully created a Payout request;<br>while the total of each Payout will be deducted from your Payout Limit. <br><br>Payout that failed to process will be refunded back to your Payout Limit. |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>A standard `RM1.50` or `RM0.50` or `RM0.00` fee would be charged from your credits when you successfully created a Payout request;<br>while the total of each Payout will be deducted from your Payout limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
 | reference_id | Payout's reference ID. Useful for identification on recipient part.|
-
-<aside class="notice">
-  For <b>Sandbox</b> environment, by default all payout will <b>fail</b> and the amount will be <b>refunded</b> back to your Payout Limit. To simulate a <b>success</b> payout, please use <i>bank_account_number <b>8011408168</b></i> and <i>bank_code <b>OCBCMYKL</b></i>.
-</aside>
 
 ### Get a Payout
 

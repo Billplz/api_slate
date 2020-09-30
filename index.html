@@ -476,6 +476,11 @@
           </li>
           <li>
             <a href="#x-signature" class="toc-h1 toc-link" data-title="X Signature">X Signature</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#x-signature-tokenization-extra-payment-completion-information" class="toc-h2 toc-link" data-title="Extra Payment Completion Information">Extra Payment Completion Information</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#payment-completion" class="toc-h1 toc-link" data-title="Payment Completion">Payment Completion</a>
@@ -4399,6 +4404,106 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <td>BP-SGP01</td>
 <td>Senangpay</td>
 </tr>
+<tr>
+<td>B2B1-ABB0232</td>
+<td>Affin Bank</td>
+</tr>
+<tr>
+<td>B2B1-ABB0235</td>
+<td>AFFINMAX</td>
+</tr>
+<tr>
+<td>B2B1-ABMB0213</td>
+<td>Alliance Bank (Business)</td>
+</tr>
+<tr>
+<td>B2B1-AGRO02*</td>
+<td>Agro Bank</td>
+</tr>
+<tr>
+<td>B2B1-AMBB0208</td>
+<td>AmBank</td>
+</tr>
+<tr>
+<td>B2B1-BCBB0235</td>
+<td>CIMB Bank</td>
+</tr>
+<tr>
+<td>B2B1-BIMB0340</td>
+<td>Bank Islam</td>
+</tr>
+<tr>
+<td>B2B1-BKRM0602</td>
+<td>i-bizRAKYAT</td>
+</tr>
+<tr>
+<td>B2B1-BMMB0342</td>
+<td>Bank Muamalat</td>
+</tr>
+<tr>
+<td>B2B1-BNP003</td>
+<td>BNP Paribas</td>
+</tr>
+<tr>
+<td>B2B1-CIT0218</td>
+<td>Citibank Corporate Banking</td>
+</tr>
+<tr>
+<td>B2B1-DBB0199</td>
+<td>Deutsche Bank</td>
+</tr>
+<tr>
+<td>B2B1-HLB0224</td>
+<td>Hong Leong Bank</td>
+</tr>
+<tr>
+<td>B2B1-HSBC0223</td>
+<td>HSBC Bank</td>
+</tr>
+<tr>
+<td>B2B1-KFH0346</td>
+<td>KFH</td>
+</tr>
+<tr>
+<td>B2B1-MBB0228</td>
+<td>Maybank2E</td>
+</tr>
+<tr>
+<td>B2B1-OCBC0229</td>
+<td>OCBC Bank</td>
+</tr>
+<tr>
+<td>B2B1-PBB0233</td>
+<td>Public Bank</td>
+</tr>
+<tr>
+<td>B2B1-PBB0234</td>
+<td>PB Enterprise</td>
+</tr>
+<tr>
+<td>B2B1-RHB0218</td>
+<td>RHB Bank</td>
+</tr>
+<tr>
+<td>B2B1-SCB0215</td>
+<td>Standard Chartered</td>
+</tr>
+<tr>
+<td>B2B1-TEST0021*</td>
+<td>SBI Bank A</td>
+</tr>
+<tr>
+<td>B2B1-TEST0022*</td>
+<td>SBI Bank B</td>
+</tr>
+<tr>
+<td>B2B1-TEST0023*</td>
+<td>SBI Bank C</td>
+</tr>
+<tr>
+<td>B2B1-UOB0228</td>
+<td>UOB Regional</td>
+</tr>
 </tbody></table>
 
 <p>* Only applicable in staging environment.</p>
@@ -4904,6 +5009,14 @@ curl https://www.billplz.com/api/v4/bills/awyzmy0m/ocbc_charge <span class="se">
 <aside class="notice">
   Elements in the source string should not contain <code>x_signature</code>.
 </aside>
+<h3 id='x-signature-tokenization-extra-payment-completion-information'>Extra Payment Completion Information</h3>
+<p>To get <code>transaction_id</code> and <code>transaction_status</code>, enable <strong>Extra Payment Completion Information</strong>.</p>
+
+<p><img src="images/x_spc_transaction_setting.png" alt="Activate the extra payment completion information." /></p>
+
+<aside class="notice">
+  You are advised to activate this option when integrating with FPX B2B banks for better user experience.
+</aside>
 <h1 id='payment-completion'>Payment Completion</h1><h2 id='payment-completion-basic-callback-url'>Basic Callback Url</h2>
 <p><code>callback_url</code> feature does not give your users the same instant bill update experience as of redirect_url feature, however <strong>it does guarantee you 100% execution backend to backend update</strong>.</p>
 
@@ -4938,7 +5051,7 @@ Content-Type: application/x-www-form-urlencoded
 <blockquote>
 <p>Body formatted for readability.</p>
 </blockquote>
-<h6 id='payment-completion-basic-callback-url-ocbc-charge-card-server-side-request'>SERVER SIDE REQUEST</h6>
+<h6 id='payment-completion-basic-callback-url-extra-payment-completion-information-charge-card-server-side-request'>SERVER SIDE REQUEST</h6>
 <p>Billplz will make a POST request to <code>callback_url</code> with Bill object upon payment completion (<code>failure</code> or <code>success</code>).</p>
 
 <p>A bill that catched payment failure will be in <code>due</code> state.</p>
@@ -4948,9 +5061,9 @@ Content-Type: application/x-www-form-urlencoded
 <aside class="notice">
   Billplz account registered before September 2018 will have Basic Callback URL feature enabled by default.
 </aside>
-<h6 id='payment-completion-basic-callback-url-ocbc-charge-card-http-request'>HTTP REQUEST</h6>
+<h6 id='payment-completion-basic-callback-url-extra-payment-completion-information-charge-card-http-request'>HTTP REQUEST</h6>
 <p><code>POST {CALLBACK_URL}</code></p>
-<h6 id='payment-completion-basic-callback-url-ocbc-charge-card-post-parameter'>POST PARAMETER</h6>
+<h6 id='payment-completion-basic-callback-url-extra-payment-completion-information-charge-card-post-parameter'>POST PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -5038,7 +5151,7 @@ Content-Type: application/x-www-form-urlencoded
 <p><code>callback_url</code> feature integration is <strong>compulsory</strong> but <code>redirect_url</code> feature is <strong>optional</strong>.</p>
 
 <p>**<strong><em>you are strongly advised to integrate both redirect_url feature (for better user experience) and callback_url feature (for 100% transaction update)</em></strong></p>
-<h6 id='payment-completion-basic-redirect-url-ocbc-charge-card-client-side-request'>CLIENT SIDE REQUEST</h6>
+<h6 id='payment-completion-basic-redirect-url-extra-payment-completion-information-charge-card-client-side-request'>CLIENT SIDE REQUEST</h6>
 <p>If <code>redirect_url</code> exists, Billplz will redirect the browser to <code>redirect_url</code></p>
 
 <p>By default, <code>Basic Redirect URL</code> feature is disabled due to security reason.</p>
@@ -5046,9 +5159,9 @@ Content-Type: application/x-www-form-urlencoded
 <aside class="notice">
   Billplz account registered before September 2018 will have Basic Redirect URL feature enabled by default.
 </aside>
-<h6 id='payment-completion-basic-redirect-url-ocbc-charge-card-http-request'>HTTP REQUEST</h6>
+<h6 id='payment-completion-basic-redirect-url-extra-payment-completion-information-charge-card-http-request'>HTTP REQUEST</h6>
 <p><code>GET {REDIRECT_URL}?billplz[id]=W_79pJDk</code></p>
-<h6 id='payment-completion-basic-redirect-url-ocbc-charge-card-url-parameter'>URL PARAMETER</h6>
+<h6 id='payment-completion-basic-redirect-url-extra-payment-completion-information-charge-card-url-parameter'>URL PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -5070,7 +5183,7 @@ Content-Type: application/x-www-form-urlencoded
 <p><code>callback_url</code> feature integration is <strong>compulsory</strong> but <code>redirect_url</code> feature is <strong>optional</strong>.</p>
 
 <p>**<strong><em>you are strongly advised to integrate both redirect_url feature (for better user experience) and callback_url feature (for 100% transaction update)</em></strong></p>
-<h6 id='payment-completion-x-signature-callback-url-ocbc-charge-card-server-side-request'>SERVER SIDE REQUEST</h6>
+<h6 id='payment-completion-x-signature-callback-url-extra-payment-completion-information-charge-card-server-side-request'>SERVER SIDE REQUEST</h6>
 <p>Billplz will make a POST request to <code>callback_url</code> with Bill object upon payment completion (<code>failure</code> or <code>success</code>).</p>
 
 <p>X Signature Callback URL request created through the API by Billplz can be verified by calculating a digital signature - <code>x_signature</code>.</p>
@@ -5110,10 +5223,37 @@ Content-Type: application/x-www-form-urlencoded
 </code></pre>
 <blockquote>
 <p>Body formatted for readability.</p>
+
+<p>Example Server Side Request with transaction from Billplz:</p>
 </blockquote>
-<h6 id='payment-completion-x-signature-callback-url-ocbc-charge-card-http-request'>HTTP REQUEST</h6>
+<pre class="highlight plaintext"><code>POST /webhook/ HTTP/1.1
+Connection: close
+Host: 127.0.0.1
+Content-Length: 376
+Content-Type: application/x-www-form-urlencoded
+
+  id="pjpetpdy"
+  &amp;collection_id="bvgo7ueb"
+  &amp;paid="true"
+  &amp;state="paid"
+  &amp;amount="100"
+  &amp;paid_amount="100"
+  &amp;due_at="2020-8-7"
+  &amp;email="api@billplz.com"
+  &amp;mobile=""
+  &amp;name="WILL"
+  &amp;url="http://www.billplz.test:3000/bills/pjpetpdy"
+  &amp;paid_at="2020-08-07 15:08:19 +0800"
+  &amp;transaction_id="711044E05418"
+  &amp;transaction_status="completed"
+  &amp;x_signature="b5ca81d0f1b87ab3b17580236735c68af92936de9aaa588751a4371ac4944a56"
+</code></pre>
+<blockquote>
+<p>Body formatted for readability.</p>
+</blockquote>
+<h6 id='payment-completion-x-signature-callback-url-extra-payment-completion-information-charge-card-http-request'>HTTP REQUEST</h6>
 <p><code>POST {CALLBACK_URL}</code></p>
-<h6 id='payment-completion-x-signature-callback-url-ocbc-charge-card-post-parameter'>POST PARAMETER</h6>
+<h6 id='payment-completion-x-signature-callback-url-extra-payment-completion-information-charge-card-post-parameter'>POST PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -5169,6 +5309,14 @@ Content-Type: application/x-www-form-urlencoded
 <td>Date time when the bill was paid, in format <code>YYYY-MM-DD HH:MM:SS TimeZone</code>. Example, <code>2015-03-09 16:23:59 +0800</code>.</td>
 </tr>
 <tr>
+<td>transaction_id</td>
+<td>ID that represent the transaction. (Enable <code>Extra Payment Completion Information</code> option to receive this parameter)</td>
+</tr>
+<tr>
+<td>transaction_status</td>
+<td>Status that representing the transaction&#39;s status, possible statuses are <code>pending</code>, <code>completed</code> and <code>failed</code>. (Enable <code>Extra Payment Completion Information</code> option to receive this parameter)</td>
+</tr>
+<tr>
 <td>x_signature</td>
 <td>Digital signature computed with posted data and shared XSignature Key.</td>
 </tr>
@@ -5185,12 +5333,12 @@ Content-Type: application/x-www-form-urlencoded
 <p>Assuming the first callback is initiated at 13:00:00. The second attempt will be at 13:15:00 + N seconds. The third attempt will be at 13:30:02 + N seconds. The fourth attempt will be at 13:45:05 + N seconds. The fifth attempt will be at 13:45:07+ N seconds next day.</p>
 
 <p>Billplz will attempt for maximum of 5 times and the callback will be removed from the system queue permanently after that.</p>
-<h6 id='payment-completion-x-signature-callback-url-ocbc-charge-card-sample-http-request-from-x-signature-callback-url-feature'>SAMPLE HTTP REQUEST FROM X SIGNATURE CALLBACK URL FEATURE</h6>
+<h6 id='payment-completion-x-signature-callback-url-extra-payment-completion-information-charge-card-sample-http-request-from-x-signature-callback-url-feature'>SAMPLE HTTP REQUEST FROM X SIGNATURE CALLBACK URL FEATURE</h6>
 <p><code>POST {CALLBACK_URL}</code></p>
 
 <p>with POST body,
 <code>{:id=&gt;&quot;zq0tm2wc&quot;, :collection_id=&gt;&quot;yhx5t1pp&quot;, :paid=&gt;true, :state=&gt;&quot;paid&quot;, :amount=&gt;100, :paid_amount=&gt;100, :due_at=&gt;&quot;2018-9-27&quot;, :email=&gt;&quot;tester@test.com&quot;, :mobile=&gt;nil, :name=&gt;&quot;TESTER&quot;, :url=&gt;&quot;http://www.billplz-sandbox.com/bills/zq0tm2wc&quot;, :paid_at=&gt;&quot;2018-09-27 15:15:09 +0800&quot;, :x_signature=&gt;&quot;0fe0a20b8d557eeae570377783d062a3816a9ea80f368860bacfa7ec3ca4d00e&quot;}</code></p>
-<h6 id='payment-completion-x-signature-callback-url-ocbc-charge-card-1-extract-all-key-value-pair-parameters-except-x_signature'>#1 Extract all key-value pair parameters except x_signature.</h6>
+<h6 id='payment-completion-x-signature-callback-url-extra-payment-completion-information-charge-card-1-extract-all-key-value-pair-parameters-except-x_signature'>#1 Extract all key-value pair parameters except x_signature.</h6>
 <p><code>id=&quot;zq0tm2wc&quot;</code></p>
 
 <p><code>collection_id=&quot;yhx5t1pp&quot;</code></p>
@@ -5214,7 +5362,7 @@ Content-Type: application/x-www-form-urlencoded
 <p><code>url=&quot;http://www.billplz-sandbox.com/bills/zq0tm2wc&quot;</code></p>
 
 <p><code>paid_at=&quot;2018-09-27 15:15:09 +0800&quot;</code></p>
-<h6 id='payment-completion-x-signature-callback-url-ocbc-charge-card-2-construct-source-string-from-each-key-value-pair-parameters-above'>#2 Construct source string from each key-value pair parameters above.</h6>
+<h6 id='payment-completion-x-signature-callback-url-extra-payment-completion-information-charge-card-2-construct-source-string-from-each-key-value-pair-parameters-above'>#2 Construct source string from each key-value pair parameters above.</h6>
 <p><code>idzq0tm2wc</code></p>
 
 <p><code>collection_idyhx5t1pp</code></p>
@@ -5238,7 +5386,7 @@ Content-Type: application/x-www-form-urlencoded
 <p><code>urlhttp://www.billplz-sandbox.com/bills/zq0tm2wc</code></p>
 
 <p><code>paid_at2018-09-27 15:15:09 +0800</code></p>
-<h6 id='payment-completion-x-signature-callback-url-ocbc-charge-card-3-sort-in-ascending-order-case-insensitive'>#3 Sort in ascending order, case-insensitive.</h6>
+<h6 id='payment-completion-x-signature-callback-url-extra-payment-completion-information-charge-card-3-sort-in-ascending-order-case-insensitive'>#3 Sort in ascending order, case-insensitive.</h6>
 <p><code>amount100</code></p>
 
 <p><code>collection_idyhx5t1pp</code></p>
@@ -5262,13 +5410,13 @@ Content-Type: application/x-www-form-urlencoded
 <p><code>statepaid</code></p>
 
 <p><code>urlhttp://www.billplz-sandbox.com/bills/zq0tm2wc</code></p>
-<h6 id='payment-completion-x-signature-callback-url-ocbc-charge-card-4-combine-sorted-source-strings-with-quot-quot-pipe-character-in-between'>#4 Combine sorted source strings with &quot;|&quot; (pipe) character in between.</h6>
+<h6 id='payment-completion-x-signature-callback-url-extra-payment-completion-information-charge-card-4-combine-sorted-source-strings-with-quot-quot-pipe-character-in-between'>#4 Combine sorted source strings with &quot;|&quot; (pipe) character in between.</h6>
 <p><code>amount100|collection_idyhx5t1pp|due_at2018-9-27|emailtester@test.com|idzq0tm2wc|mobile|nameTESTER|paid_amount100|paid_at2018-09-27 15:15:09 +0800|paidtrue|statepaid|urlhttp://www.billplz-sandbox.com/bills/zq0tm2wc</code></p>
-<h6 id='payment-completion-x-signature-callback-url-ocbc-charge-card-5-compute-x_signature-by-signing-the-final-source-in-4-using-hmac_sha256-and-the-sample-xsignature-key'>#5 Compute x_signature by signing the final source in #4 using HMAC_SHA256 and the sample XSignature Key.</h6>
+<h6 id='payment-completion-x-signature-callback-url-extra-payment-completion-information-charge-card-5-compute-x_signature-by-signing-the-final-source-in-4-using-hmac_sha256-and-the-sample-xsignature-key'>#5 Compute x_signature by signing the final source in #4 using HMAC_SHA256 and the sample XSignature Key.</h6>
 <p><code>S-s7b4yWpp9h7rrkNM1i3Z_g</code></p>
 
 <p><code>0fe0a20b8d557eeae570377783d062a3816a9ea80f368860bacfa7ec3ca4d00e</code></p>
-<h6 id='payment-completion-x-signature-callback-url-ocbc-charge-card-6-compare-the-computed-x_signature-with-the-x_signature-passed-in-the-request'>#6 Compare the computed x_signature with the x_signature passed in the request.</h6>
+<h6 id='payment-completion-x-signature-callback-url-extra-payment-completion-information-charge-card-6-compare-the-computed-x_signature-with-the-x_signature-passed-in-the-request'>#6 Compare the computed x_signature with the x_signature passed in the request.</h6>
 <p>If they match, you can be sure that the callback was sent from Billplz and the data has not been compromised, and you <strong>do not need to trigger additional Get a Bill API for primary status validation</strong>.</p>
 
 <aside class="warning">
@@ -5282,7 +5430,7 @@ Content-Type: application/x-www-form-urlencoded
 <p><code>callback_url</code> feature integration is <strong>compulsory</strong> but <code>redirect_url</code> feature is <strong>optional</strong>.</p>
 
 <p>**<strong><em>you are strongly advised to integrate both redirect_url feature (for better user experience) and callback_url feature (for 100% transaction update)</em></strong></p>
-<h6 id='payment-completion-x-signature-redirect-url-ocbc-charge-card-client-side-request'>CLIENT SIDE REQUEST</h6>
+<h6 id='payment-completion-x-signature-redirect-url-extra-payment-completion-information-charge-card-client-side-request'>CLIENT SIDE REQUEST</h6>
 <p>If <code>redirect_url</code> exists, Billplz will redirect the browser to <code>redirect_url</code></p>
 
 <p>X Signature Redirect URL request created by Billplz can be verified by calculating a digital signature - <code>x_signature</code>.</p>
@@ -5294,9 +5442,9 @@ Content-Type: application/x-www-form-urlencoded
 <aside class="success">
   By default, X Signature Redirect URL feature is activated for account registered starting September 2018.
 </aside>
-<h6 id='payment-completion-x-signature-redirect-url-ocbc-charge-card-http-request'>HTTP REQUEST</h6>
+<h6 id='payment-completion-x-signature-redirect-url-extra-payment-completion-information-charge-card-http-request'>HTTP REQUEST</h6>
 <p><code>GET {REDIRECT_URL}?billplz[id]=ifpgaa&amp;billplz[paid]=true&amp;billplz[paid_at]=2017-01-04%2013%3A10%3A45%20%2B0800&amp;billplz[x_signature]=76de0ad8cc23706d694fd81c9027b8e3ae169e0880d75e1e123c5832c82bf707</code></p>
-<h6 id='payment-completion-x-signature-redirect-url-ocbc-charge-card-url-parameter'>URL PARAMETER</h6>
+<h6 id='payment-completion-x-signature-redirect-url-extra-payment-completion-information-charge-card-url-parameter'>URL PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -5316,37 +5464,45 @@ Content-Type: application/x-www-form-urlencoded
 <td>Date time when the bill was paid, in format <code>YYYY-MM-DD HH:MM:SS TimeZone</code>. Example, <code>2017-01-04 13:10:45 +0800</code>.</td>
 </tr>
 <tr>
+<td>billplz[transaction_id]</td>
+<td>ID that represent the transaction. (Enable <code>Extra Payment Completion Information</code> option to receive this parameter)</td>
+</tr>
+<tr>
+<td>billplz[transaction_status]</td>
+<td>Status that representing the transaction&#39;s status, possible statuses are <code>pending</code>, <code>completed</code> and <code>failed</code>. (Enable <code>Extra Payment Completion Information</code> option to receive this parameter)</td>
+</tr>
+<tr>
 <td>billplz[x_signature]</td>
 <td>Digital signature computed with passing parameters and shared XSignature Key.</td>
 </tr>
 </tbody></table>
-<h6 id='payment-completion-x-signature-redirect-url-ocbc-charge-card-sample-http-request-from-x-signature-redirect-url-feature'>SAMPLE HTTP REQUEST FROM X SIGNATURE REDIRECT URL FEATURE</h6>
+<h6 id='payment-completion-x-signature-redirect-url-extra-payment-completion-information-charge-card-sample-http-request-from-x-signature-redirect-url-feature'>SAMPLE HTTP REQUEST FROM X SIGNATURE REDIRECT URL FEATURE</h6>
 <p><code>GET {REDIRECT_URL}?billplz[id]=zq0tm2wc&amp;billplz[paid]=true&amp;billplz[paid_at]=2018-09-27%2015%3A15%3A09%20%2B0800&amp;billplz[x_signature]=4aab095fe5a39b1d534500988f9a0cb085cd1b6d5bbb55dd4e02ea6fa102b47b</code></p>
-<h6 id='payment-completion-x-signature-redirect-url-ocbc-charge-card-1-extract-all-key-value-pair-parameters-except-x_signature'>#1 Extract all key-value pair parameters except x_signature.</h6>
+<h6 id='payment-completion-x-signature-redirect-url-extra-payment-completion-information-charge-card-1-extract-all-key-value-pair-parameters-except-x_signature'>#1 Extract all key-value pair parameters except x_signature.</h6>
 <p><code>billplz[id]=&quot;zq0tm2wc&quot;</code></p>
 
 <p><code>billplz[paid]=&quot;true&quot;</code></p>
 
 <p><code>billplz[paid_at]=&quot;2018-09-27 15:15:09 +0800&quot;</code></p>
-<h6 id='payment-completion-x-signature-redirect-url-ocbc-charge-card-2-construct-source-string-from-each-key-value-pair-parameters-above'>#2 Construct source string from each key-value pair parameters above.</h6>
+<h6 id='payment-completion-x-signature-redirect-url-extra-payment-completion-information-charge-card-2-construct-source-string-from-each-key-value-pair-parameters-above'>#2 Construct source string from each key-value pair parameters above.</h6>
 <p><code>billplzidzq0tm2wc</code></p>
 
 <p><code>billplzpaidtrue</code></p>
 
 <p><code>billplzpaid_at2018-09-27 15:15:09 +0800</code></p>
-<h6 id='payment-completion-x-signature-redirect-url-ocbc-charge-card-3-sort-in-ascending-order-case-insensitive'>#3 Sort in ascending order, case-insensitive.</h6>
+<h6 id='payment-completion-x-signature-redirect-url-extra-payment-completion-information-charge-card-3-sort-in-ascending-order-case-insensitive'>#3 Sort in ascending order, case-insensitive.</h6>
 <p><code>billplzidzq0tm2wc</code></p>
 
 <p><code>billplzpaid_at2018-09-27 15:15:09 +0800</code></p>
 
 <p><code>billplzpaidtrue</code></p>
-<h6 id='payment-completion-x-signature-redirect-url-ocbc-charge-card-4-combine-all-source-strings-with-quot-quot-pipe-character-in-between'>#4 Combine all source strings with &quot;|&quot; (pipe) character in between.</h6>
+<h6 id='payment-completion-x-signature-redirect-url-extra-payment-completion-information-charge-card-4-combine-all-source-strings-with-quot-quot-pipe-character-in-between'>#4 Combine all source strings with &quot;|&quot; (pipe) character in between.</h6>
 <p><code>billplzidzq0tm2wc|billplzpaid_at2018-09-27 15:15:09 +0800|billplzpaidtrue</code></p>
-<h6 id='payment-completion-x-signature-redirect-url-ocbc-charge-card-5-compute-x_signature-by-signing-the-final-source-in-4-using-hmac_sha256-and-the-sample-xsignature-key'>#5 Compute x_signature by signing the final source in #4 using HMAC_SHA256 and the sample XSignature Key.</h6>
+<h6 id='payment-completion-x-signature-redirect-url-extra-payment-completion-information-charge-card-5-compute-x_signature-by-signing-the-final-source-in-4-using-hmac_sha256-and-the-sample-xsignature-key'>#5 Compute x_signature by signing the final source in #4 using HMAC_SHA256 and the sample XSignature Key.</h6>
 <p><code>S-s7b4yWpp9h7rrkNM1i3Z_g</code></p>
 
 <p><code>4aab095fe5a39b1d534500988f9a0cb085cd1b6d5bbb55dd4e02ea6fa102b47b</code></p>
-<h6 id='payment-completion-x-signature-redirect-url-ocbc-charge-card-6-compare-parameter-x_signature-passed-in-the-request-with-the-computed-x_signature-in-5'>#6 Compare parameter x_signature passed in the request with the computed x_signature in #5.</h6>
+<h6 id='payment-completion-x-signature-redirect-url-extra-payment-completion-information-charge-card-6-compare-parameter-x_signature-passed-in-the-request-with-the-computed-x_signature-in-5'>#6 Compare parameter x_signature passed in the request with the computed x_signature in #5.</h6>
 <p>If they match, you can be sure that the redirection was sent from Billplz and the data has not been compromised, and you <strong>do not need to trigger additional Get a Bill API for primary status validation</strong>.</p>
 <h1 id='rate-limit'>Rate Limit</h1>
 <blockquote>
@@ -5393,7 +5549,7 @@ Content-Type: application/json;
 <aside class="notice">
   We will set a rate limit for specific IP Address or per account basis if the usage appears to be abusive. We reserve the rights, at our sole discretion to set this rate-limit without any further notices.
 </aside>
-<h6 id='rate-limit-x-signature-redirect-url-ocbc-charge-card-response-header'>RESPONSE HEADER</h6>
+<h6 id='rate-limit-x-signature-redirect-url-extra-payment-completion-information-charge-card-response-header'>RESPONSE HEADER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -5421,7 +5577,7 @@ Content-Type: application/json;
 <aside class="success">
   Normal HTTP status code will be <code>200</code>.
 </aside>
-<h6 id='rate-limit-x-signature-redirect-url-ocbc-charge-card-response-parameter'>RESPONSE PARAMETER</h6>
+<h6 id='rate-limit-x-signature-redirect-url-extra-payment-completion-information-charge-card-response-parameter'>RESPONSE PARAMETER</h6>
 <p>Response parameter will be as usual if didn&#39;t exceed the rate limit. Otherwise, the response parameters will be as follows:</p>
 
 <table><thead>

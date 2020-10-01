@@ -1633,27 +1633,27 @@ curl https://www.billplz.com/api/v3/fpx_banks \
 
 | Bank Code | Bank Name |
 | --- | --- |
-| ABMB0212 | Alliance Bank |
-| ABB0233 | Affin Bank |
+| ABMB0212 | allianceonline |
+| ABB0233 | affinOnline |
 | ABB0234* | Affin Bank |
-| AMBB0209 | AmBank |
+| AMBB0209 | AmOnline |
 | BCBB0235 | CIMB Clicks |
-| BIMB0340 | Bank Islam |
-| BKRM0602 | Bank Rakyat |
-| BMMB0341 | Bank Muamalat |
-| BSN0601 | BSN |
-| CIT0219 | Citibank Berhad |
-| HLB0224 | Hong Leong Bank |
-| HSBC0223 | HSBC Bank |
-| KFH0346 | Kuwait Finance House |
+| BIMB0340 | Bank Islam Internet Banking |
+| BKRM0602 | i-Rakyat |
+| BMMB0341 | i-Muamalat |
+| BSN0601 | myBSN |
+| CIT0219 | Citibank Online |
+| HLB0224 | HLB Connect |
+| HSBC0223 | HSBC Online Banking |
+| KFH0346 | KFH Online |
 | MB2U0227 | Maybank2u |
 | MBB0227 | Maybank2E |
 | MBB0228 | Maybank2E |
-| OCBC0229 | OCBC Bank |
-| PBB0233 | Public Bank |
+| OCBC0229 | OCBC Online Banking |
+| PBB0233 | PBe |
 | RHB0218 | RHB Now |
-| SCB0216 | Standard Chartered |
-| UOB0226 | UOB Bank |
+| SCB0216 | SC Online Banking |
+| UOB0226 | UOB Internet Banking |
 | UOB0229* | UOB Bank |
 | TEST0001\* | Test 0001 |
 | TEST0002\* | Test 0002 |
@@ -2779,27 +2779,27 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 #### Payment Gateway Abbreviations
 | Code | Name |
 | --- | --- |
-| ABMB0212 | Alliance Bank |
-| ABB0233 | Affin Bank |
+| ABMB0212 | allianceonline |
+| ABB0233 | affinOnline |
 | ABB0234* | Affin Bank |
-| AMBB0209 | AmBank |
+| AMBB0209 | AmOnline |
 | BCBB0235 | CIMB Clicks |
-| BIMB0340 | Bank Islam |
-| BKRM0602 | Bank Rakyat |
-| BMMB0341 | Bank Muamalat |
-| BSN0601 | BSN |
-| CIT0219 | Citibank |
-| HLB0224 | Hong Leong Bank |
-| HSBC0223 | HSBC Bank |
-| KFH0346 | Kuwait Finance House |
+| BIMB0340 | Bank Islam Internet Banking |
+| BKRM0602 | i-Rakyat |
+| BMMB0341 | i-Muamalat |
+| BSN0601 | myBSN |
+| CIT0219 | Citibank Online |
+| HLB0224 | HLB Connect |
+| HSBC0223 | HSBC Online Banking |
+| KFH0346 | KFH Online |
 | MB2U0227 | Maybank2u |
 | MBB0227 | Maybank2E |
 | MBB0228 | Maybank2E |
-| OCBC0229 | OCBC Bank |
-| PBB0233 | Public Bank |
+| OCBC0229 | OCBC Online Banking |
+| PBB0233 | PBe |
 | RHB0218 | RHB Now |
-| SCB0216 | Standard Chartered |
-| UOB0226 | UOB Bank |
+| SCB0216 | SC Online Banking |
+| UOB0226 | UOB Internet Banking |
 | UOB0229* | UOB Bank |
 | TEST0001* | Test 0001 |
 | TEST0002* | Test 0002 |
@@ -2819,31 +2819,31 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | BP-2C2PTNG  | TnG |
 | BP-BST01  | Boost |
 | BP-SGP01  | Senangpay |
-| B2B1-ABB0232 | Affin Bank |
+| B2B1-ABB0232 | affinOnline |
 | B2B1-ABB0235 | AFFINMAX |
-| B2B1-ABMB0213 | Alliance Bank (Business) |
+| B2B1-ABMB0213 | Alliance BizSmart |
 | B2B1-AGRO02* | Agro Bank |
-| B2B1-AMBB0208 | AmBank |
-| B2B1-BCBB0235 | CIMB Bank |
-| B2B1-BIMB0340 | Bank Islam |
+| B2B1-AMBB0208 | AmAccess Biz |
+| B2B1-BCBB0235 | BizChannel@CIMB |
+| B2B1-BIMB0340 | Bank Islam eBanker |
 | B2B1-BKRM0602 | i-bizRAKYAT |
-| B2B1-BMMB0342 | Bank Muamalat |
+| B2B1-BMMB0342 | iBiz Muamalat |
 | B2B1-BNP003 | BNP Paribas |
-| B2B1-CIT0218 | Citibank Corporate Banking |
-| B2B1-DBB0199 | Deutsche Bank |
-| B2B1-HLB0224 | Hong Leong Bank |
-| B2B1-HSBC0223 | HSBC Bank |
-| B2B1-KFH0346 | KFH |
+| B2B1-CIT0218 | CitiDirect BE |
+| B2B1-DBB0199 | Deutsche Bank Autobahn |
+| B2B1-HLB0224 | HLB ConnectFirst |
+| B2B1-HSBC0223 | HSBCnet |
+| B2B1-KFH0346 | KFH Online |
 | B2B1-MBB0228 | Maybank2E |
-| B2B1-OCBC0229 | OCBC Bank |
-| B2B1-PBB0233 | Public Bank |
-| B2B1-PBB0234 | PB Enterprise |
-| B2B1-RHB0218 | RHB Bank |
-| B2B1-SCB0215 | Standard Chartered |
+| B2B1-OCBC0229 | Velocity@ocbc |
+| B2B1-PBB0233 | PBe |
+| B2B1-PBB0234 | PB enterprise |
+| B2B1-RHB0218 | RHB Reflex |
+| B2B1-SCB0215 | SC Straight2Bank |
 | B2B1-TEST0021* | SBI Bank A |
 | B2B1-TEST0022* | SBI Bank B |
 | B2B1-TEST0023* | SBI Bank C |
-| B2B1-UOB0228 | UOB Regional |
+| B2B1-UOB0228 | UOB BIBPlus |
 
 \* Only applicable in staging environment.
 

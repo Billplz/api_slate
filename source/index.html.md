@@ -2379,20 +2379,20 @@ curl https://www.billplz.com/api/v4/collections/qag4fe_o6/customer_receipt_deliv
 | id | ID that represents a collection. |
 | customer_receipt_delivery | Collection's Customer Receipt Notification status, it is either `active`, `inactive` or `global`. |
 
-## Payout Flow
+## Payout API Flow
 
-Payout allows you to make payment to any account bank registered in Malaysia. Since Bank doesn't provide way to programatically make payment to bank account, you can achieve that by using our Payout API.
+Payout API allows you to make payment to any account bank registered in Malaysia. Since Bank doesn't provide way to programatically make payment to bank account, you can achieve that by using our Payout API.
 
-Payout implements the same collection concept as per [API Flow](#api-flow). You will have collection that consists of multiple payouts.
+Payout API implements the same collection concept as per [API Flow](#api-flow). You will have collection that consists of multiple payout APIs.
 
-Before proceeding further, you need to ensure that you have enough payout limit to perform Payout. To increase payout limit, navigate to Payout tab and you will notice the Payout Limit at the top.
+Before proceeding further, you need to ensure that you have enough payout API limit to perform payout API. To increase payout API limit, navigate to payout API tab and you will notice the payout API Limit at the top.
 
-![Payout Limit Interface Screenshot.](payoutlimit.png)
+![Payout API Limit Interface Screenshot.](payoutlimit.png)
 
-To start using the API, you would have to create a Payout Collection. Then the payout will kicks in as per below:
+To start using the API, you would have to create a Payout API Collection. Then the payout API will kicks in as per below:
 
 1. Get bank information from the recipient.
-1. Execute [Create a Payout](#v4-payout-create-a-payout) API.
+1. Execute [Create a Payout API](#v4-payout-api-create-a-payout-api) API.
 1. If failed, perform one-time bank account registration using [Create a Bank Account](#v3-bank-account-direct-verification-create-a-bank-account);
 1. Then, execute Create a Payout API again after three working days.
 1. The payment will be settled to the receipient in one (1) working day except Thursday and public holidays.
@@ -2401,16 +2401,16 @@ To start using the API, you would have to create a Payout Collection. Then the p
   Get a Bank Account API will pass the latest record from Create a Bank Account API. Merchant is expected to store the recipient details on their own and not relying on details provided by Get a Bank Account API.
 </aside>
 
-## Payout Collections
+## Payout API Collections
 
-### Create a Payout Collection
+### Create a Payout API Collection
 
-New Payout Collection used to group all your Payouts to make payout transfers.
+New Payout API Collection used to group all your Payout APIs to make payout API transfers.
 
 > Example request:
 
 ```shell
-# Creates a Payout collection
+# Creates a Payout API collection
 curl https://www.billplz.com/api/v4/mass_payment_instruction_collections \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
   -d title="My First API Payout Collection"
@@ -2444,18 +2444,18 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections \
 | --- | --- |
 | id | ID that represents a collection. |
 | title | The collection's title in string format. |
-| mass_payment_instructions_count | The number of payout belongs to this collection. |
-| paid_amount | Total paid amount for payouts in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| mass_payment_instructions_count | The number of payout API belongs to this collection. |
+| paid_amount | Total paid amount for payout APIs in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
 | status | Collection's status, it is either `active` and `inactive`. |
 
-### Get a Payout Collection
+### Get a Payout API Collection
 
-Use this API to query your Payout Collection record.
+Use this API to query your Payout API Collection record.
 
 > Example request:
 
 ```shell
-# Get a Payout collection
+# Get a Payout API collection
 curl https://www.billplz.com/api/v4/mass_payment_instruction_collections/4po8no8h \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
 ```
@@ -2480,7 +2480,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections/4po8no8
 
 | Parameter | Description |
 | --- | --- |
-| PAYOUT_COLLECTION_ID | Collection ID returned in Payout Collection object. |
+| PAYOUT_COLLECTION_ID | Collection ID returned in Payout API Collection object. |
 
 ###### RESPONSE PARAMETER
 
@@ -2488,26 +2488,26 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections/4po8no8
 | --- | --- |
 | id | ID that represents a collection. |
 | title | The collection's title in string format. |
-| mass_payment_instructions_count | The number of payout belongs to this collection. |
-| paid_amount | Total paid amount for payouts in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| mass_payment_instructions_count | The number of payout API belongs to this collection. |
+| paid_amount | Total paid amount for payout APIs in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
 | status | Collection's status, it is either `active` and `inactive`. |
 
-## Payout
+## Payout API
 
-### Create a Payout
+### Create a Payout API
 
-To make a payment transfer to another bank account, simply create a Payout.
+To make a payment transfer to another bank account, simply create a Payout API.
 
-To create a Payout, you would need the Payout collection's ID. Each Payout must be created within a Payout Collection.
+To create a Payout API, you would need the Payout API collection's ID. Each Payout API must be created within a Payout API Collection.
 
 <aside class="warning">
-  It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout Limit</strong>.
+  It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout API Limit</strong>.
 </aside>
 
 > Example request:
 
 ```shell
-# Creates a Payout for RM 20.00
+# Creates a Payout API for RM 20.00
 curl https://www.billplz.com/api/v4/mass_payment_instructions \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
   -d mass_payment_instruction_collection_id="4po8no8h" \
@@ -2542,7 +2542,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 > Example request with optional arguments:
 
 ```shell
-# Creates a Payout for RM 20.00
+# Creates a Payout API for RM 20.00
 curl https://www.billplz.com/api/v4/mass_payment_instructions \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
   -d mass_payment_instruction_collection_id="4po8no8h" \
@@ -2586,49 +2586,49 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 
 | Parameter | Description |
 | --- | --- |
-| mass_payment_instruction_collection_id | The Payout Collection ID. A string. |
+| mass_payment_instruction_collection_id | The Payout API Collection ID. A string. |
 | bank_code | Bank Code that represents bank, in string value. Case sensitive. <br><br> Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#v3-bank-account-direct-verification-get-a-bank-account). |
 | bank_account_number | Bank account number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#v3-bank-account-direct-verification-get-a-bank-account). |
 | identity_number | Bank account's IC Number/SSM Registration Number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. <br><br>Please refer to [API#get-a-bank-account](#v3-bank-account-direct-verification-get-a-bank-account). |
-| name | Payout's recipient name. Useful for identification on recipient part. |
-| description | The Payout's description. Will be displayed on bill template. String format (Max of 200 characters). |
+| name | Payout API's recipient name. Useful for identification on recipient part. |
+| description | The Payout API's description. Will be displayed on bill template. String format (Max of 200 characters). |
 | total | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
 
 ###### OPTIONAL ARGUMENTS
 
 | Parameter | Description |
 | --- | --- |
-| email | The email address of recipient (it default to sender's email if not present). <br>A receipt will be sent to this email once the Payout has been processed. |
-| notification | Boolean value. As a sender, you can opt-in for email notification by setting this to `true`. Sender will receive email once a Payout has been processed. Default value is `false`. |
-| recipient_notification | Boolean value. If this is set to `true`, recipient of the Payout will receive email notification once the Payout has been processed. Default value is `true`. Set to false if you do not like the recipient to receive any email notifications. |
-| reference_id | Payout's unique reference ID scoped by [Payout Collection](#v4-payout-collections). This helps maintain data integrity by ensuring that no two rows of data in a payout collection have identical reference_id value. Useful to prevent unintentional payout creation. (Max of 255 characters).|
+| email | The email address of recipient (it default to sender's email if not present). <br>A receipt will be sent to this email once the Payout API has been processed. |
+| notification | Boolean value. As a sender, you can opt-in for email notification by setting this to `true`. Sender will receive email once a Payout API has been processed. Default value is `false`. |
+| recipient_notification | Boolean value. If this is set to `true`, recipient of the Payout API will receive email notification once the Payout API has been processed. Default value is `true`. Set to false if you do not like the recipient to receive any email notifications. |
+| reference_id | Payout API's unique reference ID scoped by [Payout API Collection](#v4-payout-api-collections). This helps maintain data integrity by ensuring that no two rows of data in a payout API collection have identical reference_id value. Useful to prevent unintentional payout API creation. (Max of 255 characters).|
 
 ###### RESPONSE PARAMETER
 
 | Parameter | Description |
 | --- | --- |
-| id | ID that represents a Payout. |
-| mass_payment_instruction_collection_id | The Payout collection's title in string format. |
+| id | ID that represents a Payout API. |
+| mass_payment_instruction_collection_id | The Payout API collection's title in string format. |
 | bank_code | Bank Code that represents bank, in string value. Case sensitive. |
 | bank_account_number | Bank account number, in string value. |
 | identity_number | Bank account's IC Number/SSM Registration Number, in string value. |
-| name | Payout's recipient name. |
-| description | The Payout's description. |
+| name | Payout API's recipient name. |
+| description | The Payout API's description. |
 | email | The email address of recipient (it default to sender's email if not present). |
-| status | Payout status. It is either `processing` or `completed` or `refunded`. |
+| status | Payout API status. It is either `processing` or `completed` or `refunded`. |
 | notification | Boolean value. Sender will receive email notification if this is `true`. |
 | recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
-| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>A standard `RM1.50` or `RM0.50` or `RM0.00` fee would be charged from your credits when you successfully created a Payout request;<br>while the total of each Payout will be deducted from your Payout limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
-| reference_id | Payout's reference ID. Useful for identification on recipient part.|
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>A standard `RM1.50` or `RM0.50` or `RM0.00` fee would be charged from your credits when you successfully created a Payout API request;<br>while the total of each Payout API will be deducted from your Payout API limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
+| reference_id | Payout API's reference ID. Useful for identification on recipient part.|
 
-### Get a Payout
+### Get a Payout API
 
-Use this API to query your Payout record.
+Use this API to query your Payout API record.
 
 > Example request:
 
 ```shell
-# Get a Payout
+# Get a Payout API
 curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
 ```
@@ -2661,25 +2661,25 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf \
 
 | Parameter | Description |
 | --- | --- |
-| PAYOUT_ID | The Payout ID. A string. |
+| PAYOUT_ID | The Payout API ID. A string. |
 
 ###### RESPONSE PARAMETER
 
 | Parameter | Description |
 | --- | --- |
-| id | ID that represents a Payout. |
-| mass_payment_instruction_collection_id | The Payout collection's title in string format. |
+| id | ID that represents a Payout API. |
+| mass_payment_instruction_collection_id | The Payout API collection's title in string format. |
 | bank_code | Bank Code that represents bank, in string value. Case sensitive. |
 | bank_account_number | Bank account number, in string value. |
 | identity_number | Bank account's IC Number/ROC/ROB/ROS Number, in string value. |
-| name | Payout's recipient name. |
-| description | The Payout's description. |
+| name | Payout API's recipient name. |
+| description | The Payout API's description. |
 | email | The email address of recipient (it default to sender's email if not present). |
-| status | Payout status. It is either `processing` or `completed` or `refunded`. |
+| status | Payout API status. It is either `processing` or `completed` or `refunded`. |
 | notification | Boolean value. Sender will receive email notification if this is `true`. |
 | recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
 | total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
-| reference_id | Payout's reference ID. Useful for identification on recipient part.|
+| reference_id | Payout API's reference ID. Useful for identification on recipient part.|
 
 ## Webhook Rank
 

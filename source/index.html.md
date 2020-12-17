@@ -259,7 +259,7 @@ Collections are where all of your [Bills](#v3-bills) are belongs to. Collections
 
 ### Create a Collection
 
-Billplz API now supports the creation of collection with a split rule feature. The response will contain the collection's ID that is needed in Bill API, split rule info and fields.
+Billplz API supports the creation of new collection (*with split rule feature for selected legacy feature*). The response will contain the collection's ID that is needed in Bill API, split rule info and fields.
 
 <aside class="notice">
   You can choose to upload a logo to display on your bill template. It will use your company logo otherwise.
@@ -343,10 +343,12 @@ curl https://www.billplz.com/api/v3/collections \
 | Parameter | Description |
 | --- | --- |
 | logo | This image will be resized to avatar (40x40) and thumb (180x180) dimensions. Whitelisted formats are `jpg`, `jpeg`, `gif` and `png`. |
-| split_payment[email] | The email address of the split rule's recipient. (The account must be a verified account.)|
-| split_payment[fixed_cut] | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00) <br>This field is required if `split_payment[variable_cut]` is not present.|
-| split_payment[variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present.|
-| split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to true. |
+| **split_payment[email] | The email address of the split rule's recipient. (The account must be a verified account.)|
+| **split_payment[fixed_cut] | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00) <br>This field is required if `split_payment[variable_cut]` is not present.|
+| **split_payment[variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present.|
+| **split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to true. |
+
+** legacy feature, only applicable for accounts before 1/1/2021
 
 ###### RESPONSE PARAMETER
 
@@ -360,10 +362,6 @@ curl https://www.billplz.com/api/v3/collections \
 | split_payment[fixed_cut] | The 1st recipient's fixed cut in smallest and positive currency unit. |
 | split_payment[variable_cut] | The 1st recipient's percentage cut in positive integer format. |
 | split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to true. |
-
-<aside class="notice">
-  API <code>V4</code> now supports Split Rule for 2 recipients. Please refer <a href="#v4-collections-create-a-collection">API#v4-create-a-collection</a>.
-</aside>
 
 ### Get a Collection
 
@@ -508,7 +506,7 @@ curl https://www.billplz.com/api/v3/collections?page=2&status=active \
 
 ### Create an Open Collection
 
-Billplz API now supports the creation of open collections (Payment Form) with a split rule feature. The response contains the collection's attributes, including the payment form URL.
+Billplz API supports the creation of new open collections aka Payment Form (*with split rule feature for selected legacy feature*) . The response contains the collection's attributes, including the payment form URL.
 
 <aside class="notice">
   You can choose to upload a photo to display on your payment form. It uses your company logo otherwise.
@@ -632,10 +630,12 @@ curl https://www.billplz.com/api/v3/open_collections \
 | email_link | A URL that email to customer after payment is successful. |
 | tax | Tax rate in positive integer format. |
 | photo | This image will be resized to retina (Yx960) and avatar (180x180) dimensions. Whitelisted formats are jpg, jpeg, gif and png.
-| split_payment[email] | The email address of the split rule's recipient. (The account must be a verified account.) |
-| split_payment[fixed_cut] | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00). <br> This field is required if `split_payment[variable_cut]` is not present |
-| split_payment[variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present|
-| split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to true. |
+| **split_payment[email] | The email address of the split rule's recipient. (The account must be a verified account.) |
+| **split_payment[fixed_cut] | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00). <br> This field is required if `split_payment[variable_cut]` is not present |
+| **split_payment[variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present|
+| **split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to true. |
+
+** legacy feature, only applicable for accounts before 1/1/2021
 
 ###### RESPONSE PARAMETER
 
@@ -659,10 +659,6 @@ curl https://www.billplz.com/api/v3/open_collections \
 | split_payment[variable_cut] | The 1st recipient's percentage cut in positive integer format.|
 | split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
 | url | URL to the collection.|
-
-<aside class="notice">
-  API <code>V4</code> now supports Split Rule for 2 recipients. Please refer <a href="#v4-create-an-open-collection">API#v4-create-an-open-collection</a>.
-</aside>
 
 ### Get an Open Collection
 
@@ -1675,7 +1671,7 @@ Collections are where all of your [Bills](#v3-bills) are belongs to. Collections
 
 ### Create a Collection
 
-Billplz API now support creation of collection with 2 split rules feature, the response will contain the collection's ID that is needed in Bill API, split rules info and fields
+Billplz API support creation of new collection (*with 2 split rules feature for selected legacy feature*), the response will contain the collection's ID that is needed in Bill API, split rules info and fields
 
 <aside class="warning">
   Collection with custom logo support are removed starting in <code>V4</code>
@@ -1765,11 +1761,13 @@ curl https://www.billplz.com/api/v4/collections \
 
 | Parameter | Description |
 | --- | --- |
-| split_payments[][email] | The email address of the split rule's recipient (The account must be a verified account). |
-| split_payments[][fixed_cut] | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00). <br>This field is required if `split_payment[variable_cut]` is not present. |
-| split_payments[][variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present. |
-| split_payments[][stack_order] | Integer format that defines the sequence of the split rule recipients. <br>This field is required and must be in correct order starts from 0 and increment by 1 subsequently if you want to set a split rule. <br>This input is crucial to determine a precise recipient's order. |
-| split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
+| **split_payments[][email] | The email address of the split rule's recipient (The account must be a verified account). |
+| **split_payments[][fixed_cut] | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00). <br>This field is required if `split_payment[variable_cut]` is not present. |
+| **split_payments[][variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present. |
+| **split_payments[][stack_order] | Integer format that defines the sequence of the split rule recipients. <br>This field is required and must be in correct order starts from 0 and increment by 1 subsequently if you want to set a split rule. <br>This input is crucial to determine a precise recipient's order. |
+| **split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
+
+** legacy feature, only applicable for accounts before 1/1/2021
 
 ###### RESPONSE PARAMETER
 
@@ -1923,7 +1921,7 @@ curl https://www.billplz.com/api/v4/collections?page=2&status=active \
 
 ### Create an Open Collection
 
-Billplz API now support creation of open collections (Payment Form) with 2 split rule recipients feature, the response will contain the collection's attributes, including the payment form URL.
+Billplz API supports creation of open collections aka Payment Form (*with 2 split rule recipients feature for selected legacy feature*), the response will contain the collection's attributes, including the payment form URL.
 
 > Example request:
 
@@ -2044,12 +2042,14 @@ curl https://www.billplz.com/api/v4/open_collections \
 | email_link | A URL that email to customer after payment is successful. |
 | tax | Tax rate in positive integer format. |
 | photo | This image will be resized to retina (960x960) and avatar (180x180) dimensions. Whitelisted formats are `jpg`, `jpeg`, `gif` and `png`. |
-| split_payments[][email] | The email address of the split rule's recipient (The account must be a verified account). |
-| split_payments[][fixed_cut] | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00) <br>This field is required if `split_payment[variable_cut]` is not present. |
-| split_payments[][variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present. |
-| split_payments[][stack_order] | Integer format that defines the sequence of the split rule recipients. <br>This field is required and must be in correct order starts from 0 and increment by 1 subsequently if you want to set a split rule. <br>This input is crucial to determine a precise recipient's order. |
-| split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
+| **split_payments[][email] | The email address of the split rule's recipient (The account must be a verified account). |
+| **split_payments[][fixed_cut] | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00) <br>This field is required if `split_payment[variable_cut]` is not present. |
+| **split_payments[][variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present. |
+| **split_payments[][stack_order] | Integer format that defines the sequence of the split rule recipients. <br>This field is required and must be in correct order starts from 0 and increment by 1 subsequently if you want to set a split rule. <br>This input is crucial to determine a precise recipient's order. |
+| **split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
 | redirect_uri | URL to redirect the customer after payment <i>(completed or failed)</i>. Billplz will do a GET to redirect_uri, with bill's `ID` appended to the URL <i>(additional `paid`, `paid_at` and `x_signature` if <a href="#x-signature">x_signature</a> is enabled)</i>. |
+
+** legacy feature, only applicable for accounts before 1/1/2021
 
 ###### RESPONSE PARAMETER
 

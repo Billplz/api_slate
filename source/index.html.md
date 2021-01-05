@@ -2635,6 +2635,10 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>A standard `RM1.50` or `RM0.50` or `RM0.00` fee would be charged from your credits when you successfully created a Payout API request;<br>while the total of each Payout API will be deducted from your Payout API limit. <br><br>Payout that failed to process will be refunded back to your Payout Limit. |
 | reference_id | Payout API's reference ID. Useful for identification on recipient part.|
 
+<aside class="notice">
+  For <b>Sandbox</b> environment, by default all payout will <b>fail</b> and the amount will be <b>refunded</b> back to your Payout Limit. To simulate a <b>success</b> payout, please use <i>bank_account_number <b>8011408168</b></i> and <i>bank_code <b>OCBCMYKL</b></i>.
+</aside>
+
 ### Get a Payout API
 
 Use this API to query your Payout API record.

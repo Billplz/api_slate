@@ -2801,6 +2801,7 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | ABB0233 | affinOnline |
 | ABB0234* | Affin Bank |
 | AMBB0209 | AmOnline |
+| AGRO01 | Agro Bank |
 | BCBB0235 | CIMB Clicks |
 | BIMB0340 | Bank Islam Internet Banking |
 | BKRM0602 | i-Rakyat |

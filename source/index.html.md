@@ -2681,6 +2681,298 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf \
 | total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
 | reference_id | Payout API's reference ID. Useful for identification on recipient part.|
 
+## Payment Order Flow
+
+Payment Order allows you to make payment to any account bank registered in Malaysia. Since Bank doesn't provide way to programatically make payment to bank account, you can achieve that by using our Payment Order.
+
+Payout Order implements the same collection concept as per [API Flow](#api-flow). You will have collection that consists of multiple payment orders.
+
+Before proceeding further, you need to ensure that you have enough payout API limit to perform payment order. To increase payout API limit, navigate to payment order tab and you will notice the payout API Limit at the top.
+
+![Payout API Limit Interface Screenshot.](payoutlimit.png)
+
+To start using the API, you would have to create a Payment Order Collection. Then the payment order will kicks in as per below:
+
+1. Get bank information from the recipient.
+1. Execute [Create a Payment Order](#v4-payment-order-create-a-payment-order) API.
+1. The payment will be settled to the receipient once the processing completed.
+
+<aside class="notice">
+  The Payment Order feature is in the testing phase and only opened to selected merchants.
+</aside>
+
+## Payment Order Collections
+
+### Create a Payment Order Collection
+
+Payment Order Collection used to group all your Payment Order to make payment order transfers.
+
+> Example request:
+
+```shell
+# Creates a Payment Order collection
+curl https://www.billplz.com/api/v4/payment_order_collections \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d title="My First Payment Order Collection"
+```
+
+> Response:
+
+```json
+{
+  "id": "668d2ac6-6f1b-487e-a699-780f9de4f1db",
+  "title": "My First Payment Order Collection",
+  "payment_orders_count": "0",
+  "paid_amount": "0",
+  "status": "active"
+}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/payment_order_collections`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| title | The collection title. Will be displayed on bill template. String format. |
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents a collection. |
+| title | The collection's title in string format. |
+| payment_orders_count | The number of payment orders belongs to this collection. |
+| paid_amount | Total paid amount for payment orders in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| status | Collection's status, it is either `active` and `inactive`. |
+
+### Get a Payment Record Collection
+
+Use this API to query your Payment Order Collection record.
+
+> Example request:
+
+```shell
+# Get a Payment Order collection
+curl https://www.billplz.com/api/v4/payment_order_collections/4po8no8h \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{
+  "id": "4po8no8h",
+  "title": "My First Payment Order Collection",
+  "payment_orders_count": "0",
+  "paid_amount": "0",
+  "status": "active"
+}
+```
+
+###### HTTP REQUEST
+
+`GET https://www.billplz.com/api/v4/payment_order_collections/{PAYMENT_ORDER_COLLECTION_ID}`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| PAYMENT_ORDER_COLLECTION_ID | Collection ID returned in Payment Order Collection object. |
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents a collection. |
+| title | The collection's title in string format. |
+| payment_orders_count | The number of payment orders belongs to this collection. |
+| paid_amount | Total paid amount for payment orders in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| status | Collection's status, it is either `active` and `inactive`. |
+
+## Payment Order
+
+### Create a Payment Order
+
+To make a payment transfer to another bank account, simply create a Payment Order.
+
+To create a Payment Order, you would need the Payment Order collection's ID. Each Payment Order must be created within a Payment Order Collection.
+
+<aside class="warning">
+  It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout API Limit</strong>.
+</aside>
+
+> Example request:
+
+```shell
+# Creates a Payment Order for RM 20.00
+curl https://www.billplz.com/api/v4/payment_orders \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d payment_order_collection_id="4po8no8h" \
+  -d bank_code="MBBEMYKL" \
+  -d bank_account_number="820808062202123" \
+  -d name="Michael Yap" \
+  -d description="Maecenas eu placerat ante." \
+  -d total=2000
+```
+
+> Response:
+
+```json
+{
+  "id": "afae4bqf",
+  "payment_order_collection_id": "4po8no8h",
+  "bank_code": "MBBEMYKL",
+  "bank_account_number": "820808062202123",
+  "name": "Michael Yap",
+  "description": "Maecenas eu placerat ante.",
+  "email" :"hello@billplz.com",
+  "status": "processing",
+  "notification": false,
+  "recipient_notification": true,
+  "total": "2000",
+  "reference_id": null
+}
+```
+
+> Example request with optional arguments:
+
+```shell
+# Creates a Payment Order for RM 20.00
+curl https://www.billplz.com/api/v4/payment_orders \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d payment_order_collection_id="4po8no8h" \
+  -d bank_code="MBBEMYKL" \
+  -d bank_account_number="820808062202123" \
+  -d name="Michael Yap" \
+  -d description="Maecenas eu placerat ante." \
+  -d total=2000 \
+  -d email="recipient@email.com" \
+  -d notification=true \
+  -d recipient_notification=false \
+  -d reference_id="paymentorder123123"
+```
+
+> Response:
+
+```json
+{
+  "id": "57iofla8",
+  "payment_order_collection_id": "4po8no8h",
+  "bank_code": "MBBEMYKL",
+  "bank_account_number": "820808062202123",
+  "name": "Michael Yap",
+  "description": "Maecenas eu placerat ante.",
+  "email":"recipient@email.com",
+  "status": "processing",
+  "notification": true,
+  "recipient_notification": false,
+  "total": "2000",
+  "reference_id": "paymentorder123123"
+}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/payment_orders`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| payment_order_collection_id | The Payment Order Collection ID. A string. |
+| bank_code | Bank Code that represents bank, in string value. Case sensitive. |
+| bank_account_number | Bank account number, in string value. |
+| name | Payment Order's recipient name. Useful for identification on recipient part. |
+| description | The Payment Order's description. Will be displayed on bill template. String format (Max of 200 characters). |
+| total | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+
+###### OPTIONAL ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| email | The email address of recipient (it default to sender's email if not present). <br>A receipt will be sent to this email once the Payment Order has been processed. |
+| notification | Boolean value. As a sender, you can opt-in for email notification by setting this to `true`. Sender will receive email once a Payment Order has been processed. Default value is `false`. |
+| recipient_notification | Boolean value. If this is set to `true`, recipient of the Payment Order will receive email notification once the Payment Order has been processed. Default value is `true`. Set to false if you do not like the recipient to receive any email notifications. |
+| reference_id | Payment Order unique reference ID scoped by [Payment Order Collection](#v4-payment-order-collections). This helps maintain data integrity by ensuring that no two rows of data in a payment order collection have identical reference_id value. Useful to prevent unintentional payment order creation. (Max of 255 characters).|
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents a Payment Order. |
+| payment_order_collection_id | The Payment Order collection's title in string format. |
+| bank_code | Bank Code that represents bank, in string value. Case sensitive. |
+| bank_account_number | Bank account number, in string value. |
+| name | Payment Order's recipient name. |
+| description | The Payment Order's description. |
+| email | The email address of recipient (it default to sender's email if not present). |
+| status | Payment Order status. It is either `processing` or `enquiring` or `executing` or `reviewing` or `completed` or `refunded`. |
+| notification | Boolean value. Sender will receive email notification if this is `true`. |
+| recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>A standard `RM1.50` or `RM0.50` or `RM0.00` fee would be charged from your credits when you successfully created a Payment Order request;<br>while the total of each Payment Order will be deducted from your Payout API limit. |
+| reference_id | Payment Order's reference ID. Useful for identification on recipient part.|
+
+### Get a Payment Order
+
+Use this API to query your Payment Order record.
+
+> Example request:
+
+```shell
+# Get a Payment Order
+curl https://www.billplz.com/api/v4/payment_orders/afae4bqf \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{
+  "id": "afae4bqf",
+  "payment_order_collection_id": "4po8no8h",
+  "bank_code": "MBBEMYKL",
+  "bank_account_number": "820808062202123",
+  "name": "Michael Yap",
+  "description": "Maecenas eu placerat ante.",
+  "email" :"hello@billplz.com",
+  "status": "processing",
+  "notification": false,
+  "recipient_notification": true,
+  "total": "2000",
+  "reference_id": null
+}
+```
+
+###### HTTP REQUEST
+
+`GET https://www.billplz.com/api/v4/payment_orders/{PAYMENT_ORDER_ID}`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| PAYMENT_ORDER_ID | The Payment Order ID. A string. |
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents a Payment Order. |
+| payment_order_collection_id | The Payment Order collection's title in string format. |
+| bank_code | Bank Code that represents bank, in string value. Case sensitive. |
+| bank_account_number | Bank account number, in string value. |
+| name | Payment Order's recipient name. |
+| description | The Payment Order's description. |
+| email | The email address of recipient (it default to sender's email if not present). |
+| status | Payment Order status. It is either `processing` or `enquiring` or `executing` or `reviewing` or `completed` or `refunded`. |
+| notification | Boolean value. Sender will receive email notification if this is `true`. |
+| recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| reference_id | Payment Order's reference ID. Useful for identification on recipient part.|
+
 ## Webhook Rank
 
 Webhook Rank has been introduced to ensure callback is running at it's best. The higher the ranking, the higher priority for the callback to be executed. Use this API to query your current Account Ranking. `0.0` indicate highest ranking (default) and `10.0` lowest ranking.

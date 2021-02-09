@@ -2811,13 +2811,14 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | TEST0023* | Test 0023 |
 | BP-FKR01* | Billplz Simulator |
 | BP-PPL01  | PayPal |
+| BP-OCBC1  | Visa / Mastercard |
 | BP-2C2P1  | e-pay |
 | BP-2C2PC  | Visa / Mastercard |
 | BP-2C2PU  | UnionPay |
-| BP-OCBC1  | Visa / Mastercard |
 | BP-2C2PGRB  | Grab |
 | BP-2C2PBST  | Boost |
 | BP-2C2PTNG  | TnG |
+| BP-2C2PI  | IPP |
 | BP-BST01  | Boost |
 | BP-SGP01  | Senangpay |
 | B2B1-ABB0232 | affinOnline |

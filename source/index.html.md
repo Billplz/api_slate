@@ -2818,7 +2818,7 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | BP-2C2PGRB  | Grab |
 | BP-2C2PBST  | Boost |
 | BP-2C2PTNG  | TnG |
-| BP-2C2PI  | IPP |
+| BP-2C2PIPP  | IPP |
 | BP-BST01  | Boost |
 | BP-SGP01  | Senangpay |
 | B2B1-ABB0232 | affinOnline |

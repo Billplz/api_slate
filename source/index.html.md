@@ -3384,9 +3384,9 @@ Billplz server also expecting the end point server responds with status code of 
 
 In a case of either the end point server does not able to respond within the limit seconds (20 secs) or does not respond with 200 status code, the callback will consider as failure.
 
-On failure, the job is scheduled again in 15 minutes * N + (random 0-300 seconds), where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours + random (0-300 seconds) after 4th attempt.
+On failure, the job is rescheduled for 2nd attempt in `15 seconds + (random 0-300 seconds)`, while 3rd and 4th attempts will rescheduled at `15 minutes + (random 0-300 seconds)`. The 5th (last) attempt will be `24 hours + random (0-300 seconds)` after 4th attempt.
 
-Assuming the first callback is initiated at 13:00:00. The second attempt will be at 13:15:00 + N seconds. The third attempt will be at 13:30:02 + N seconds. The fourth attempt will be at 13:45:05 + N seconds. The fifth attempt will be at 13:45:07+ N seconds next day.
+Assuming the 1st callback is initiated at 13:00:00. The 2nd attempt will be at 13:00:15 + N seconds. The 3rd attempt will be at 13:15:15 + N seconds. The 4th attempt will be at 13:30:15 + N seconds. The fifth attempt will be at 13:30:15+ N seconds next day.
 
 Billplz will attempt for maximum of 5 times and the callback will be removed from the system queue permanently after that.
 
@@ -3540,9 +3540,9 @@ Billplz server also expecting the end point server responds with status code of 
 
 In a case of either the end point server does not able to respond within the limit seconds (20 secs) or does not respond with 200 status code, the callback will consider as failure.
 
-On failure, the job is scheduled again in 15 minutes * N + (random 0-300 seconds), where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours + random (0-300 seconds) after 4th attempt.
+On failure, the job is rescheduled for 2nd attempt in `15 seconds + (random 0-300 seconds)`, while 3rd and 4th attempts will rescheduled at `15 minutes + (random 0-300 seconds)`. The 5th (last) attempt will be `24 hours + random (0-300 seconds)` after 4th attempt.
 
-Assuming the first callback is initiated at 13:00:00. The second attempt will be at 13:15:00 + N seconds. The third attempt will be at 13:30:02 + N seconds. The fourth attempt will be at 13:45:05 + N seconds. The fifth attempt will be at 13:45:07+ N seconds next day.
+Assuming the 1st callback is initiated at 13:00:00. The 2nd attempt will be at 13:00:15 + N seconds. The 3rd attempt will be at 13:15:15 + N seconds. The 4th attempt will be at 13:30:15 + N seconds. The fifth attempt will be at 13:30:15+ N seconds next day.
 
 Billplz will attempt for maximum of 5 times and the callback will be removed from the system queue permanently after that.
 

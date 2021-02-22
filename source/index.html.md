@@ -2864,13 +2864,11 @@ This feature allows you to exchange for a card's tokenization from our provider'
 
 This feature enables you to tokenize 3DS Visa / Mastercard cards to be charged later, which will be stored in Senangpay's PCI DSS certified servers.
 
-###### Card Tokenization Flow
+###### Ways to use Senangpay's tokenization:
 
-1. Create card & token using this [Create Card](#v4-tokenization-senangpay-create-card) API.
-1. Merchant redirects card holder to Senangpay's 3DS authentication page.
-1. Card holder inputs credit/debit card details and submits the form.
-1. Billplz will send a POST request to merchant's callback_url containing masked card details together with CARD_ID and TOKEN.
-1. Merchant compares the checksum sent, and store card details if they match.
+1. [Tokenize customer's card](#v4-tokenization-senangpay-create-card), so they only need to enter their card details once.
+1. Using [token](#v4-tokenization-senangpay-create-card) obtained, pay a Billplz bill by [charging customers's card](#v4-tokenization-senangpay-charge-card), anytime, any amount.
+1. Using [token](#v4-tokenization-senangpay-create-card) obtained, [pre authorize a bill payment](#v4-tokenization-senangpay-pre-auth), and [capture](#v4-tokenization-senangpay-pre-auth-capture) later in the future.
 
 <aside class="notice">
   This feature won't be enabled by default, and only applicable to paid plan members. Email <a href="mailto:team@billplz.com?subject=Senangpay_Tokenization">team@billplz.com</a> for assistance.
@@ -2880,7 +2878,16 @@ This feature enables you to tokenize 3DS Visa / Mastercard cards to be charged l
 
 Use this API to create a card token for 3DS Visa / Mastercard cards. Remember to store the response, as no card details nor tokens will be stored in Billplz's servers.
 
-To charge a card with the token generated, refer to this [API](#v4-tokenization-senangpay-charge-card).
+###### Flow
+
+1. Create card & token using this [Create Card](#v4-tokenization-senangpay-create-card) API.
+1. Merchant redirects card holder to Senangpay's 3DS authentication page.
+1. Card holder inputs credit/debit card details and submits the form.
+1. Upon 3DS verifcation success, Billplz will send a POST request to merchant's callback_url containing masked card details together with CARD_ID and TOKEN.
+1. Merchant compares the checksum sent, and store card details if they match.
+
+
+To charge a card with the token generated, refer to [Charge Card](#v4-tokenization-senangpay-charge-card) API.
 
 > Example request:
 
@@ -2970,7 +2977,7 @@ Billplz will send a POST request to `callback_url` provided within an hour, rega
 > Example request to callback_url:
 
 ```shell
-# POST request sent to callback_url
+# POST request sent by Billplz to your callback_url
 curl https://www.example.com/callback \
   -d id="a35296ad-b50c-4179-8024-036da00c1aee" \
   -d card_number="1118" \
@@ -3012,7 +3019,7 @@ Use this API to make bill payment by charging a Visa / Mastercard card with [tok
 
 1. Collection without split recipients (split payment).
 1. Bill. Email and Mobile number are required during bill creation.
-[Card Token & ID](#v4-tokenization-senangpay-create-card).
+1. [Card Token & ID](#v4-tokenization-senangpay-create-card).
 
 <aside class="notice">
   This function is only applicable for Visa / Mastercard cards. You won't be able to charge Amex cards.
@@ -3050,6 +3057,105 @@ curl https://www.billplz.com/api/v4/bills/awyzmy0m/charge \
 | --- | --- |
 | card_id | ID that represents a card. |
 | token | Card token. |
+
+#### Pre-Auth
+
+Use this API to pre-authorize a transaction with [token generated](#v4-tokenization-senangpay-create-card), and capture later.
+Amount will not be charged to the card, but the amount will be blocked until the transaction is captured or released.
+
+###### REQUIREMENTS
+
+1. Collection without split recipients (split payment).
+1. Bill. Email and Mobile number are required during bill creation.
+1. [Card Token & ID](#v4-tokenization-senangpay-create-card).
+
+<aside class="notice">
+  This function is only applicable for Visa / Mastercard cards. You won't be able to charge Amex cards.
+</aside>
+
+> Example request:
+
+```shell
+# Pre authorize bill payment with token
+curl https://www.billplz.com/api/v4/bills/awyzmy0m/preauth \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d token="77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740" \
+  -d card_id="8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6"
+```
+
+> Response:
+
+```json
+{
+  "amount": 10000,
+  "preauth_status": "success",
+  "preauth_id": "732d8sdk778912e81003946192b0b6aa4b754b3c8addd5",
+  "hash_value": "1b66606732d846192b0b6aa4b754b3c8addd59072fce4bdd066b5d631c31d5e8",
+  "message": "Preauth was successful"
+}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/bills/{BILL_ID}/preauth`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| card_id | ID that represents a card. |
+| token | Card token. |
+
+#### Pre-Auth Capture
+
+Use this API to capture a pre-authorize transaction with [token generated](#v4-tokenization-senangpay-create-card). Amount will be charged to the credit card right away.
+
+###### REQUIREMENTS
+
+1. Collection without split recipients (split payment).
+1. Bill. Email and Mobile number are required during bill creation.
+1. [Card Token & ID](#v4-tokenization-senangpay-create-card).
+1. [Preauth ID](#v4-tokenization-senangpay-preauth).
+
+<aside class="notice">
+  This function is only applicable for Visa / Mastercard cards. You won't be able to charge Amex cards.
+</aside>
+
+> Example request:
+
+```shell
+# Capture a pre-authed transaction
+curl https://www.billplz.com/api/v4/bills/awyzmy0m/preauth_capture \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d token="77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740" \
+  -d card_id="8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6"
+  -d preauth_id="732d8sdk778912e81003946192b0b6aa4b754b3c8addd5"
+```
+
+> Response:
+
+```json
+{
+  "amount": 10000,
+  "status": "success",
+  "reference_id": "15681981586116610",
+  "preauth_id": "732d8sdk778912e81003946192b0b6aa4b754b3c8addd5",
+  "hash_value": "1b66606732d846192b0b6aa4b754b3c8addd59072fce4bdd066b5d631c31d5e8",
+  "message": "Payment was successful"
+}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/bills/{BILL_ID}/preauth_capture`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| card_id | ID that represents a card. |
+| token | Card token. |
+| preauth_id | ID for pre-authed transaction |
 
 ### OCBC
 This feature enables merchants with OCBC business account to tokenize 3DS Visa / Mastercard cards to be charged later, which will be stored in OCBC's PCI DSS certified servers.

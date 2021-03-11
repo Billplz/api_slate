@@ -2821,6 +2821,14 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | BP-2C2PIPP  | IPP |
 | BP-BST01  | Boost |
 | BP-SGP01  | Senangpay |
+| BP-BILM1 | Visa / Mastercard |
+| BP-RZRGRB | Grab |
+| BP-RZRBST | Boost |
+| BP-RZRTNG | TnG |
+| BP-RZRPAY | RazerPay |
+| BP-RZRMB2QR | Maybank QR |
+| BP-RZRWCTP | WeChat Pay |
+| BP-RZRSHPE | Shopee Pay |
 | B2B1-ABB0232 | affinOnline |
 | B2B1-ABB0235 | AFFINMAX |
 | B2B1-ABMB0213 | Alliance BizSmart |

@@ -95,6 +95,9 @@ Billplz does not redirects (Payment Completion) the customer back to your site, 
 <aside class="notice">
   The order of <code>redirect_url</code> and <code>callback_url</code> APIs execution is not in a fixed order. Your system should not rely on the sequence and must be able to prevent duplicate updates.
 </aside>
+<aside class="notice">
+  Billplz API only accept <strong>Malaysian Ringgit (MYR)</strong> currency and did not support currency conversion. You need to ensure the value passed is in the smallest currency unit.
+</aside>
 
 # Authentication
 

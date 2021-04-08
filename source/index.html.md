@@ -2832,6 +2832,7 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | BP-RZRMB2QR | Maybank QR |
 | BP-RZRWCTP | WeChat Pay |
 | BP-RZRSHPE | Shopee Pay |
+| BP-MPGS1 | MPGS |
 | B2B1-ABB0232 | affinOnline |
 | B2B1-ABB0235 | AFFINMAX |
 | B2B1-ABMB0213 | Alliance BizSmart |

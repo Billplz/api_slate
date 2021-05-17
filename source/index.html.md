@@ -151,10 +151,6 @@ Billplz has been integrated with many systems available in the market and always
 
 For a self-hosted system, you may download a production-ready module to integrate with your e-commerce system. Please refer to our [GitHub](https://github.com/billplz) or [Knowledgebase](https://help.billplz.com/article/53-list-of-system-with-production-ready-integration) for the list of the available module.
 
-## Xero
-
-Billplz integration with XERO has been deprecated and pending removal.
-
 ## OAuth 2.0
 
 Billplz provides a solution for a platform owner to connect merchants with Billplz easily. With OAuth integration, a merchant can easily integrate with Billplz by Signing In using their Billplz account. That's means; they don't have to manually copy `API Secret Key`, `Collection ID`, and `X Signature Key` to your platform.

@@ -2617,7 +2617,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | status | Payout API status. It is either `processing` or `completed` or `refunded`. |
 | notification | Boolean value. Sender will receive email notification if this is `true`. |
 | recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
-| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>A standard `RM1.50` or `RM0.50` or `RM0.00` fee would be charged from your credits when you successfully created a Payout API request;<br>while the total of each Payout API will be deducted from your Payout API limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payout API request;<br>while the total of each Payout API will be deducted from your Payout API limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
 | reference_id | Payout API's reference ID. Useful for identification on recipient part.|
 
 ### Get a Payout API

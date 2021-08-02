@@ -3918,7 +3918,7 @@ Content-Type: application/x-www-form-urlencoded
 | Parameter | Description |
 | --- | --- |
 | id | ID that represents payout. |
-| mass_payment_instruction_collection_id | AAAAAAAAAAAAA. |
+| mass_payment_instruction_collection_id | The Payout API collection's title in string format. |
 | bank_code | Bank Code that represents bank, in string value. |
 | bank_account_number | Bank account number, in string value. |
 | identity_number | Bank account's IC Number/SSM Registration Number, in string value. |

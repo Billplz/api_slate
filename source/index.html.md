@@ -2534,7 +2534,8 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
   "notification": false,
   "recipient_notification": true,
   "total": "2000",
-  "reference_id": null
+  "reference_id": null,
+  "callback_url": null
 }
 ```
 
@@ -2554,7 +2555,8 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
   -d email="recipient@email.com" \
   -d notification=true \
   -d recipient_notification=false \
-  -d reference_id="payout123123"
+  -d reference_id="payout123123" \
+  -d callback_url="https://example.com/callback_url"
 ```
 
 > Response:
@@ -2573,7 +2575,8 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
   "notification": true,
   "recipient_notification": false,
   "total": "2000",
-  "reference_id": "payout123123"
+  "reference_id": "payout123123",
+  "callback_url": "https://example.com/callback_url"
 }
 ```
 
@@ -2601,6 +2604,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | notification | Boolean value. As a sender, you can opt-in for email notification by setting this to `true`. Sender will receive email once a Payout API has been processed. Default value is `false`. |
 | recipient_notification | Boolean value. If this is set to `true`, recipient of the Payout API will receive email notification once the Payout API has been processed. Default value is `true`. Set to false if you do not like the recipient to receive any email notifications. |
 | reference_id | Payout API's unique reference ID scoped by [Payout API Collection](#v4-payout-api-collections). This helps maintain data integrity by ensuring that no two rows of data in a payout API collection have identical reference_id value. Useful to prevent unintentional payout API creation. (Max of 255 characters).|
+| callback_url |  Web hook URL to be called after payout's transaction state changed. It will POST a Payout object.|
 
 ###### RESPONSE PARAMETER
 
@@ -2619,6 +2623,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
 | total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payout API request;<br>while the total of each Payout API will be deducted from your Payout API limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
 | reference_id | Payout API's reference ID. Useful for identification on recipient part.|
+| callback_url | Callback URL for notifying the payout status change. The last POST constitute the final state of payout.|
 
 ### Get a Payout API
 
@@ -2679,6 +2684,14 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf \
 | recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
 | total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
 | reference_id | Payout API's reference ID. Useful for identification on recipient part.|
+
+<aside class="warning">
+  The usage of this API is not recommended as it is subject to our <a href="#rate-limit">Rate Limit</a> policy.
+</aside>
+
+<aside class="success">
+  Use <a href="#payment-completion-x-signature-payout-api">X Signature Payout API to validate the response parameter.
+</aside>
 
 ## Webhook Rank
 
@@ -3845,6 +3858,206 @@ To verify that the request came from Billplz, compute the HMAC-SHA256 digest acc
 ######\#6 Compare parameter x_signature passed in the request with the computed x_signature in #5.
 
 If they match, you can be sure that the redirection was sent from Billplz and the data has not been compromised, and you **do not need to trigger additional Get a Bill API for primary status validation**.
+
+## X Signature Payout API
+
+X Signature Payout API allows your system to be notified in the event of the payout status change. This will ensure that your system can be hooked to perform an action in the event of payout status. The callback notification will be send when the status changed to `completed` or `refunded`.
+
+You are required to have this feature set-up if your system require an update on the payout status as <a href="#v4-payout-api-get-a-payout-api">Get a Payout API</a> is rate-limited.
+
+###### SERVER SIDE REQUEST
+
+If `callback_url` exists, Billplz will make a POST request with Payout object upon status change (`completed` or `refunded`).
+
+X Signature Callback URL request created through the API by Billplz can be verified by calculating a digital signature - `x_signature`.
+
+Each callback request includes a x_signature which is generated using HMAC-SHA256 algorithm and shared XSignature Key, along with the data sent in the request.
+
+To verify that the request came from Billplz, compute the HMAC-SHA256 digest according to the X Signature section and compare it to the value in the x_signature parameter. If they match, you can be sure that the callback was sent from Billplz and the data has not been compromised.
+
+A bill that catched payment failure will be in due state.
+
+<aside class="success">
+  By default, X Signature Callback URL feature is activated for account registered starting September 2018.
+</aside>
+
+> Example Server Side Request from Billplz:
+
+```
+POST /webhook/ HTTP/1.1
+Connection: close
+Host: 127.0.0.1
+Content-Length: 346
+Content-Type: application/x-www-form-urlencoded
+
+  id="bdejmycg"
+  &mass_payment_instruction_collection_id="bbk2nh77"
+  &bank_code="CIBBMYKL"
+  &bank_account_number="9230248"
+  &identity_number="PC0011H"
+  &name="Michae Yap"
+  &description="Maecenas eu placerat ante."
+  &email="api@billplz.com"
+  &status="completed"
+  &notification="false"
+  &recipient_notification="true"
+  &reference_id=""
+  &total="1"
+  &paid_at="02/08/2021"
+  &x_signature="f815155154fa4fbef2bf5482fe8ab4273bc5125facf9c880ad634bceca292f8f"
+```
+
+> Body formatted for readability.
+
+###### HTTP REQUEST
+
+`POST {CALLBACK_URL}`
+
+###### POST PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents payout. |
+| mass_payment_instruction_collection_id | AAAAAAAAAAAAA. |
+| bank_code | Bank Code that represents bank, in string value. |
+| bank_account_number | Bank account number, in string value. |
+| identity_number | Bank account's IC Number/SSM Registration Number, in string value. |
+| name | Payout API's recipient name. |
+| description | The Payout API's description. |
+| email | The email address of recipient. |
+| status | Payout API status. It is either `processing` or `completed` or `refunded`. |
+| notification | Boolean value. |
+| recipient_notification | Boolean value. |
+| reference_id | Payout API's reference ID. Useful for identification on recipient part. |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| paid_at | Date time when the bill was paid, in format `DD/MM/YYYY`. Example, `02/08/2021` |
+
+Callback request will be timeout in 20 seconds.
+
+Billplz server also expecting the end point server responds with status code of 200.
+
+In a case of either the end point server does not able to respond within the limit seconds (20 secs) or does not respond with 200 status code, the callback will consider as failure.
+
+On failure, the job is rescheduled for 2nd attempt in `15 seconds + (random 0-300 seconds)`, while 3rd and 4th attempts will rescheduled at `15 minutes + (random 0-300 seconds)`. The 5th (last) attempt will be `24 hours + random (0-300 seconds)` after 4th attempt.
+
+Assuming the 1st callback is initiated at 13:00:00. The 2nd attempt will be at 13:00:15 + N seconds. The 3rd attempt will be at 13:15:15 + N seconds. The 4th attempt will be at 13:30:15 + N seconds. The fifth attempt will be at 13:30:15+ N seconds next day.
+
+Billplz will attempt for maximum of 5 times and the callback will be removed from the system queue permanently after that.
+
+###### SAMPLE HTTP REQUEST FROM X SIGNATURE CALLBACK URL FEATURE
+
+`POST {CALLBACK_URL}`
+
+with POST body,
+`{:id=>"bdejmycg", :mass_payment_instruction_collection_id=>"bbk2nh77", :bank_code=>"CIBBMYKL", :bank_account_number=>"9230248", :identity_number=>"PC0011H", :name=>"Michae Yap", :description=>"Maecenas eu placerat ante.", :email=>"api@billplz.com", :status=>"completed", :notification=>"false", :recipient_notification=>"true", :reference_id=>"", :total=>"1", :paid_at=>"02/08/2021", :x_signature=>"f815155154fa4fbef2bf5482fe8ab4273bc5125facf9c880ad634bceca292f8f"}`
+
+###### \#1 Extract all key-value pair parameters except x_signature.
+
+`id="bdejmycg"`
+
+`mass_payment_instruction_collection_id="bbk2nh77" `
+
+`bank_code="CIBBMYKL"`
+
+`bank_account_number="9230248"`
+
+`identity_number="PC0011H"`
+
+`name="Michae Yap"`
+
+`description="Maecenas eu placerat ante."`
+
+`email="api@billplz.com"`
+
+`status="completed"`
+
+`notification="false"`
+
+`recipient_notification="true"`
+
+`reference_id=""`
+
+`total="1"`
+
+`paid_at="02/08/2021"`
+
+###### \#2 Construct source string from each key-value pair parameters above.
+
+`idbdejmycg`
+
+`mass_payment_instruction_collection_idbbk2nh77`
+
+`bank_codeCIBBMYKL`
+
+`bank_account_number9230248`
+
+`identity_numberPC0011H`
+
+`nameMichae Yap`
+
+`descriptionMaecenas eu placerat ante.`
+
+`emailapi@billplz.com`
+
+`statuscompleted`
+
+`notificationfalse`
+
+`recipient_notificationtrue`
+
+`reference_id`
+
+`total1`
+
+`paid_at="02/08/2021`
+
+###### \#3 Sort in ascending order, case-insensitive.
+
+`bank_account_number9230248`
+
+`bank_codeCIBBMYKL`
+
+`descriptionMaecenas eu placerat ante.`
+
+`emailapi@billplz.com`
+
+`idediomtyu`
+
+`identity_numberPC0011H`
+
+`mass_payment_instruction_collection_idbbk2nh77`
+
+`nameMichael Yap`
+
+`notificationfalse`
+
+`paid_at02/08/2021`
+
+`recipient_notificationtrue`
+
+`reference_id`
+
+`statuscompleted`
+
+`total1`
+
+###### \#4 Combine sorted source strings with "|" (pipe) character in between.
+
+`bank_account_number9230248|bank_codeCIBBMYKL|descriptionMaecenas eu placerat ante.|emailapi@billplz.com|idediomtyu|identity_numberPC0011H|mass_payment_instruction_collection_idbbk2nh77|nameMichael Yap|notificationfalse|paid_at02/08/2021|recipient_notificationtrue|reference_id|statuscompleted|total1`
+
+###### \#5 Compute x_signature by signing the final source in #4 using HMAC_SHA256 and the sample XSignature Key.
+
+`S-R5t3Uw6SrwXNWyZV-naVHg`
+
+`f815155154fa4fbef2bf5482fe8ab4273bc5125facf9c880ad634bceca292f8f`
+
+###### \#6 Compare the computed x_signature with the x_signature passed in the request.
+
+If they match, you can be sure that the callback was sent from Billplz and the data has not been compromised, and you **do not need to trigger additional Get a Payout API for primary status validation**.
+
+<aside class="warning">
+  YOUR ACCOUNT RANK WILL BE DEGRADED BY 1 FOR EVERY UNSUCCESSFUL ATTEMPT OF CALLBACK AND WILL RESULT TO LOWER SCHEDULING PRIORITY FOR THE CALLBACK TO BE EXECUTED FOR YOUR ACCOUNT.
+</aside>
 
 # Rate Limit
 

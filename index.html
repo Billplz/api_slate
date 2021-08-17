@@ -237,9 +237,6 @@
             <a href="#integration" class="toc-h1 toc-link" data-title="Integration">Integration</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#integration-xero" class="toc-h2 toc-link" data-title="Xero">Xero</a>
-                  </li>
-                  <li>
                     <a href="#integration-oauth-2-0" class="toc-h2 toc-link" data-title="OAuth 2.0">OAuth 2.0</a>
                   </li>
               </ul>
@@ -398,27 +395,27 @@
                       </ul>
                   </li>
                   <li>
-                    <a href="#v4-payout-flow" class="toc-h2 toc-link" data-title="Payout Flow">Payout Flow</a>
+                    <a href="#v4-payout-api-flow" class="toc-h2 toc-link" data-title="Payout API Flow">Payout API Flow</a>
                   </li>
                   <li>
-                    <a href="#v4-payout-collections" class="toc-h2 toc-link" data-title="Payout Collections">Payout Collections</a>
+                    <a href="#v4-payout-api-collections" class="toc-h2 toc-link" data-title="Payout API Collections">Payout API Collections</a>
                       <ul class="toc-list-h3">
                           <li>
-                            <a href="#v4-payout-collections-create-a-payout-collection" class="toc-h3 toc-link" data-title="Create a Payout Collection">Create a Payout Collection</a>
+                            <a href="#v4-payout-api-collections-create-a-payout-api-collection" class="toc-h3 toc-link" data-title="Create a Payout API Collection">Create a Payout API Collection</a>
                           </li>
                           <li>
-                            <a href="#v4-payout-collections-get-a-payout-collection" class="toc-h3 toc-link" data-title="Get a Payout Collection">Get a Payout Collection</a>
+                            <a href="#v4-payout-api-collections-get-a-payout-api-collection" class="toc-h3 toc-link" data-title="Get a Payout API Collection">Get a Payout API Collection</a>
                           </li>
                       </ul>
                   </li>
                   <li>
-                    <a href="#v4-payout" class="toc-h2 toc-link" data-title="Payout">Payout</a>
+                    <a href="#v4-payout-api" class="toc-h2 toc-link" data-title="Payout API">Payout API</a>
                       <ul class="toc-list-h3">
                           <li>
-                            <a href="#v4-payout-create-a-payout" class="toc-h3 toc-link" data-title="Create a Payout">Create a Payout</a>
+                            <a href="#v4-payout-api-create-a-payout-api" class="toc-h3 toc-link" data-title="Create a Payout API">Create a Payout API</a>
                           </li>
                           <li>
-                            <a href="#v4-payout-get-a-payout" class="toc-h3 toc-link" data-title="Get a Payout">Get a Payout</a>
+                            <a href="#v4-payout-api-get-a-payout-api" class="toc-h3 toc-link" data-title="Get a Payout API">Get a Payout API</a>
                           </li>
                       </ul>
                   </li>
@@ -429,7 +426,7 @@
                     <a href="#v4-get-payment-gateways" class="toc-h2 toc-link" data-title="Get Payment Gateways">Get Payment Gateways</a>
                       <ul class="toc-list-h3">
                           <li>
-                            <a href="#v4-get-payment-gateways-get-a-payout-payment-gateway-abbreviations" class="toc-h3 toc-link" data-title="Payment Gateway Abbreviations">Payment Gateway Abbreviations</a>
+                            <a href="#v4-get-payment-gateways-get-a-payout-api-payment-gateway-abbreviations" class="toc-h3 toc-link" data-title="Payment Gateway Abbreviations">Payment Gateway Abbreviations</a>
                           </li>
                       </ul>
                   </li>
@@ -450,6 +447,12 @@
                                   </li>
                                   <li>
                                     <a href="#v4-tokenization-senangpay-charge-card" class="toc-h4 toc-link" data-title="Charge Card">Charge Card</a>
+                                  </li>
+                                  <li>
+                                    <a href="#v4-tokenization-senangpay-pre-auth" class="toc-h4 toc-link" data-title="Pre-Auth">Pre-Auth</a>
+                                  </li>
+                                  <li>
+                                    <a href="#v4-tokenization-senangpay-pre-auth-capture" class="toc-h4 toc-link" data-title="Pre-Auth Capture">Pre-Auth Capture</a>
                                   </li>
                               </ul>
                           </li>
@@ -496,6 +499,9 @@
                   </li>
                   <li>
                     <a href="#payment-completion-x-signature-redirect-url" class="toc-h2 toc-link" data-title="X Signature Redirect Url">X Signature Redirect Url</a>
+                  </li>
+                  <li>
+                    <a href="#payment-completion-x-signature-payout-api" class="toc-h2 toc-link" data-title="X Signature Payout API">X Signature Payout API</a>
                   </li>
               </ul>
           </li>
@@ -590,6 +596,10 @@ Billplz does not redirects (Payment Completion) the customer back to your site, 
 <aside class="notice">
   The order of <code>redirect_url</code> and <code>callback_url</code> APIs execution is not in a fixed order. Your system should not rely on the sequence and must be able to prevent duplicate updates.
 </aside>
+
+<aside class="notice">
+  Billplz API only accept <strong>Malaysian Ringgit (MYR)</strong> currency and did not support currency conversion. You need to ensure the value passed is in the smallest currency unit.
+</aside>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
 <p>To test authentication, use this code:</p>
@@ -635,8 +645,6 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <p>Billplz has been integrated with many systems available in the market and always working to integrate with more platforms.</p>
 
 <p>For a self-hosted system, you may download a production-ready module to integrate with your e-commerce system. Please refer to our <a href="https://github.com/billplz">GitHub</a> or <a href="https://help.billplz.com/article/53-list-of-system-with-production-ready-integration">Knowledgebase</a> for the list of the available module.</p>
-<h2 id='integration-xero'>Xero</h2>
-<p>Billplz integration with XERO has been deprecated and pending removal.</p>
 <h2 id='integration-oauth-2-0'>OAuth 2.0</h2>
 <p>Billplz provides a solution for a platform owner to connect merchants with Billplz easily. With OAuth integration, a merchant can easily integrate with Billplz by Signing In using their Billplz account. That&#39;s means; they don&#39;t have to manually copy <code>API Secret Key</code>, <code>Collection ID</code>, and <code>X Signature Key</code> to your platform.</p>
 
@@ -2624,11 +2632,11 @@ curl https://www.billplz.com/api/v3/fpx_banks <span class="se">\</span>
 </thead><tbody>
 <tr>
 <td>ABMB0212</td>
-<td>Alliance Bank</td>
+<td>allianceonline</td>
 </tr>
 <tr>
 <td>ABB0233</td>
-<td>Affin Bank</td>
+<td>affinOnline</td>
 </tr>
 <tr>
 <td>ABB0234*</td>
@@ -2636,7 +2644,7 @@ curl https://www.billplz.com/api/v3/fpx_banks <span class="se">\</span>
 </tr>
 <tr>
 <td>AMBB0209</td>
-<td>AmBank</td>
+<td>AmOnline</td>
 </tr>
 <tr>
 <td>BCBB0235</td>
@@ -2644,35 +2652,35 @@ curl https://www.billplz.com/api/v3/fpx_banks <span class="se">\</span>
 </tr>
 <tr>
 <td>BIMB0340</td>
-<td>Bank Islam</td>
+<td>Bank Islam Internet Banking</td>
 </tr>
 <tr>
 <td>BKRM0602</td>
-<td>Bank Rakyat</td>
+<td>i-Rakyat</td>
 </tr>
 <tr>
 <td>BMMB0341</td>
-<td>Bank Muamalat</td>
+<td>i-Muamalat</td>
 </tr>
 <tr>
 <td>BSN0601</td>
-<td>BSN</td>
+<td>myBSN</td>
 </tr>
 <tr>
 <td>CIT0219</td>
-<td>Citibank Berhad</td>
+<td>Citibank Online</td>
 </tr>
 <tr>
 <td>HLB0224</td>
-<td>Hong Leong Bank</td>
+<td>HLB Connect</td>
 </tr>
 <tr>
 <td>HSBC0223</td>
-<td>HSBC Bank</td>
+<td>HSBC Online Banking</td>
 </tr>
 <tr>
 <td>KFH0346</td>
-<td>Kuwait Finance House</td>
+<td>KFH Online</td>
 </tr>
 <tr>
 <td>MB2U0227</td>
@@ -2688,11 +2696,11 @@ curl https://www.billplz.com/api/v3/fpx_banks <span class="se">\</span>
 </tr>
 <tr>
 <td>OCBC0229</td>
-<td>OCBC Bank</td>
+<td>OCBC Online Banking</td>
 </tr>
 <tr>
 <td>PBB0233</td>
-<td>Public Bank</td>
+<td>PBe</td>
 </tr>
 <tr>
 <td>RHB0218</td>
@@ -2700,11 +2708,11 @@ curl https://www.billplz.com/api/v3/fpx_banks <span class="se">\</span>
 </tr>
 <tr>
 <td>SCB0216</td>
-<td>Standard Chartered</td>
+<td>SC Online Banking</td>
 </tr>
 <tr>
 <td>UOB0226</td>
-<td>UOB Bank</td>
+<td>UOB Internet Banking</td>
 </tr>
 <tr>
 <td>UOB0229*</td>
@@ -3686,35 +3694,35 @@ curl https://www.billplz.com/api/v4/collections/qag4fe_o6/customer_receipt_deliv
 <td>Collection&#39;s Customer Receipt Notification status, it is either <code>active</code>, <code>inactive</code> or <code>global</code>.</td>
 </tr>
 </tbody></table>
-<h2 id='v4-payout-flow'>Payout Flow</h2>
-<p>Payout allows you to make payment to any account bank registered in Malaysia. Since Bank doesn&#39;t provide way to programatically make payment to bank account, you can achieve that by using our Payout API.</p>
+<h2 id='v4-payout-api-flow'>Payout API Flow</h2>
+<p>Payout API allows you to make payment to any account bank registered in Malaysia. Since Bank doesn&#39;t provide way to programatically make payment to bank account, you can achieve that by using our Payout API.</p>
 
-<p>Payout implements the same collection concept as per <a href="#api-flow">API Flow</a>. You will have collection that consists of multiple payouts.</p>
+<p>Payout API implements the same collection concept as per <a href="#api-flow">API Flow</a>. You will have collection that consists of multiple payout APIs.</p>
 
-<p>Before proceeding further, you need to ensure that you have enough payout limit to perform Payout. To increase payout limit, navigate to Payout tab and you will notice the Payout Limit at the top.</p>
+<p>Before proceeding further, you need to ensure that you have enough payout API limit to perform payout API. To increase payout API limit, navigate to payout API tab and you will notice the payout API Limit at the top.</p>
 
-<p><img src="images/payoutlimit.png" alt="Payout Limit Interface Screenshot." /></p>
+<p><img src="images/payoutlimit.png" alt="Payout API Limit Interface Screenshot." /></p>
 
-<p>To start using the API, you would have to create a Payout Collection. Then the payout will kicks in as per below:</p>
+<p>To start using the API, you would have to create a Payout API Collection. Then the payout API will kicks in as per below:</p>
 
 <ol>
 <li>Get bank information from the recipient.</li>
-<li>Execute <a href="#v4-payout-create-a-payout">Create a Payout</a> API.</li>
+<li>Execute <a href="#v4-payout-api-create-a-payout-api">Create a Payout API</a> API.</li>
 <li>If failed, perform one-time bank account registration using <a href="#v3-bank-account-direct-verification-create-a-bank-account">Create a Bank Account</a>;</li>
 <li>Then, execute Create a Payout API again after three working days.</li>
-<li>The payment will be settled to the receipient in one (1) working day except Thursday and public holidays.</li>
+<li>The payment will be settled to the receipient in one (1) working day.</li>
 </ol>
 
 <aside class="notice">
   Get a Bank Account API will pass the latest record from Create a Bank Account API. Merchant is expected to store the recipient details on their own and not relying on details provided by Get a Bank Account API.
 </aside>
-<h2 id='v4-payout-collections'>Payout Collections</h2><h3 id='v4-payout-collections-create-a-payout-collection'>Create a Payout Collection</h3>
-<p>New Payout Collection used to group all your Payouts to make payout transfers.</p>
+<h2 id='v4-payout-api-collections'>Payout API Collections</h2><h3 id='v4-payout-api-collections-create-a-payout-api-collection'>Create a Payout API Collection</h3>
+<p>New Payout API Collection used to group all your Payout APIs to make payout API transfers.</p>
 
 <blockquote>
 <p>Example request:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Creates a Payout collection</span>
+<pre class="highlight shell tab-shell"><code><span class="c"># Creates a Payout API collection</span>
 curl https://www.billplz.com/api/v4/mass_payment_instruction_collections <span class="se">\</span>
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: <span class="se">\</span>
   -d <span class="nv">title</span><span class="o">=</span><span class="s2">"My First API Payout Collection"</span>
@@ -3729,9 +3737,9 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections <span c
   </span><span class="s2">"paid_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h6 id='v4-payout-collections-create-a-payout-collection-get-status-http-request'>HTTP REQUEST</h6>
+</span></code></pre><h6 id='v4-payout-api-collections-create-a-payout-api-collection-get-status-http-request'>HTTP REQUEST</h6>
 <p><code>POST https://www.billplz.com/api/v4/mass_payment_instruction_collections</code></p>
-<h6 id='v4-payout-collections-create-a-payout-collection-get-status-required-arguments'>REQUIRED ARGUMENTS</h6>
+<h6 id='v4-payout-api-collections-create-a-payout-api-collection-get-status-required-arguments'>REQUIRED ARGUMENTS</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3743,7 +3751,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections <span c
 <td>The collection title. Will be displayed on bill template. String format.</td>
 </tr>
 </tbody></table>
-<h6 id='v4-payout-collections-create-a-payout-collection-get-status-response-parameter'>RESPONSE PARAMETER</h6>
+<h6 id='v4-payout-api-collections-create-a-payout-api-collection-get-status-response-parameter'>RESPONSE PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3760,24 +3768,24 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections <span c
 </tr>
 <tr>
 <td>mass_payment_instructions_count</td>
-<td>The number of payout belongs to this collection.</td>
+<td>The number of payout API belongs to this collection.</td>
 </tr>
 <tr>
 <td>paid_amount</td>
-<td>Total paid amount for payouts in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00).</td>
+<td>Total paid amount for payout APIs in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00).</td>
 </tr>
 <tr>
 <td>status</td>
 <td>Collection&#39;s status, it is either <code>active</code> and <code>inactive</code>.</td>
 </tr>
 </tbody></table>
-<h3 id='v4-payout-collections-get-a-payout-collection'>Get a Payout Collection</h3>
-<p>Use this API to query your Payout Collection record.</p>
+<h3 id='v4-payout-api-collections-get-a-payout-api-collection'>Get a Payout API Collection</h3>
+<p>Use this API to query your Payout API Collection record.</p>
 
 <blockquote>
 <p>Example request:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Get a Payout collection</span>
+<pre class="highlight shell tab-shell"><code><span class="c"># Get a Payout API collection</span>
 curl https://www.billplz.com/api/v4/mass_payment_instruction_collections/4po8no8h <span class="se">\</span>
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
 </code></pre>
@@ -3791,9 +3799,9 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections/4po8no8
   </span><span class="s2">"paid_amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h6 id='v4-payout-collections-get-a-payout-collection-get-status-http-request'>HTTP REQUEST</h6>
+</span></code></pre><h6 id='v4-payout-api-collections-get-a-payout-api-collection-get-status-http-request'>HTTP REQUEST</h6>
 <p><code>GET https://www.billplz.com/api/v4/mass_payment_instruction_collections/{PAYOUT_COLLECTION_ID}</code></p>
-<h6 id='v4-payout-collections-get-a-payout-collection-get-status-required-arguments'>REQUIRED ARGUMENTS</h6>
+<h6 id='v4-payout-api-collections-get-a-payout-api-collection-get-status-required-arguments'>REQUIRED ARGUMENTS</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3802,10 +3810,10 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections/4po8no8
 </thead><tbody>
 <tr>
 <td>PAYOUT_COLLECTION_ID</td>
-<td>Collection ID returned in Payout Collection object.</td>
+<td>Collection ID returned in Payout API Collection object.</td>
 </tr>
 </tbody></table>
-<h6 id='v4-payout-collections-get-a-payout-collection-get-status-response-parameter'>RESPONSE PARAMETER</h6>
+<h6 id='v4-payout-api-collections-get-a-payout-api-collection-get-status-response-parameter'>RESPONSE PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3822,30 +3830,30 @@ curl https://www.billplz.com/api/v4/mass_payment_instruction_collections/4po8no8
 </tr>
 <tr>
 <td>mass_payment_instructions_count</td>
-<td>The number of payout belongs to this collection.</td>
+<td>The number of payout API belongs to this collection.</td>
 </tr>
 <tr>
 <td>paid_amount</td>
-<td>Total paid amount for payouts in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00).</td>
+<td>Total paid amount for payout APIs in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00).</td>
 </tr>
 <tr>
 <td>status</td>
 <td>Collection&#39;s status, it is either <code>active</code> and <code>inactive</code>.</td>
 </tr>
 </tbody></table>
-<h2 id='v4-payout'>Payout</h2><h3 id='v4-payout-create-a-payout'>Create a Payout</h3>
-<p>To make a payment transfer to another bank account, simply create a Payout.</p>
+<h2 id='v4-payout-api'>Payout API</h2><h3 id='v4-payout-api-create-a-payout-api'>Create a Payout API</h3>
+<p>To make a payment transfer to another bank account, simply create a Payout API.</p>
 
-<p>To create a Payout, you would need the Payout collection&#39;s ID. Each Payout must be created within a Payout Collection.</p>
+<p>To create a Payout API, you would need the Payout API collection&#39;s ID. Each Payout API must be created within a Payout API Collection.</p>
 
 <aside class="warning">
-  It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout Limit</strong>.
+  It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout API Limit</strong>.
 </aside>
 
 <blockquote>
 <p>Example request:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Creates a Payout for RM 20.00</span>
+<pre class="highlight shell tab-shell"><code><span class="c"># Creates a Payout API for RM 20.00</span>
 curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\</span>
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: <span class="se">\</span>
   -d <span class="nv">mass_payment_instruction_collection_id</span><span class="o">=</span><span class="s2">"4po8no8h"</span> <span class="se">\</span>
@@ -3872,13 +3880,14 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
   </span><span class="s2">"notification"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"recipient_notification"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"reference_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+  </span><span class="s2">"reference_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
 <p>Example request with optional arguments:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Creates a Payout for RM 20.00</span>
+<pre class="highlight shell tab-shell"><code><span class="c"># Creates a Payout API for RM 20.00</span>
 curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\</span>
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: <span class="se">\</span>
   -d <span class="nv">mass_payment_instruction_collection_id</span><span class="o">=</span><span class="s2">"4po8no8h"</span> <span class="se">\</span>
@@ -3891,7 +3900,8 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
   -d <span class="nv">email</span><span class="o">=</span><span class="s2">"recipient@email.com"</span> <span class="se">\</span>
   -d <span class="nv">notification</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
   -d <span class="nv">recipient_notification</span><span class="o">=</span><span class="nb">false</span> <span class="se">\</span>
-  -d <span class="nv">reference_id</span><span class="o">=</span><span class="s2">"payout123123"</span>
+  -d <span class="nv">reference_id</span><span class="o">=</span><span class="s2">"payout123123"</span> <span class="se">\</span>
+  -d <span class="nv">callback_url</span><span class="o">=</span><span class="s2">"https://example.com/callback_url"</span>
 </code></pre>
 <blockquote>
 <p>Response:</p>
@@ -3909,11 +3919,12 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
   </span><span class="s2">"notification"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
   </span><span class="s2">"recipient_notification"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"reference_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"payout123123"</span><span class="w">
+  </span><span class="s2">"reference_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"payout123123"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"callback_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://example.com/callback_url"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h6 id='v4-payout-create-a-payout-get-status-http-request'>HTTP REQUEST</h6>
+</span></code></pre><h6 id='v4-payout-api-create-a-payout-api-get-status-http-request'>HTTP REQUEST</h6>
 <p><code>POST https://www.billplz.com/api/v4/mass_payment_instructions</code></p>
-<h6 id='v4-payout-create-a-payout-get-status-required-arguments'>REQUIRED ARGUMENTS</h6>
+<h6 id='v4-payout-api-create-a-payout-api-get-status-required-arguments'>REQUIRED ARGUMENTS</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3922,7 +3933,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
 </thead><tbody>
 <tr>
 <td>mass_payment_instruction_collection_id</td>
-<td>The Payout Collection ID. A string.</td>
+<td>The Payout API Collection ID. A string.</td>
 </tr>
 <tr>
 <td>bank_code</td>
@@ -3938,18 +3949,18 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
 </tr>
 <tr>
 <td>name</td>
-<td>Payout&#39;s recipient name. Useful for identification on recipient part.</td>
+<td>Payout API&#39;s recipient name. Useful for identification on recipient part.</td>
 </tr>
 <tr>
 <td>description</td>
-<td>The Payout&#39;s description. Will be displayed on bill template. String format (Max of 200 characters).</td>
+<td>The Payout API&#39;s description. Will be displayed on bill template. String format (Max of 200 characters).</td>
 </tr>
 <tr>
 <td>total</td>
 <td>Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00).</td>
 </tr>
 </tbody></table>
-<h6 id='v4-payout-create-a-payout-get-status-optional-arguments'>OPTIONAL ARGUMENTS</h6>
+<h6 id='v4-payout-api-create-a-payout-api-get-status-optional-arguments'>OPTIONAL ARGUMENTS</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3958,22 +3969,26 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
 </thead><tbody>
 <tr>
 <td>email</td>
-<td>The email address of recipient (it default to sender&#39;s email if not present). <br>A receipt will be sent to this email once the Payout has been processed.</td>
+<td>The email address of recipient (it default to sender&#39;s email if not present). <br>A receipt will be sent to this email once the Payout API has been processed.</td>
 </tr>
 <tr>
 <td>notification</td>
-<td>Boolean value. As a sender, you can opt-in for email notification by setting this to <code>true</code>. Sender will receive email once a Payout has been processed. Default value is <code>false</code>.</td>
+<td>Boolean value. As a sender, you can opt-in for email notification by setting this to <code>true</code>. Sender will receive email once a Payout API has been processed. Default value is <code>false</code>.</td>
 </tr>
 <tr>
 <td>recipient_notification</td>
-<td>Boolean value. If this is set to <code>true</code>, recipient of the Payout will receive email notification once the Payout has been processed. Default value is <code>true</code>. Set to false if you do not like the recipient to receive any email notifications.</td>
+<td>Boolean value. If this is set to <code>true</code>, recipient of the Payout API will receive email notification once the Payout API has been processed. Default value is <code>true</code>. Set to false if you do not like the recipient to receive any email notifications.</td>
 </tr>
 <tr>
 <td>reference_id</td>
-<td>Payout&#39;s unique reference ID scoped by <a href="#v4-payout-collections">Payout Collection</a>. This helps maintain data integrity by ensuring that no two rows of data in a payout collection have identical reference_id value. Useful to prevent unintentional payout creation. (Max of 255 characters).</td>
+<td>Payout API&#39;s unique reference ID scoped by <a href="#v4-payout-api-collections">Payout API Collection</a>. This helps maintain data integrity by ensuring that no two rows of data in a payout API collection have identical reference_id value. Useful to prevent unintentional payout API creation. (Max of 255 characters).</td>
+</tr>
+<tr>
+<td>callback_url</td>
+<td>Web hook URL to be called after payout&#39;s transaction state changed. It will POST a Payout object.</td>
 </tr>
 </tbody></table>
-<h6 id='v4-payout-create-a-payout-get-status-response-parameter'>RESPONSE PARAMETER</h6>
+<h6 id='v4-payout-api-create-a-payout-api-get-status-response-parameter'>RESPONSE PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -3982,11 +3997,11 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
 </thead><tbody>
 <tr>
 <td>id</td>
-<td>ID that represents a Payout.</td>
+<td>ID that represents a Payout API.</td>
 </tr>
 <tr>
 <td>mass_payment_instruction_collection_id</td>
-<td>The Payout collection&#39;s title in string format.</td>
+<td>The Payout API collection&#39;s title in string format.</td>
 </tr>
 <tr>
 <td>bank_code</td>
@@ -4002,11 +4017,11 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
 </tr>
 <tr>
 <td>name</td>
-<td>Payout&#39;s recipient name.</td>
+<td>Payout API&#39;s recipient name.</td>
 </tr>
 <tr>
 <td>description</td>
-<td>The Payout&#39;s description.</td>
+<td>The Payout API&#39;s description.</td>
 </tr>
 <tr>
 <td>email</td>
@@ -4014,7 +4029,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
 </tr>
 <tr>
 <td>status</td>
-<td>Payout status. It is either <code>processing</code> or <code>completed</code> or <code>refunded</code>.</td>
+<td>Payout API status. It is either <code>processing</code> or <code>completed</code> or <code>refunded</code>.</td>
 </tr>
 <tr>
 <td>notification</td>
@@ -4026,20 +4041,24 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions <span class="se">\
 </tr>
 <tr>
 <td>total</td>
-<td>Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>A standard <code>RM1.50</code> or <code>RM0.50</code> or <code>RM0.00</code> fee would be charged from your credits when you successfully created a Payout request;<br>while the total of each Payout will be deducted from your Payout limit. <br><br>Status code of <code>422</code> with <code>Bank account not verified</code> message will be returned if the matching bank account is pending for verification. <br><br>Status code of <code>422</code> with <code>Bank account rejected</code> message will be returned if the matching bank account is rejected.</td>
+<td>Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payout API request;<br>while the total of each Payout API will be deducted from your Payout API limit. <br><br>Status code of <code>422</code> with <code>Bank account not verified</code> message will be returned if the matching bank account is pending for verification. <br><br>Status code of <code>422</code> with <code>Bank account rejected</code> message will be returned if the matching bank account is rejected.</td>
 </tr>
 <tr>
 <td>reference_id</td>
-<td>Payout&#39;s reference ID. Useful for identification on recipient part.</td>
+<td>Payout API&#39;s reference ID. Useful for identification on recipient part.</td>
+</tr>
+<tr>
+<td>callback_url</td>
+<td>Callback URL for notifying the payout status change. The last POST constitute the final state of payout.</td>
 </tr>
 </tbody></table>
-<h3 id='v4-payout-get-a-payout'>Get a Payout</h3>
-<p>Use this API to query your Payout record.</p>
+<h3 id='v4-payout-api-get-a-payout-api'>Get a Payout API</h3>
+<p>Use this API to query your Payout API record.</p>
 
 <blockquote>
 <p>Example request:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Get a Payout</span>
+<pre class="highlight shell tab-shell"><code><span class="c"># Get a Payout API</span>
 curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf <span class="se">\</span>
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
 </code></pre>
@@ -4061,9 +4080,9 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf <span cla
   </span><span class="s2">"total"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2000"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"reference_id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h6 id='v4-payout-get-a-payout-get-status-http-request'>HTTP REQUEST</h6>
+</span></code></pre><h6 id='v4-payout-api-get-a-payout-api-get-status-http-request'>HTTP REQUEST</h6>
 <p><code>GET https://www.billplz.com/api/v4/mass_payment_instructions/{PAYOUT_ID}</code></p>
-<h6 id='v4-payout-get-a-payout-get-status-required-arguments'>REQUIRED ARGUMENTS</h6>
+<h6 id='v4-payout-api-get-a-payout-api-get-status-required-arguments'>REQUIRED ARGUMENTS</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -4072,10 +4091,10 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf <span cla
 </thead><tbody>
 <tr>
 <td>PAYOUT_ID</td>
-<td>The Payout ID. A string.</td>
+<td>The Payout API ID. A string.</td>
 </tr>
 </tbody></table>
-<h6 id='v4-payout-get-a-payout-get-status-response-parameter'>RESPONSE PARAMETER</h6>
+<h6 id='v4-payout-api-get-a-payout-api-get-status-response-parameter'>RESPONSE PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -4084,11 +4103,11 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf <span cla
 </thead><tbody>
 <tr>
 <td>id</td>
-<td>ID that represents a Payout.</td>
+<td>ID that represents a Payout API.</td>
 </tr>
 <tr>
 <td>mass_payment_instruction_collection_id</td>
-<td>The Payout collection&#39;s title in string format.</td>
+<td>The Payout API collection&#39;s title in string format.</td>
 </tr>
 <tr>
 <td>bank_code</td>
@@ -4104,11 +4123,11 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf <span cla
 </tr>
 <tr>
 <td>name</td>
-<td>Payout&#39;s recipient name.</td>
+<td>Payout API&#39;s recipient name.</td>
 </tr>
 <tr>
 <td>description</td>
-<td>The Payout&#39;s description.</td>
+<td>The Payout API&#39;s description.</td>
 </tr>
 <tr>
 <td>email</td>
@@ -4116,7 +4135,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf <span cla
 </tr>
 <tr>
 <td>status</td>
-<td>Payout status. It is either <code>processing</code> or <code>completed</code> or <code>refunded</code>.</td>
+<td>Payout API status. It is either <code>processing</code> or <code>completed</code> or <code>refunded</code>.</td>
 </tr>
 <tr>
 <td>notification</td>
@@ -4132,9 +4151,17 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf <span cla
 </tr>
 <tr>
 <td>reference_id</td>
-<td>Payout&#39;s reference ID. Useful for identification on recipient part.</td>
+<td>Payout API&#39;s reference ID. Useful for identification on recipient part.</td>
 </tr>
 </tbody></table>
+
+<aside class="warning">
+  The usage of this API is not recommended as it is subject to our <a href="#rate-limit">Rate Limit</a> policy.
+</aside>
+
+<aside class="success">
+  Use <a href="#payment-completion-x-signature-payout-api">X Signature Payout API to validate the response parameter.
+</aside>
 <h2 id='v4-webhook-rank'>Webhook Rank</h2>
 <p>Webhook Rank has been introduced to ensure callback is running at it&#39;s best. The higher the ranking, the higher priority for the callback to be executed. Use this API to query your current Account Ranking. <code>0.0</code> indicate highest ranking (default) and <code>10.0</code> lowest ranking.</p>
 
@@ -4155,9 +4182,9 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"rank"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h6 id='v4-webhook-rank-get-a-payout-get-status-http-request'>HTTP REQUEST</h6>
+</span></code></pre><h6 id='v4-webhook-rank-get-a-payout-api-get-status-http-request'>HTTP REQUEST</h6>
 <p><code>GET https://www.billplz.com/api/v4/webhook_rank</code></p>
-<h6 id='v4-webhook-rank-get-a-payout-get-status-response-parameter'>RESPONSE PARAMETER</h6>
+<h6 id='v4-webhook-rank-get-a-payout-api-get-status-response-parameter'>RESPONSE PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -4215,9 +4242,9 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
     </span><span class="s2">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ocbc"</span><span class="w">
   </span><span class="p">}]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h6 id='v4-get-payment-gateways-get-a-payout-get-status-http-request'>HTTP REQUEST</h6>
+</span></code></pre><h6 id='v4-get-payment-gateways-get-a-payout-api-get-status-http-request'>HTTP REQUEST</h6>
 <p><code>GET https://www.billplz.com/api/v4/payment_gateways</code></p>
-<h6 id='v4-get-payment-gateways-get-a-payout-get-status-response-parameter'>RESPONSE PARAMETER</h6>
+<h6 id='v4-get-payment-gateways-get-a-payout-api-get-status-response-parameter'>RESPONSE PARAMETER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -4237,7 +4264,7 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <td>Category this payment gateway belongs to.</td>
 </tr>
 </tbody></table>
-<h4 id='v4-get-payment-gateways-get-a-payout-payment-gateway-abbreviations'>Payment Gateway Abbreviations</h4>
+<h4 id='v4-get-payment-gateways-get-a-payout-api-payment-gateway-abbreviations'>Payment Gateway Abbreviations</h4>
 <table><thead>
 <tr>
 <th>Code</th>
@@ -4246,11 +4273,11 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 </thead><tbody>
 <tr>
 <td>ABMB0212</td>
-<td>Alliance Bank</td>
+<td>allianceonline</td>
 </tr>
 <tr>
 <td>ABB0233</td>
-<td>Affin Bank</td>
+<td>affinOnline</td>
 </tr>
 <tr>
 <td>ABB0234*</td>
@@ -4258,7 +4285,11 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 </tr>
 <tr>
 <td>AMBB0209</td>
-<td>AmBank</td>
+<td>AmOnline</td>
+</tr>
+<tr>
+<td>AGRO01</td>
+<td>AGRONet</td>
 </tr>
 <tr>
 <td>BCBB0235</td>
@@ -4266,35 +4297,35 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 </tr>
 <tr>
 <td>BIMB0340</td>
-<td>Bank Islam</td>
+<td>Bank Islam Internet Banking</td>
 </tr>
 <tr>
 <td>BKRM0602</td>
-<td>Bank Rakyat</td>
+<td>i-Rakyat</td>
 </tr>
 <tr>
 <td>BMMB0341</td>
-<td>Bank Muamalat</td>
+<td>i-Muamalat</td>
 </tr>
 <tr>
 <td>BSN0601</td>
-<td>BSN</td>
+<td>myBSN</td>
 </tr>
 <tr>
 <td>CIT0219</td>
-<td>Citibank</td>
+<td>Citibank Online</td>
 </tr>
 <tr>
 <td>HLB0224</td>
-<td>Hong Leong Bank</td>
+<td>HLB Connect</td>
 </tr>
 <tr>
 <td>HSBC0223</td>
-<td>HSBC Bank</td>
+<td>HSBC Online Banking</td>
 </tr>
 <tr>
 <td>KFH0346</td>
-<td>Kuwait Finance House</td>
+<td>KFH Online</td>
 </tr>
 <tr>
 <td>MB2U0227</td>
@@ -4310,11 +4341,11 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 </tr>
 <tr>
 <td>OCBC0229</td>
-<td>OCBC Bank</td>
+<td>OCBC Online Banking</td>
 </tr>
 <tr>
 <td>PBB0233</td>
-<td>Public Bank</td>
+<td>PBe</td>
 </tr>
 <tr>
 <td>RHB0218</td>
@@ -4322,11 +4353,11 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 </tr>
 <tr>
 <td>SCB0216</td>
-<td>Standard Chartered</td>
+<td>SC Online Banking</td>
 </tr>
 <tr>
 <td>UOB0226</td>
-<td>UOB Bank</td>
+<td>UOB Internet Banking</td>
 </tr>
 <tr>
 <td>UOB0229*</td>
@@ -4369,6 +4400,10 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <td>PayPal</td>
 </tr>
 <tr>
+<td>BP-OCBC1</td>
+<td>Visa / Mastercard</td>
+</tr>
+<tr>
 <td>BP-2C2P1</td>
 <td>e-pay</td>
 </tr>
@@ -4379,10 +4414,6 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <tr>
 <td>BP-2C2PU</td>
 <td>UnionPay</td>
-</tr>
-<tr>
-<td>BP-OCBC1</td>
-<td>Visa / Mastercard</td>
 </tr>
 <tr>
 <td>BP-2C2PGRB</td>
@@ -4397,6 +4428,10 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <td>TnG</td>
 </tr>
 <tr>
+<td>BP-2C2PIPP</td>
+<td>IPP</td>
+</tr>
+<tr>
 <td>BP-BST01</td>
 <td>Boost</td>
 </tr>
@@ -4405,8 +4440,48 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 <td>Senangpay</td>
 </tr>
 <tr>
+<td>BP-BILM1</td>
+<td>Visa / Mastercard</td>
+</tr>
+<tr>
+<td>BP-RZRGRB</td>
+<td>Grab</td>
+</tr>
+<tr>
+<td>BP-RZRBST</td>
+<td>Boost</td>
+</tr>
+<tr>
+<td>BP-RZRTNG</td>
+<td>TnG</td>
+</tr>
+<tr>
+<td>BP-RZRPAY</td>
+<td>RazerPay</td>
+</tr>
+<tr>
+<td>BP-RZRMB2QR</td>
+<td>Maybank QR</td>
+</tr>
+<tr>
+<td>BP-RZRWCTP</td>
+<td>WeChat Pay</td>
+</tr>
+<tr>
+<td>BP-RZRSHPE</td>
+<td>Shopee Pay</td>
+</tr>
+<tr>
+<td>BP-MPGS1</td>
+<td>MPGS</td>
+</tr>
+<tr>
+<td>BP-CYBS1</td>
+<td>Secure Acceptance</td>
+</tr>
+<tr>
 <td>B2B1-ABB0232</td>
-<td>Affin Bank</td>
+<td>affinOnline</td>
 </tr>
 <tr>
 <td>B2B1-ABB0235</td>
@@ -4414,23 +4489,23 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 </tr>
 <tr>
 <td>B2B1-ABMB0213</td>
-<td>Alliance Bank (Business)</td>
+<td>Alliance BizSmart</td>
 </tr>
 <tr>
-<td>B2B1-AGRO02*</td>
-<td>Agro Bank</td>
+<td>B2B1-AGRO02</td>
+<td>AGRONetBIZ</td>
 </tr>
 <tr>
 <td>B2B1-AMBB0208</td>
-<td>AmBank</td>
+<td>AmAccess Biz</td>
 </tr>
 <tr>
 <td>B2B1-BCBB0235</td>
-<td>CIMB Bank</td>
+<td>BizChannel@CIMB</td>
 </tr>
 <tr>
 <td>B2B1-BIMB0340</td>
-<td>Bank Islam</td>
+<td>Bank Islam eBanker</td>
 </tr>
 <tr>
 <td>B2B1-BKRM0602</td>
@@ -4438,7 +4513,7 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 </tr>
 <tr>
 <td>B2B1-BMMB0342</td>
-<td>Bank Muamalat</td>
+<td>iBiz Muamalat</td>
 </tr>
 <tr>
 <td>B2B1-BNP003</td>
@@ -4446,23 +4521,23 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 </tr>
 <tr>
 <td>B2B1-CIT0218</td>
-<td>Citibank Corporate Banking</td>
+<td>CitiDirect BE</td>
 </tr>
 <tr>
 <td>B2B1-DBB0199</td>
-<td>Deutsche Bank</td>
+<td>Deutsche Bank Autobahn</td>
 </tr>
 <tr>
 <td>B2B1-HLB0224</td>
-<td>Hong Leong Bank</td>
+<td>HLB ConnectFirst</td>
 </tr>
 <tr>
 <td>B2B1-HSBC0223</td>
-<td>HSBC Bank</td>
+<td>HSBCnet</td>
 </tr>
 <tr>
 <td>B2B1-KFH0346</td>
-<td>KFH</td>
+<td>KFH Online</td>
 </tr>
 <tr>
 <td>B2B1-MBB0228</td>
@@ -4470,23 +4545,23 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 </tr>
 <tr>
 <td>B2B1-OCBC0229</td>
-<td>OCBC Bank</td>
+<td>Velocity@ocbc</td>
 </tr>
 <tr>
 <td>B2B1-PBB0233</td>
-<td>Public Bank</td>
+<td>PBe</td>
 </tr>
 <tr>
 <td>B2B1-PBB0234</td>
-<td>PB Enterprise</td>
+<td>PB enterprise</td>
 </tr>
 <tr>
 <td>B2B1-RHB0218</td>
-<td>RHB Bank</td>
+<td>RHB Reflex</td>
 </tr>
 <tr>
 <td>B2B1-SCB0215</td>
-<td>Standard Chartered</td>
+<td>SC Straight2Bank</td>
 </tr>
 <tr>
 <td>B2B1-TEST0021*</td>
@@ -4502,14 +4577,14 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 </tr>
 <tr>
 <td>B2B1-UOB0228</td>
-<td>UOB Regional</td>
+<td>UOB BIBPlus</td>
 </tr>
 </tbody></table>
 
 <p>* Only applicable in staging environment.</p>
 <h2 id='v4-tokenization'>Tokenization</h2>
 <p>This feature allows you to exchange for a card&#39;s tokenization from our provider&#39;s PCI DSS certified vault, and use the token to charge your customer later.</p>
-<h6 id='v4-tokenization-get-a-payout-payment-gateway-abbreviations-providers'>Providers</h6>
+<h6 id='v4-tokenization-get-a-payout-api-payment-gateway-abbreviations-providers'>Providers</h6>
 <table><thead>
 <tr>
 <th>Provider</th>
@@ -4530,13 +4605,11 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 </tbody></table>
 <h3 id='v4-tokenization-senangpay'>Senangpay</h3>
 <p>This feature enables you to tokenize 3DS Visa / Mastercard cards to be charged later, which will be stored in Senangpay&#39;s PCI DSS certified servers.</p>
-<h6 id='v4-tokenization-senangpay-payment-gateway-abbreviations-card-tokenization-flow'>Card Tokenization Flow</h6>
+<h6 id='v4-tokenization-senangpay-payment-gateway-abbreviations-ways-to-use-senangpay-39-s-tokenization'>Ways to use Senangpay&#39;s tokenization:</h6>
 <ol>
-<li>Create card &amp; token using this <a href="#v4-tokenization-senangpay-create-card">Create Card</a> API.</li>
-<li>Merchant redirects card holder to Senangpay&#39;s 3DS authentication page.</li>
-<li>Card holder inputs credit/debit card details and submits the form.</li>
-<li>Billplz will send a POST request to merchant&#39;s callback_url containing masked card details together with CARD_ID and TOKEN.</li>
-<li>Merchant compares the checksum sent, and store card details if they match.</li>
+<li><a href="#v4-tokenization-senangpay-create-card">Tokenize customer&#39;s card</a>, so they only need to enter their card details once.</li>
+<li>Using <a href="#v4-tokenization-senangpay-create-card">token</a> obtained, pay a Billplz bill by <a href="#v4-tokenization-senangpay-charge-card">charging customers&#39;s card</a>, anytime, any amount.</li>
+<li>Using <a href="#v4-tokenization-senangpay-create-card">token</a> obtained, <a href="#v4-tokenization-senangpay-pre-auth">pre authorize a bill payment</a>, and <a href="#v4-tokenization-senangpay-pre-auth-capture">capture</a> later in the future.</li>
 </ol>
 
 <aside class="notice">
@@ -4544,8 +4617,16 @@ curl https://www.billplz.com/api/v4/webhook_rank <span class="se">\</span>
 </aside>
 <h4 id='v4-tokenization-senangpay-create-card'>Create Card</h4>
 <p>Use this API to create a card token for 3DS Visa / Mastercard cards. Remember to store the response, as no card details nor tokens will be stored in Billplz&#39;s servers.</p>
+<h6 id='v4-tokenization-senangpay-create-card-flow'>Flow</h6>
+<ol>
+<li>Create card &amp; token using this <a href="#v4-tokenization-senangpay-create-card">Create Card</a> API.</li>
+<li>Merchant redirects card holder to Senangpay&#39;s 3DS authentication page.</li>
+<li>Card holder inputs credit/debit card details and submits the form.</li>
+<li>Upon 3DS verifcation success, Billplz will send a POST request to merchant&#39;s callback_url containing masked card details together with CARD_ID and TOKEN.</li>
+<li>Merchant compares the checksum sent, and store card details if they match.</li>
+</ol>
 
-<p>To charge a card with the token generated, refer to this <a href="#v4-tokenization-senangpay-charge-card">API</a>.</p>
+<p>To charge a card with the token generated, refer to <a href="#v4-tokenization-senangpay-charge-card">Charge Card</a> API.</p>
 
 <blockquote>
 <p>Example request:</p>
@@ -4645,7 +4726,7 @@ curl -X DELETE https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b
 <blockquote>
 <p>Example request to callback_url:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># POST request sent to callback_url</span>
+<pre class="highlight shell tab-shell"><code><span class="c"># POST request sent by Billplz to your callback_url</span>
 curl https://www.example.com/callback <span class="se">\</span>
   -d <span class="nv">id</span><span class="o">=</span><span class="s2">"a35296ad-b50c-4179-8024-036da00c1aee"</span> <span class="se">\</span>
   -d <span class="nv">card_number</span><span class="o">=</span><span class="s2">"1118"</span> <span class="se">\</span>
@@ -4696,8 +4777,8 @@ curl https://www.example.com/callback <span class="se">\</span>
 <h6 id='v4-tokenization-senangpay-charge-card-requirements'>REQUIREMENTS</h6>
 <ol>
 <li>Collection without split recipients (split payment).</li>
-<li>Bill. Email and Mobile number are required during bill creation.
-<a href="#v4-tokenization-senangpay-create-card">Card Token &amp; ID</a>.</li>
+<li>Bill. Email and Mobile number are required during bill creation.</li>
+<li><a href="#v4-tokenization-senangpay-create-card">Card Token &amp; ID</a>.</li>
 </ol>
 
 <aside class="notice">
@@ -4741,9 +4822,117 @@ curl https://www.billplz.com/api/v4/bills/awyzmy0m/charge <span class="se">\</sp
 <td>Card token.</td>
 </tr>
 </tbody></table>
+<h4 id='v4-tokenization-senangpay-pre-auth'>Pre-Auth</h4>
+<p>Use this API to pre-authorize a transaction with <a href="#v4-tokenization-senangpay-create-card">token generated</a>, and capture later.
+Amount will not be charged to the card, but the amount will be blocked until the transaction is captured or released.</p>
+<h6 id='v4-tokenization-senangpay-pre-auth-requirements'>REQUIREMENTS</h6>
+<ol>
+<li>Collection without split recipients (split payment).</li>
+<li>Bill. Email and Mobile number are required during bill creation.</li>
+<li><a href="#v4-tokenization-senangpay-create-card">Card Token &amp; ID</a>.</li>
+</ol>
+
+<aside class="notice">
+  This function is only applicable for Visa / Mastercard cards. You won't be able to charge Amex cards.
+</aside>
+
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Pre authorize bill payment with token</span>
+curl https://www.billplz.com/api/v4/bills/awyzmy0m/preauth <span class="se">\</span>
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: <span class="se">\</span>
+  -d <span class="nv">token</span><span class="o">=</span><span class="s2">"77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740"</span> <span class="se">\</span>
+  -d <span class="nv">card_id</span><span class="o">=</span><span class="s2">"8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6"</span>
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"preauth_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"preauth_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"732d8sdk778912e81003946192b0b6aa4b754b3c8addd5"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"hash_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1b66606732d846192b0b6aa4b754b3c8addd59072fce4bdd066b5d631c31d5e8"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Preauth was successful"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h6 id='v4-tokenization-senangpay-pre-auth-http-request'>HTTP REQUEST</h6>
+<p><code>POST https://www.billplz.com/api/v4/bills/{BILL_ID}/preauth</code></p>
+<h6 id='v4-tokenization-senangpay-pre-auth-required-arguments'>REQUIRED ARGUMENTS</h6>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>card_id</td>
+<td>ID that represents a card.</td>
+</tr>
+<tr>
+<td>token</td>
+<td>Card token.</td>
+</tr>
+</tbody></table>
+<h4 id='v4-tokenization-senangpay-pre-auth-capture'>Pre-Auth Capture</h4>
+<p>Use this API to capture a pre-authorize transaction with <a href="#v4-tokenization-senangpay-create-card">token generated</a>. Amount will be charged to the credit card right away.</p>
+<h6 id='v4-tokenization-senangpay-pre-auth-capture-requirements'>REQUIREMENTS</h6>
+<ol>
+<li>Collection without split recipients (split payment).</li>
+<li>Bill. Email and Mobile number are required during bill creation.</li>
+<li><a href="#v4-tokenization-senangpay-create-card">Card Token &amp; ID</a>.</li>
+<li><a href="#v4-tokenization-senangpay-preauth">Preauth ID</a>.</li>
+</ol>
+
+<aside class="notice">
+  This function is only applicable for Visa / Mastercard cards. You won't be able to charge Amex cards.
+</aside>
+
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Capture a pre-authed transaction</span>
+curl https://www.billplz.com/api/v4/bills/awyzmy0m/preauth_capture <span class="se">\</span>
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: <span class="se">\</span>
+  -d <span class="nv">token</span><span class="o">=</span><span class="s2">"77d62ad5a3ae56aafc8e3529b89d0268afa205303f6017afbd9826afb8394740"</span> <span class="se">\</span>
+  -d <span class="nv">card_id</span><span class="o">=</span><span class="s2">"8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6"</span> <span class="se">\</span>
+  -d <span class="nv">preauth_id</span><span class="o">=</span><span class="s2">"732d8sdk778912e81003946192b0b6aa4b754b3c8addd5"</span>
+</code></pre>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"reference_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15681981586116610"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"preauth_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"732d8sdk778912e81003946192b0b6aa4b754b3c8addd5"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"hash_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1b66606732d846192b0b6aa4b754b3c8addd59072fce4bdd066b5d631c31d5e8"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Payment was successful"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h6 id='v4-tokenization-senangpay-pre-auth-capture-http-request'>HTTP REQUEST</h6>
+<p><code>POST https://www.billplz.com/api/v4/bills/{BILL_ID}/preauth_capture</code></p>
+<h6 id='v4-tokenization-senangpay-pre-auth-capture-required-arguments'>REQUIRED ARGUMENTS</h6>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>card_id</td>
+<td>ID that represents a card.</td>
+</tr>
+<tr>
+<td>token</td>
+<td>Card token.</td>
+</tr>
+<tr>
+<td>preauth_id</td>
+<td>ID for pre-authed transaction</td>
+</tr>
+</tbody></table>
 <h3 id='v4-tokenization-ocbc'>OCBC</h3>
 <p>This feature enables merchants with OCBC business account to tokenize 3DS Visa / Mastercard cards to be charged later, which will be stored in OCBC&#39;s PCI DSS certified servers.</p>
-<h6 id='v4-tokenization-ocbc-charge-card-card-tokenization-flow'>CARD TOKENIZATION FLOW</h6>
+<h6 id='v4-tokenization-ocbc-pre-auth-capture-card-tokenization-flow'>CARD TOKENIZATION FLOW</h6>
 <ol>
 <li>Merchant to collect card details from card holder. Card number, expiry date and CVV.</li>
 <li>Create card &amp; token using this <a href="#v4-tokenization-ocbc-create-card">API</a>.</li>
@@ -5130,9 +5319,9 @@ Content-Type: application/x-www-form-urlencoded
 
 <p>In a case of either the end point server does not able to respond within the limit seconds (20 secs) or does not respond with 200 status code, the callback will consider as failure.</p>
 
-<p>On failure, the job is scheduled again in 15 minutes * N + (random 0-300 seconds), where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours + random (0-300 seconds) after 4th attempt.</p>
+<p>On failure, the job is rescheduled for 2nd attempt in <code>15 seconds + (random 0-300 seconds)</code>, while 3rd and 4th attempts will rescheduled at <code>15 minutes + (random 0-300 seconds)</code>. The 5th (last) attempt will be <code>24 hours + random (0-300 seconds)</code> after 4th attempt.</p>
 
-<p>Assuming the first callback is initiated at 13:00:00. The second attempt will be at 13:15:00 + N seconds. The third attempt will be at 13:30:02 + N seconds. The fourth attempt will be at 13:45:05 + N seconds. The fifth attempt will be at 13:45:07+ N seconds next day.</p>
+<p>Assuming the 1st callback is initiated at 13:00:00. The 2nd attempt will be at 13:00:15 + N seconds. The 3rd attempt will be at 13:15:15 + N seconds. The 4th attempt will be at 13:30:15 + N seconds. The fifth attempt will be at 13:30:15+ N seconds next day.</p>
 
 <p>Billplz will attempt for maximum of 5 times and the callback will be removed from the system queue permanently after that.</p>
 
@@ -5328,9 +5517,9 @@ Content-Type: application/x-www-form-urlencoded
 
 <p>In a case of either the end point server does not able to respond within the limit seconds (20 secs) or does not respond with 200 status code, the callback will consider as failure.</p>
 
-<p>On failure, the job is scheduled again in 15 minutes * N + (random 0-300 seconds), where N is the number of attempts with maximum of 4. The 5th (last) attempt will be 24 hours + random (0-300 seconds) after 4th attempt.</p>
+<p>On failure, the job is rescheduled for 2nd attempt in <code>15 seconds + (random 0-300 seconds)</code>, while 3rd and 4th attempts will rescheduled at <code>15 minutes + (random 0-300 seconds)</code>. The 5th (last) attempt will be <code>24 hours + random (0-300 seconds)</code> after 4th attempt.</p>
 
-<p>Assuming the first callback is initiated at 13:00:00. The second attempt will be at 13:15:00 + N seconds. The third attempt will be at 13:30:02 + N seconds. The fourth attempt will be at 13:45:05 + N seconds. The fifth attempt will be at 13:45:07+ N seconds next day.</p>
+<p>Assuming the 1st callback is initiated at 13:00:00. The 2nd attempt will be at 13:00:15 + N seconds. The 3rd attempt will be at 13:15:15 + N seconds. The 4th attempt will be at 13:30:15 + N seconds. The fifth attempt will be at 13:30:15+ N seconds next day.</p>
 
 <p>Billplz will attempt for maximum of 5 times and the callback will be removed from the system queue permanently after that.</p>
 <h6 id='payment-completion-x-signature-callback-url-extra-payment-completion-information-charge-card-sample-http-request-from-x-signature-callback-url-feature'>SAMPLE HTTP REQUEST FROM X SIGNATURE CALLBACK URL FEATURE</h6>
@@ -5504,6 +5693,232 @@ Content-Type: application/x-www-form-urlencoded
 <p><code>4aab095fe5a39b1d534500988f9a0cb085cd1b6d5bbb55dd4e02ea6fa102b47b</code></p>
 <h6 id='payment-completion-x-signature-redirect-url-extra-payment-completion-information-charge-card-6-compare-parameter-x_signature-passed-in-the-request-with-the-computed-x_signature-in-5'>#6 Compare parameter x_signature passed in the request with the computed x_signature in #5.</h6>
 <p>If they match, you can be sure that the redirection was sent from Billplz and the data has not been compromised, and you <strong>do not need to trigger additional Get a Bill API for primary status validation</strong>.</p>
+<h2 id='payment-completion-x-signature-payout-api'>X Signature Payout API</h2>
+<p>X Signature Payout API allows your system to be notified in the event of the payout status change. This will ensure that your system can be hooked to perform an action in the event of payout status. The callback notification will be send when the status changed to <code>completed</code> or <code>refunded</code>.</p>
+
+<p>You are required to have this feature set-up if your system require an update on the payout status as <a href="#v4-payout-api-get-a-payout-api">Get a Payout API</a> is rate-limited.</p>
+<h6 id='payment-completion-x-signature-payout-api-extra-payment-completion-information-charge-card-server-side-request'>SERVER SIDE REQUEST</h6>
+<p>If <code>callback_url</code> exists, Billplz will make a POST request with Payout object upon status change (<code>completed</code> or <code>refunded</code>).</p>
+
+<p>X Signature Callback URL request created through the API by Billplz can be verified by calculating a digital signature - <code>x_signature</code>.</p>
+
+<p>Each callback request includes a x_signature which is generated using HMAC-SHA256 algorithm and shared XSignature Key, along with the data sent in the request.</p>
+
+<p>To verify that the request came from Billplz, compute the HMAC-SHA256 digest according to the X Signature section and compare it to the value in the x_signature parameter. If they match, you can be sure that the callback was sent from Billplz and the data has not been compromised.</p>
+
+<p>A bill that catched payment failure will be in due state.</p>
+
+<aside class="success">
+  By default, X Signature Callback URL feature is activated for account registered starting September 2018.
+</aside>
+
+<blockquote>
+<p>Example Server Side Request from Billplz:</p>
+</blockquote>
+<pre class="highlight plaintext"><code>POST /webhook/ HTTP/1.1
+Connection: close
+Host: 127.0.0.1
+Content-Length: 346
+Content-Type: application/x-www-form-urlencoded
+
+  id="bdejmycg"
+  &amp;mass_payment_instruction_collection_id="bbk2nh77"
+  &amp;bank_code="CIBBMYKL"
+  &amp;bank_account_number="9230248"
+  &amp;identity_number="PC0011H"
+  &amp;name="Michae Yap"
+  &amp;description="Maecenas eu placerat ante."
+  &amp;email="api@billplz.com"
+  &amp;status="completed"
+  &amp;notification="false"
+  &amp;recipient_notification="true"
+  &amp;reference_id=""
+  &amp;total="1"
+  &amp;paid_at="02/08/2021"
+  &amp;x_signature="f815155154fa4fbef2bf5482fe8ab4273bc5125facf9c880ad634bceca292f8f"
+</code></pre>
+<blockquote>
+<p>Body formatted for readability.</p>
+</blockquote>
+<h6 id='payment-completion-x-signature-payout-api-extra-payment-completion-information-charge-card-http-request'>HTTP REQUEST</h6>
+<p><code>POST {CALLBACK_URL}</code></p>
+<h6 id='payment-completion-x-signature-payout-api-extra-payment-completion-information-charge-card-post-parameter'>POST PARAMETER</h6>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>ID that represents payout.</td>
+</tr>
+<tr>
+<td>mass_payment_instruction_collection_id</td>
+<td>The Payout API collection&#39;s title in string format.</td>
+</tr>
+<tr>
+<td>bank_code</td>
+<td>Bank Code that represents bank, in string value.</td>
+</tr>
+<tr>
+<td>bank_account_number</td>
+<td>Bank account number, in string value.</td>
+</tr>
+<tr>
+<td>identity_number</td>
+<td>Bank account&#39;s IC Number/SSM Registration Number, in string value.</td>
+</tr>
+<tr>
+<td>name</td>
+<td>Payout API&#39;s recipient name.</td>
+</tr>
+<tr>
+<td>description</td>
+<td>The Payout API&#39;s description.</td>
+</tr>
+<tr>
+<td>email</td>
+<td>The email address of recipient.</td>
+</tr>
+<tr>
+<td>status</td>
+<td>Payout API status. It is either <code>processing</code> or <code>completed</code> or <code>refunded</code>.</td>
+</tr>
+<tr>
+<td>notification</td>
+<td>Boolean value.</td>
+</tr>
+<tr>
+<td>recipient_notification</td>
+<td>Boolean value.</td>
+</tr>
+<tr>
+<td>reference_id</td>
+<td>Payout API&#39;s reference ID. Useful for identification on recipient part.</td>
+</tr>
+<tr>
+<td>total</td>
+<td>Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00).</td>
+</tr>
+<tr>
+<td>paid_at</td>
+<td>Date time when the bill was paid, in format <code>DD/MM/YYYY</code>. Example, <code>02/08/2021</code></td>
+</tr>
+</tbody></table>
+
+<p>Callback request will be timeout in 20 seconds.</p>
+
+<p>Billplz server also expecting the end point server responds with status code of 200.</p>
+
+<p>In a case of either the end point server does not able to respond within the limit seconds (20 secs) or does not respond with 200 status code, the callback will consider as failure.</p>
+
+<p>On failure, the job is rescheduled for 2nd attempt in <code>15 seconds + (random 0-300 seconds)</code>, while 3rd and 4th attempts will rescheduled at <code>15 minutes + (random 0-300 seconds)</code>. The 5th (last) attempt will be <code>24 hours + random (0-300 seconds)</code> after 4th attempt.</p>
+
+<p>Assuming the 1st callback is initiated at 13:00:00. The 2nd attempt will be at 13:00:15 + N seconds. The 3rd attempt will be at 13:15:15 + N seconds. The 4th attempt will be at 13:30:15 + N seconds. The fifth attempt will be at 13:30:15+ N seconds next day.</p>
+
+<p>Billplz will attempt for maximum of 5 times and the callback will be removed from the system queue permanently after that.</p>
+<h6 id='payment-completion-x-signature-payout-api-extra-payment-completion-information-charge-card-sample-http-request-from-x-signature-callback-url-feature'>SAMPLE HTTP REQUEST FROM X SIGNATURE CALLBACK URL FEATURE</h6>
+<p><code>POST {CALLBACK_URL}</code></p>
+
+<p>with POST body,
+<code>{:id=&gt;&quot;bdejmycg&quot;, :mass_payment_instruction_collection_id=&gt;&quot;bbk2nh77&quot;, :bank_code=&gt;&quot;CIBBMYKL&quot;, :bank_account_number=&gt;&quot;9230248&quot;, :identity_number=&gt;&quot;PC0011H&quot;, :name=&gt;&quot;Michae Yap&quot;, :description=&gt;&quot;Maecenas eu placerat ante.&quot;, :email=&gt;&quot;api@billplz.com&quot;, :status=&gt;&quot;completed&quot;, :notification=&gt;&quot;false&quot;, :recipient_notification=&gt;&quot;true&quot;, :reference_id=&gt;&quot;&quot;, :total=&gt;&quot;1&quot;, :paid_at=&gt;&quot;02/08/2021&quot;, :x_signature=&gt;&quot;f815155154fa4fbef2bf5482fe8ab4273bc5125facf9c880ad634bceca292f8f&quot;}</code></p>
+<h6 id='payment-completion-x-signature-payout-api-extra-payment-completion-information-charge-card-1-extract-all-key-value-pair-parameters-except-x_signature'>#1 Extract all key-value pair parameters except x_signature.</h6>
+<p><code>id=&quot;bdejmycg&quot;</code></p>
+
+<p><code>mass_payment_instruction_collection_id=&quot;bbk2nh77&quot;</code></p>
+
+<p><code>bank_code=&quot;CIBBMYKL&quot;</code></p>
+
+<p><code>bank_account_number=&quot;9230248&quot;</code></p>
+
+<p><code>identity_number=&quot;PC0011H&quot;</code></p>
+
+<p><code>name=&quot;Michae Yap&quot;</code></p>
+
+<p><code>description=&quot;Maecenas eu placerat ante.&quot;</code></p>
+
+<p><code>email=&quot;api@billplz.com&quot;</code></p>
+
+<p><code>status=&quot;completed&quot;</code></p>
+
+<p><code>notification=&quot;false&quot;</code></p>
+
+<p><code>recipient_notification=&quot;true&quot;</code></p>
+
+<p><code>reference_id=&quot;&quot;</code></p>
+
+<p><code>total=&quot;1&quot;</code></p>
+
+<p><code>paid_at=&quot;02/08/2021&quot;</code></p>
+<h6 id='payment-completion-x-signature-payout-api-extra-payment-completion-information-charge-card-2-construct-source-string-from-each-key-value-pair-parameters-above'>#2 Construct source string from each key-value pair parameters above.</h6>
+<p><code>idbdejmycg</code></p>
+
+<p><code>mass_payment_instruction_collection_idbbk2nh77</code></p>
+
+<p><code>bank_codeCIBBMYKL</code></p>
+
+<p><code>bank_account_number9230248</code></p>
+
+<p><code>identity_numberPC0011H</code></p>
+
+<p><code>nameMichae Yap</code></p>
+
+<p><code>descriptionMaecenas eu placerat ante.</code></p>
+
+<p><code>emailapi@billplz.com</code></p>
+
+<p><code>statuscompleted</code></p>
+
+<p><code>notificationfalse</code></p>
+
+<p><code>recipient_notificationtrue</code></p>
+
+<p><code>reference_id</code></p>
+
+<p><code>total1</code></p>
+
+<p><code>paid_at=&quot;02/08/2021</code></p>
+<h6 id='payment-completion-x-signature-payout-api-extra-payment-completion-information-charge-card-3-sort-in-ascending-order-case-insensitive'>#3 Sort in ascending order, case-insensitive.</h6>
+<p><code>bank_account_number9230248</code></p>
+
+<p><code>bank_codeCIBBMYKL</code></p>
+
+<p><code>descriptionMaecenas eu placerat ante.</code></p>
+
+<p><code>emailapi@billplz.com</code></p>
+
+<p><code>idediomtyu</code></p>
+
+<p><code>identity_numberPC0011H</code></p>
+
+<p><code>mass_payment_instruction_collection_idbbk2nh77</code></p>
+
+<p><code>nameMichael Yap</code></p>
+
+<p><code>notificationfalse</code></p>
+
+<p><code>paid_at02/08/2021</code></p>
+
+<p><code>recipient_notificationtrue</code></p>
+
+<p><code>reference_id</code></p>
+
+<p><code>statuscompleted</code></p>
+
+<p><code>total1</code></p>
+<h6 id='payment-completion-x-signature-payout-api-extra-payment-completion-information-charge-card-4-combine-sorted-source-strings-with-quot-quot-pipe-character-in-between'>#4 Combine sorted source strings with &quot;|&quot; (pipe) character in between.</h6>
+<p><code>bank_account_number9230248|bank_codeCIBBMYKL|descriptionMaecenas eu placerat ante.|emailapi@billplz.com|idediomtyu|identity_numberPC0011H|mass_payment_instruction_collection_idbbk2nh77|nameMichael Yap|notificationfalse|paid_at02/08/2021|recipient_notificationtrue|reference_id|statuscompleted|total1</code></p>
+<h6 id='payment-completion-x-signature-payout-api-extra-payment-completion-information-charge-card-5-compute-x_signature-by-signing-the-final-source-in-4-using-hmac_sha256-and-the-sample-xsignature-key'>#5 Compute x_signature by signing the final source in #4 using HMAC_SHA256 and the sample XSignature Key.</h6>
+<p><code>S-R5t3Uw6SrwXNWyZV-naVHg</code></p>
+
+<p><code>f815155154fa4fbef2bf5482fe8ab4273bc5125facf9c880ad634bceca292f8f</code></p>
+<h6 id='payment-completion-x-signature-payout-api-extra-payment-completion-information-charge-card-6-compare-the-computed-x_signature-with-the-x_signature-passed-in-the-request'>#6 Compare the computed x_signature with the x_signature passed in the request.</h6>
+<p>If they match, you can be sure that the callback was sent from Billplz and the data has not been compromised, and you <strong>do not need to trigger additional Get a Payout API for primary status validation</strong>.</p>
+
+<aside class="warning">
+  YOUR ACCOUNT RANK WILL BE DEGRADED BY 1 FOR EVERY UNSUCCESSFUL ATTEMPT OF CALLBACK AND WILL RESULT TO LOWER SCHEDULING PRIORITY FOR THE CALLBACK TO BE EXECUTED FOR YOUR ACCOUNT.
+</aside>
 <h1 id='rate-limit'>Rate Limit</h1>
 <blockquote>
 <p>Example request:</p>
@@ -5549,7 +5964,7 @@ Content-Type: application/json;
 <aside class="notice">
   We will set a rate limit for specific IP Address or per account basis if the usage appears to be abusive. We reserve the rights, at our sole discretion to set this rate-limit without any further notices.
 </aside>
-<h6 id='rate-limit-x-signature-redirect-url-extra-payment-completion-information-charge-card-response-header'>RESPONSE HEADER</h6>
+<h6 id='rate-limit-x-signature-payout-api-extra-payment-completion-information-charge-card-response-header'>RESPONSE HEADER</h6>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -5577,7 +5992,7 @@ Content-Type: application/json;
 <aside class="success">
   Normal HTTP status code will be <code>200</code>.
 </aside>
-<h6 id='rate-limit-x-signature-redirect-url-extra-payment-completion-information-charge-card-response-parameter'>RESPONSE PARAMETER</h6>
+<h6 id='rate-limit-x-signature-payout-api-extra-payment-completion-information-charge-card-response-parameter'>RESPONSE PARAMETER</h6>
 <p>Response parameter will be as usual if didn&#39;t exceed the rate limit. Otherwise, the response parameters will be as follows:</p>
 
 <table><thead>

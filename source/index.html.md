@@ -2394,7 +2394,7 @@ To start using the API, you would have to create a Payout API Collection. Then t
 1. Execute [Create a Payout API](#v4-payout-api-create-a-payout-api) API.
 1. If failed, perform one-time bank account registration using [Create a Bank Account](#v3-bank-account-direct-verification-create-a-bank-account);
 1. Then, execute Create a Payout API again after three working days.
-1. The payment will be settled to the receipient in one (1) working day except Thursday and public holidays.
+1. The payment will be settled to the receipient in one (1) working day.
 
 <aside class="notice">
   Get a Bank Account API will pass the latest record from Create a Bank Account API. Merchant is expected to store the recipient details on their own and not relying on details provided by Get a Bank Account API.

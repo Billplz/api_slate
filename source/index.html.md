@@ -1640,7 +1640,7 @@ curl https://www.billplz.com/api/v3/fpx_banks \
 | BIMB0340 | Bank Islam Internet Banking |
 | BKRM0602 | i-Rakyat |
 | BMMB0341 | i-Muamalat |
-| BOCM01* | BOCNET |
+| BOCM01* | Bank of China |
 | BSN0601 | myBSN |
 | CIT0219 | Citibank Online |
 | HLB0224 | HLB Connect |
@@ -2801,7 +2801,7 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | BIMB0340 | Bank Islam Internet Banking |
 | BKRM0602 | i-Rakyat |
 | BMMB0341 | i-Muamalat |
-| BOCM01* | BOCNET |
+| BOCM01* | Bank of China |
 | BSN0601 | myBSN |
 | CIT0219 | Citibank Online |
 | HLB0224 | HLB Connect |

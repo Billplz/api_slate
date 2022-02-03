@@ -3,8 +3,6 @@ title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - ruby
-  - php
 
 toc_footers:
   - <a href='https://www.billplz.com'>Billplz</a>
@@ -114,15 +112,6 @@ curl https://www.billplz.com/api/v4/webhook_rank \
 
 ```
 
-```php
-<?php
-$host = 'https://www.billplz.com/api/v4/webhook_rank';
-$api_key = '73eb57f0-7d4e-42b9-a544-aeac6e4b0f81';
-$process = curl_init($host);
-curl_setopt($process, CURLOPT_USERPWD, $api_key . ":");
-$return = curl_exec($process);
-echo $return;
-```
 > If authenticated, you should not see `Unauthorized` response type.
 
 > curl uses the -u flag to pass basic auth credentials (adding a colon after your API key will prevent it from asking you for a password).
@@ -1271,7 +1260,7 @@ curl https://www.billplz.com/api/v3/bills/inbmmepb/transactions?page=1&status=co
 | id | ID that represent the transaction. |
 | status | Status that representing the transaction's status, possible statuses are `pending`, `completed` and `failed`. |
 | completed_at | Datetime format when the transaction is completed. ISO 8601 format is used. |
-| payment_channel | Payment channel that the transaction is made.<br>Possible values are `FPX`, `CIMB`, `TWOCTWOP`, `OCBC`, `BOOST`, `SENANGPAY`, `ISUPAYPAL`, and `PAYPAL`. |
+| payment_channel | Payment channel that the transaction is made.<br>Possible values are `AMEXMBB`, `BANKISLAM`, `BILLPLZ`, `BOOST`, `EBPGMBB`, `FPX`, `FPXB2B1`, `ISUPAYPAL`, `MPGS`, `OCBC`, `PAYDEE`, `RAZERPAYWALLET`, `SECUREACCEPTANCE`, `SENANGPAY`, `TWOCTWOP`, `TWOCTWOPIPP`, and `TWOCTWOPWALLET`. |
 
 ## Payment Methods
 
@@ -1362,7 +1351,7 @@ curl -X PUT -d payment_methods[][code]='fpx' -d payment_methods[][code]='paypal'
 | Parameter | Description |
 | --- | --- |
 | COLLECTION_ID | ID that represents the collection where the payment methods belong to. |
-| payment_methods | Array that contains all codes in hash format.  <br>`code` in hash represents the unique payment method's code that you would like to enable. <br>Do not pass the code if you would like to disable a payment method. <br>Ex, `"payment_methods"=>[{"code"=>"fpx"}]` would enable fpx (Online Banking) and disable paypal (PAYPAL). <br>Possible values are `billplz`, `twoctwop`, `fpx`, `boost`, `ocbc`, `senangpay`, and `isupaypal`.|
+| payment_methods | Array that contains all codes in hash format.  <br>`code` in hash represents the unique payment method's code that you would like to enable. <br>Do not pass the code if you would like to disable a payment method. <br>Ex, `"payment_methods"=>[{"code"=>"fpx"}]` would enable fpx (Online Banking) and disable paypal (PAYPAL). <br>Possible values are `amexmbb`, `bankislam`, `billplz`, `boost`, `ebpgmbb`, `fpx`, `fpxb2b1`, `isupaypal`, `mpgs`, `ocbc`, `paydee`, `razerpaywallet`, `secureacceptance`, `senangpay`, `twoctwop`, `twoctwopipp`, and `twoctwopwallet`.|
 
 ###### RESPONSE PARAMETER
 

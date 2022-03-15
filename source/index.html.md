@@ -2821,6 +2821,7 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | BP-2C2PGRB  | Grab |
 | BP-2C2PBST  | Boost |
 | BP-2C2PTNG  | TnG |
+| BP-2C2PSHPPAY | Shopee Pay |
 | BP-2C2PIPP  | IPP |
 | BP-BST01  | Boost |
 | BP-SGP01  | Senangpay |

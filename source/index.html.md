@@ -2837,6 +2837,7 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | BP-CYBS1 | Secure Acceptance |
 | BP-EBPG1 | Visa / Mastercard |
 | BP-EBPG2 | AMEX |
+| BP-PAYDE | Paydee |
 | B2B1-ABB0235 | AFFINMAX |
 | B2B1-ABMB0213 | Alliance BizSmart |
 | B2B1-AGRO02 | AGRONetBIZ |

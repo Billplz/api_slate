@@ -2683,6 +2683,42 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf \
   Use <a href="#payment-completion-x-signature-payout-api">X Signature Payout API to validate the response parameter.</a>
 </aside>
 
+### Cancel a Payout API
+
+Use this API to cancel a Payout API request. A Payout API request can only be cancelled within the same day before the end of the day of the request.
+
+> Example request:
+
+```shell
+# Cancel a Payout API
+curl --request PATCH https://www.billplz.com/api/v4/mass_payment_instructions/57iofla8 \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{}
+```
+
+###### HTTP REQUEST
+
+`PATCH https://www.billplz.com/api/v4/mass_payment_instructions/{PAYOUT_API_ID}`
+
+###### URL PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| PAYOUT_API_ID | Payout API ID returned in Payout API object. |
+
+<aside class="success">
+  System perform a Create a Payout API at 11:58:00 PM on 13 April 2022. System will be able to cancel the Payout API when cancelled at 11:59:10 PM on 13 April 2022.
+</aside> 
+
+<aside class="warning">
+  System perform a Create a Payout API at 8:00:00 AM on 13 April 2022. System will NOT able to cancel the Payout API when cancellation made at 7:00:00 AM on 14 April 2022.
+</aside>
+
 ## Webhook Rank
 
 Webhook Rank has been introduced to ensure callback is running at it's best. The higher the ranking, the higher priority for the callback to be executed. Use this API to query your current Account Ranking. `0.0` indicate highest ranking (default) and `10.0` lowest ranking.

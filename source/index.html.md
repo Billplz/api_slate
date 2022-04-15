@@ -3082,7 +3082,6 @@ Amount will not be charged to the card, but the amount will be blocked until the
 ###### REQUIREMENTS
 
 1. Collection without split recipients (split payment).
-1. Bill. Email and Mobile number are required during bill creation.
 1. [Card Token & ID](#v4-tokenization-senangpay-create-card).
 
 <aside class="notice">
@@ -3129,7 +3128,6 @@ Use this API to capture a pre-authorize transaction with [token generated](#v4-t
 ###### REQUIREMENTS
 
 1. Collection without split recipients (split payment).
-1. Bill. Email and Mobile number are required during bill creation.
 1. [Card Token & ID](#v4-tokenization-senangpay-create-card).
 1. [Preauth ID](#v4-tokenization-senangpay-preauth).
 

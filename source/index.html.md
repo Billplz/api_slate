@@ -2691,7 +2691,7 @@ Use this API to cancel a Payout API request. A Payout API request can only be ca
 
 ```shell
 # Cancel a Payout API
-curl --request PATCH https://www.billplz.com/api/v4/mass_payment_instructions/57iofla8 \
+curl -X POST https://www.billplz.com/api/v4/mass_payment_instructions/57iofla8/cancel \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
 ```
 
@@ -2703,7 +2703,7 @@ curl --request PATCH https://www.billplz.com/api/v4/mass_payment_instructions/57
 
 ###### HTTP REQUEST
 
-`PATCH https://www.billplz.com/api/v4/mass_payment_instructions/{PAYOUT_API_ID}`
+`POST https://www.billplz.com/api/v4/mass_payment_instructions/{PAYOUT_API_ID}/cancel`
 
 ###### URL PARAMETER
 

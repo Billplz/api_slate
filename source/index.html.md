@@ -2608,7 +2608,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | name | Payout API's recipient name. |
 | description | The Payout API's description. |
 | email | The email address of recipient (it default to sender's email if not present). |
-| status | Payout API status. It is either `processing` or `completed` or `refunded`. |
+| status | Payout API status. It is either `processing` or `completed` or `refunded` or `cancelled`. |
 | notification | Boolean value. Sender will receive email notification if this is `true`. |
 | recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
 | total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payout API request;<br>while the total of each Payout API will be deducted from your Payout API limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
@@ -2669,7 +2669,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions/afae4bqf \
 | name | Payout API's recipient name. |
 | description | The Payout API's description. |
 | email | The email address of recipient (it default to sender's email if not present). |
-| status | Payout API status. It is either `processing` or `completed` or `refunded`. |
+| status | Payout API status. It is either `processing` or `completed` or `refunded` or `cancelled`. |
 | notification | Boolean value. Sender will receive email notification if this is `true`. |
 | recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
 | total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
@@ -2698,7 +2698,21 @@ curl -X POST https://www.billplz.com/api/v4/mass_payment_instructions/57iofla8/c
 > Response:
 
 ```json
-{}
+{
+  "id": "57iofla8",
+  "mass_payment_instruction_collection_id": "4po8no8h",
+  "bank_code": "MBBEMYKL",
+  "bank_account_number": "820808062202123",
+  "identity_number": 820808062202 ,
+  "name": "Michael Yap",
+  "description": "Maecenas eu placerat ante.",
+  "email" :"hello@billplz.com",
+  "status": "cancelled",
+  "notification": false,
+  "recipient_notification": true,
+  "total": "2000",
+  "reference_id": null
+}
 ```
 
 ###### HTTP REQUEST
@@ -2710,6 +2724,24 @@ curl -X POST https://www.billplz.com/api/v4/mass_payment_instructions/57iofla8/c
 | Parameter | Description |
 | --- | --- |
 | PAYOUT_API_ID | Payout API ID returned in Payout API object. |
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents a Payout API. |
+| mass_payment_instruction_collection_id | The Payout API collection's title in string format. |
+| bank_code | Bank Code that represents bank, in string value. Case sensitive. |
+| bank_account_number | Bank account number, in string value. |
+| identity_number | Bank account's IC Number/ROC/ROB/ROS Number, in string value. |
+| name | Payout API's recipient name. |
+| description | The Payout API's description. |
+| email | The email address of recipient (it default to sender's email if not present). |
+| status | Payout API status. It is either `processing` or `completed` or `refunded` or `cancelled`. |
+| notification | Boolean value. Sender will receive email notification if this is `true`. |
+| recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| reference_id | Payout API's reference ID. Useful for identification on recipient part.|
 
 <aside class="success">
   System perform a Create a Payout API at 11:58:00 PM on 13 April 2022. System will be able to cancel the Payout API when cancelled at 11:59:10 PM on 13 April 2022.
@@ -3953,7 +3985,7 @@ Content-Type: application/x-www-form-urlencoded
 | name | Payout API's recipient name. |
 | description | The Payout API's description. |
 | email | The email address of recipient. |
-| status | Payout API status. It is either `processing` or `completed` or `refunded`. |
+| status | Payout API status. It is either `processing` or `completed` or `refunded` or `cancelled`. |
 | notification | Boolean value. |
 | recipient_notification | Boolean value. |
 | reference_id | Payout API's reference ID. Useful for identification on recipient part. |

@@ -1260,7 +1260,7 @@ curl https://www.billplz.com/api/v3/bills/inbmmepb/transactions?page=1&status=co
 | id | ID that represent the transaction. |
 | status | Status that representing the transaction's status, possible statuses are `pending`, `completed` and `failed`. |
 | completed_at | Datetime format when the transaction is completed. ISO 8601 format is used. |
-| payment_channel | Payment channel that the transaction is made.<br>Possible values are `AMEXMBB`, `BANKISLAM`, `BILLPLZ`, `BOOST`, `EBPGMBB`, `FPX`, `FPXB2B1`, `ISUPAYPAL`, `MPGS`, `OCBC`, `PAYDEE`, `RAZERPAYWALLET`, `SECUREACCEPTANCE`, `SENANGPAY`, `TWOCTWOP`, `TWOCTWOPIPP`, and `TWOCTWOPWALLET`. |
+| payment_channel | Payment channel that the transaction is made.<br>Possible values are `AMEXMBB`, `BANKISLAM`, `BILLPLZ`, `BOOST`, `TOUCHNGO`, `EBPGMBB`, `FPX`, `FPXB2B1`, `ISUPAYPAL`, `MPGS`, `OCBC`, `PAYDEE`, `RAZERPAYWALLET`, `SECUREACCEPTANCE`, `SENANGPAY`, `TWOCTWOP`, `TWOCTWOPIPP`, and `TWOCTWOPWALLET`. |
 
 ## Payment Methods
 
@@ -1351,7 +1351,7 @@ curl -X PUT -d payment_methods[][code]='fpx' -d payment_methods[][code]='paypal'
 | Parameter | Description |
 | --- | --- |
 | COLLECTION_ID | ID that represents the collection where the payment methods belong to. |
-| payment_methods | Array that contains all codes in hash format.  <br>`code` in hash represents the unique payment method's code that you would like to enable. <br>Do not pass the code if you would like to disable a payment method. <br>Ex, `"payment_methods"=>[{"code"=>"fpx"}]` would enable fpx (Online Banking) and disable paypal (PAYPAL). <br>Possible values are `amexmbb`, `bankislam`, `billplz`, `boost`, `ebpgmbb`, `fpx`, `fpxb2b1`, `isupaypal`, `mpgs`, `ocbc`, `paydee`, `razerpaywallet`, `secureacceptance`, `senangpay`, `twoctwop`, `twoctwopipp`, and `twoctwopwallet`.|
+| payment_methods | Array that contains all codes in hash format.  <br>`code` in hash represents the unique payment method's code that you would like to enable. <br>Do not pass the code if you would like to disable a payment method. <br>Ex, `"payment_methods"=>[{"code"=>"fpx"}]` would enable fpx (Online Banking) and disable paypal (PAYPAL). <br>Possible values are `amexmbb`, `bankislam`, `billplz`, `boost`, `touchngo`, `ebpgmbb`, `fpx`, `fpxb2b1`, `isupaypal`, `mpgs`, `ocbc`, `paydee`, `razerpaywallet`, `secureacceptance`, `senangpay`, `twoctwop`, `twoctwopipp`, and `twoctwopwallet`.|
 
 ###### RESPONSE PARAMETER
 

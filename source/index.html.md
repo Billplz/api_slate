@@ -2892,6 +2892,7 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | BP-2C2PSHPE | Shopee Pay |
 | BP-2C2PIPP  | IPP |
 | BP-BST01  | Boost |
+| BP-TNG01  | TouchNGo E-Wallet |
 | BP-SGP01  | Senangpay |
 | BP-BILM1 | Visa / Mastercard |
 | BP-RZRGRB | Grab |

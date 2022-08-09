@@ -3449,7 +3449,7 @@ V5 API introduces new security measures. Every request made in V5 endpoints must
 - **Epoch** param must be in UNIX epoch time format
 - **Checksum** calculation is specific to each endpoint, please refer to the **REQUIRED ARGUMENTS** of each endpoint for more information on this.
 
-Checksum signature must be calculated using **HMAC_SHA512** together with your account secret key
+Checksum signature must be calculated using **HMAC_SHA512** together with your account XSignature key
 
 *This version is in active development state. New Feature will be introduced in this version.*
 
@@ -3492,7 +3492,7 @@ curl https://www.billplz.com/api/v5/mass_payment_instruction_collections \
 | --- | --- |
 | title | The collection title. Will be displayed on bill template. String format. |
 | epoch | The current time in UNIX epoch time format. |
-| checksum | The calculated checksum signature using HMAC_SHA512 with your secret key |
+| checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
 
 *Required values for checksum signature in this order:* **[ title, epoch ]**
 
@@ -3543,7 +3543,7 @@ curl -G https://www.billplz.com/api/v5/mass_payment_instruction_collections/4po8
 | --- | --- |
 | PAYOUT_COLLECTION_ID | The Payout collection API ID. A string. |
 | epoch | The current time in UNIX epoch time format. |
-| checksum | The calculated checksum signature using HMAC_SHA512 with your secret key |
+| checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
 
 *Required values for checksum signature in this order:* **[ PAYOUT_COLLECTION_ID, epoch ]**
 
@@ -3657,7 +3657,7 @@ curl https://www.billplz.com/api/v5/mass_payment_instructions \
 | description | The Payout API's description. Will be displayed on bill template. String format (Max of 200 characters). |
 | total | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
 | epoch | The current time in UNIX epoch time format. |
-| checksum | The calculated checksum signature using HMAC_SHA512 with your secret key |
+| checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
 
 *Required values for checksum signature in this order:* **[  mass_payment_instruction_collection_id, bank_account_number, total, epoch ]**
 
@@ -3735,7 +3735,7 @@ curl -G https://www.billplz.com/api/v5/mass_payment_instructions/afae4bqf \
 | --- | --- |
 | PAYOUT_API_ID | The Payout API ID. A string. |
 | epoch | The current time in UNIX epoch time format. |
-| checksum | The calculated checksum signature using HMAC_SHA512 with your secret key |
+| checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
 
 *Required values for checksum signature in this order:* **[ PAYOUT_API_ID, epoch ]**
 
@@ -3809,7 +3809,7 @@ curl -X POST https://www.billplz.com/api/v5/mass_payment_instructions/57iofla8/c
 | --- | --- |
 | PAYOUT_API_ID | Payout API ID returned in Payout API object. |
 | epoch | The current time in UNIX epoch time format. |
-| checksum | The calculated checksum signature using HMAC_SHA512 with your secret key |
+| checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
 
 *Required values for checksum signature in this order:* **[ PAYOUT_API_ID, epoch ]**
 

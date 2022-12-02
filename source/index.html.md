@@ -3639,6 +3639,338 @@ curl -X POST https://www.billplz.com/api/v5/mass_payment_instructions/57iofla8/c
 </aside>
 
 
+## Payment Order Flow
+
+Payment Order allows you to make payment to any account bank registered in Malaysia. Since Bank doesn't provide way to programatically make payment to bank account, you can achieve that by using our Payment Order.
+
+Payout Order implements the same collection concept as per [API Flow](#api-flow). You will have collection that consists of multiple payment orders.
+
+Before proceeding further, you need to ensure that you have enough payout API limit to perform payment order. To increase payout API limit, navigate to payment order tab and you will notice the payout API Limit at the top.
+
+![Payout API Limit Interface Screenshot.](payoutlimit.png)
+
+To start using the API, you would have to create a Payment Order Collection. Then the payment order will kicks in as per below:
+
+1. Get bank information from the recipient.
+2. Execute [Create a Payment Order](#v5-payment-order-create-a-payment-order) API.
+3. The payment will be settled to the receipient once the processing completed.
+
+<aside class="notice">
+  The Payment Order feature is in the testing phase and only opened to selected merchants.
+</aside>
+
+
+## Payment Order Collections
+
+### Create a Payment Order Collection
+
+Payment Order Collection used to group all your Payment Orders to make payout API transfers.
+
+> Example request:
+
+```shell
+# Creates a Payment Order collection
+curl https://www.billplz.com/api/v5/payment_order_collections \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d title="My First API Payment Order Collection"  \
+  -d epoch=1668147670 \
+  -d checksum="7ea7b8aed3093b058bfee1d67387f0d6f3be1d776ae3ebd82462237ccf2ffc1ae8b9bf38ad43a81bb2b15f817970afdf656dc622258230b08aa26c7418274041"
+```
+
+> Response:
+
+```json
+{
+  "id": "8f4e331f-ac71-435e-a870-72fe520b4563",
+  "title": "My First API Payment Order Collection",
+  "payment_orders_count": "0",
+  "paid_amount": "0",
+  "status": "active"
+}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v5/payment_order_collections`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| title | The collection title. Will be displayed on bill template. String format. |
+| epoch | The current time in UNIX epoch time format. |
+| checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
+
+*Required values for checksum signature in this order:* **[ title, epoch ]**
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents a collection. |
+| title | The collection's title in string format. |
+| payment_orders_count | The number of payment order belongs to this collection. |
+| paid_amount | Total paid amount for payment orders in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| status | Collection's status, it is either `active` and `inactive`. |
+
+
+### Get a Payment Order Collection
+
+Use this API to query your Payment Order Collection record.
+
+> Example request:
+
+```shell
+# Get a Payment Order collection
+curl -G https://www.billplz.com/api/v5/payment_order_collections/8f4e331f-ac71-435e-a870-72fe520b4563 \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d epoch=1668147747 \
+  -d checksum="2bc6333ac9539e8fc5e520432373991403155f80315c7f3c601bd6a5535ee9ae70b0d8c29823ccf3be73a251caced9f5a165d6c0e9cadd451931ec3c1ede006d"
+```
+
+> Response:
+
+```json
+{
+  "id": "8f4e331f-ac71-435e-a870-72fe520b4563",
+  "title": "My First API Payment Order Collection",
+  "payment_orders_count": "0",
+  "paid_amount": "0",
+  "status": "active"
+}
+```
+
+###### HTTP REQUEST
+
+`GET https://www.billplz.com/api/v5/payment_order_collections/{PAYMENT_ORDER_COLLECTION_ID}`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| PAYMENT_ORDER_COLLECTION_ID | The Payment Order Collection ID. A string. |
+| epoch | The current time in UNIX epoch time format. |
+| checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
+
+*Required values for checksum signature in this order:* **[ PAYMENT_ORDER_COLLECTION_ID, epoch ]**
+
+
+## Payment Order
+
+### Create a Payment Order
+
+To make a payment transfer to another bank account, simply create a Payment Order.
+
+To create a Payment Order, you would need the Payment Order collection's ID. Each Payment Order must be created within a Payment Order Collection.
+
+<aside class="warning">
+  It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout API Limit</strong>.
+</aside>
+
+> Example request:
+
+```shell
+# Creates a Payment Order for RM 20.00
+curl https://www.billplz.com/api/v5/payment_orders \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d payment_order_collection_id="8f4e331f-ac71-435e-a870-72fe520b4563" \
+  -d bank_code="MBBEMYKL" \
+  -d bank_account_number="543478924652" \
+  -d identity_number="820808062202" \
+  -d name="Michael Yap" \
+  -d description="Maecenas eu placerat ante." \
+  -d total=2000
+  -d epoch=1668148460
+  -d checksum="1516c31cd226119732b66dd423a5ae8d9741594953dfb4bd510efc7349cd7579dc885014bbb67baf8398150cdba5ac42c35196ef1a1acea437386711e159ce62"
+```
+
+> Response:
+
+```json
+{
+  "id": "ddfb5a5d-7b09-4f8c-9258-866f7ef4fa7c",
+  "payment_order_collection_id": "8f4e331f-ac71-435e-a870-72fe520b4563",
+  "bank_code": "MBBEMYKL",
+  "bank_account_number": "543478924652",
+  "identity_number": 820808062202 ,
+  "name": "Michael Yap",
+  "description": "Maecenas eu placerat ante.",
+  "email" :"hello@billplz.com",
+  "status": "enquiring",
+  "notification": false,
+  "recipient_notification": true,
+  "total": "2000",
+  "reference_id": null,
+  "display_name": "Michael Yap"
+}
+```
+
+> Example request with optional arguments:
+
+```shell
+# Creates a Payment Order for RM 20.00
+curl https://www.billplz.com/api/v5/payment_orders \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d payment_order_collection_id="8f4e331f-ac71-435e-a870-72fe520b4563" \
+  -d bank_code="MBBEMYKL" \
+  -d bank_account_number="543478924652" \
+  -d identity_number="820808062202" \
+  -d name="Michael Yap" \
+  -d description="Maecenas eu placerat ante." \
+  -d total=2000 \
+  -d email="recipient@email.com" \
+  -d notification=true \
+  -d recipient_notification=false \
+  -d reference_id="paymentOrder1" \
+  -d epoch=1668148796
+  -d checksum="fce47038896eb5c70fd33a8faf91529023cf67fa48afcc31adb20263e45a37b5cd0211fd95377a1053b9bbf70de0245c9117576998264eebb932f8244c878eed"
+```
+
+> Response:
+
+```json
+{
+  "id": "cc92738f-dfda-4969-91dc-22a44afc7e26",
+  "mass_payment_instruction_collection_id": "8f4e331f-ac71-435e-a870-72fe520b4563",
+  "bank_code": "MBBEMYKL",
+  "bank_account_number": "543478924652",
+  "identity_number": 820808062202 ,
+  "name": "Michael Yap",
+  "description": "Maecenas eu placerat ante.",
+  "email":"recipient@email.com",
+  "status": "enquiring",
+  "notification": true,
+  "recipient_notification": false,
+  "total": "2000",
+  "reference_id": "paymentOrder1",
+  "display_name": "Michael Yap"
+}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v5/payment_orders`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| payment_order_collection_id | The Payment Order Collection ID. A string. |
+| bank_code | Bank Code that represents bank, in string value. Case sensitive. <br><br> Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. |
+| bank_account_number | Bank account number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. |
+| identity_number | Bank account's IC Number/SSM Registration Number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. |
+| name | Payment Order API's recipient name. Useful for identification on recipient part. |
+| description | The Payment Order API's description. Will be displayed on bill template. String format (Max of 200 characters). |
+| total | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| epoch | The current time in UNIX epoch time format. |
+| checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
+
+*Required values for checksum signature in this order:* **[  payment_order_collection_id, bank_account_number, total, epoch ]**
+
+###### OPTIONAL ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| email | The email address of recipient (it default to sender's email if not present). <br>A receipt will be sent to this email once the Payment Order has been processed. |
+| notification | Boolean value. As a sender, you can opt-in for email notification by setting this to `true`. Sender will receive email once a Payment Order has been completed. Default value is `false`. |
+| recipient_notification | Boolean value. If this is set to `true`, recipient of the Payment Order will receive email notification once the Payment Order has been completed. Default value is `true`. Set to false if you do not like the recipient to receive any email notifications. |
+| reference_id | Payment Order's unique reference ID scoped by [Payment Order Collection](#v5-payment-order-collections). This helps maintain data integrity by ensuring that no two rows of data in a payout API collection have identical reference_id value. Useful to prevent unintentional payment order creation. (Max of 255 characters).|
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents a Payment Order. |
+| payment_order_collection_id | The Payment order collection's title in string format. |
+| bank_code | Bank Code that represents bank, in string value. Case sensitive. |
+| bank_account_number | Bank account number, in string value. |
+| identity_number | Bank account's IC Number/SSM Registration Number, in string value. |
+| name | Payment Order's recipient name. |
+| description | The Payment Order's description. |
+| email | The email address of recipient (it default to sender's email if not present). |
+| status | Payment Order status. It is either `processing` or `enquiring` or `executing` or `reviewing` or `completed` or `refunded`. |
+| notification | Boolean value. Sender will receive email notification if this is `true`. |
+| recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payment Order request;<br>while the total of each Payment Order will be deducted from your Payout API limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
+| reference_id | Payment Order's reference ID. Useful for identification on recipient part.|
+
+
+### Get a Payment Order
+
+Use this API to query your Payment Order record.
+
+> Example request:
+
+```shell
+# Get a Payout API
+curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22a44afc7e26 \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
+  -d epoch=1668149595 \
+  -d checksum="92987e17459c6e488b83c02dea1693615011fee049d88a3eb9745538f191e323ac4f067571aa8abc335075470b06693994443b52b78be22fbd12b44cb699b265"
+```
+
+> Response:
+
+```json
+{
+  "id": "cc92738f-dfda-4969-91dc-22a44afc7e26",
+  "mass_payment_instruction_collection_id": "8f4e331f-ac71-435e-a870-72fe520b4563",
+  "bank_code": "MBBEMYKL",
+  "bank_account_number": "543478924652",
+  "identity_number": 820808062202 ,
+  "name": "Michael Yap",
+  "description": "Maecenas eu placerat ante.",
+  "email" :"recipient@email.com",
+  "status": "enquiring",
+  "notification": true,
+  "recipient_notification": false,
+  "total": "2000",
+  "reference_id": "paymentOrder1",
+  "display_name": "Michael Yap"
+}
+```
+
+###### HTTP REQUEST
+
+`GET https://www.billplz.com/api/v5/payment_orders/{PAYMENT_ORDER_ID}`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| PAYMENT_ORDER_ID | The Payment Order ID. A string. |
+| epoch | The current time in UNIX epoch time format. |
+| checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
+
+*Required values for checksum signature in this order:* **[ PAYMENT_ORDER_ID, epoch ]**
+
+###### RESPONSE PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents a Payment Order. |
+| payment_order_collection_id | The Payment order collection's title in string format. |
+| bank_code | Bank Code that represents bank, in string value. Case sensitive. |
+| bank_account_number | Bank account number, in string value. |
+| identity_number | Bank account's IC Number/ROC/ROB/ROS Number, in string value. |
+| name | Payment Order's recipient name. |
+| description | The Payment Order's description. |
+| email | The email address of recipient (it default to sender's email if not present). |
+| status | Payment Order status. It is either `processing` or `enquiring` or `executing` or `reviewing` or `completed` or `refunded`. |
+| notification | Boolean value. Sender will receive email notification if this is `true`. |
+| recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| reference_id | Payment Order API's reference ID. Useful for identification on recipient part.|
+
+<aside class="warning">
+  The usage of this API is not recommended as it is subject to our <a href="#rate-limit">Rate Limit</a> policy.
+</aside>
+
+<aside class="success">
+  Use <a href="#payment-completion-x-signature-payout-api">X Signature Payment Order API to validate the response parameter.</a>
+</aside>
+
+
 # X Signature
 
 ###### X SIGNATURE CALCULATION

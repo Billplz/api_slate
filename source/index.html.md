@@ -2374,9 +2374,9 @@ Payout API allows you to make payment to any account bank registered in Malaysia
 
 Payout API implements the same collection concept as per [API Flow](#api-flow). You will have collection that consists of multiple payout APIs.
 
-Before proceeding further, you need to ensure that you have enough payout API limit to perform payout API. To increase payout API limit, navigate to payout API tab and you will notice the payout API Limit at the top.
+Before proceeding further, you need to ensure that you have enough payout API balance to perform payout API. To increase payout API balance, navigate to payout API tab and you will notice the payout API Balance at the top.
 
-![Payout API Limit Interface Screenshot.](payoutlimit.png)
+![Payout API Balance Interface Screenshot.](payoutlimit.png)
 
 To start using the API, you would have to create a Payout API Collection. Then the payout API will kicks in as per below:
 
@@ -2490,7 +2490,7 @@ To make a payment transfer to another bank account, simply create a Payout API.
 To create a Payout API, you would need the Payout API collection's ID. Each Payout API must be created within a Payout API Collection.
 
 <aside class="warning">
-  It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout API Limit</strong>.
+  It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout API Balance</strong>.
 </aside>
 
 > Example request:
@@ -2611,7 +2611,7 @@ curl https://www.billplz.com/api/v4/mass_payment_instructions \
 | status | Payout API status. It is either `processing` or `completed` or `refunded` or `cancelled`. |
 | notification | Boolean value. Sender will receive email notification if this is `true`. |
 | recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
-| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payout API request;<br>while the total of each Payout API will be deducted from your Payout API limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payout API request;<br>while the total of each Payout API will be deducted from your Payout API Balance. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
 | reference_id | Payout API's reference ID. Useful for identification on recipient part.|
 | callback_url | Callback URL for notifying the payout status change. The last POST constitute the final state of payout.|
 
@@ -3356,7 +3356,7 @@ To make a payment transfer to another bank account, simply create a Payout API.
 To create a Payout API, you would need the Payout API collection's ID. Each Payout API must be created within a Payout API Collection.
 
 <aside class="warning">
-  It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout API Limit</strong>.
+  It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout API Balance</strong>.
 </aside>
 
 > Example request:
@@ -3485,7 +3485,7 @@ curl https://www.billplz.com/api/v5/mass_payment_instructions \
 | status | Payout API status. It is either `processing` or `completed` or `refunded` or `cancelled`. |
 | notification | Boolean value. Sender will receive email notification if this is `true`. |
 | recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
-| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payout API request;<br>while the total of each Payout API will be deducted from your Payout API limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payout API request;<br>while the total of each Payout API will be deducted from your Payout API balance. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
 | reference_id | Payout API's reference ID. Useful for identification on recipient part.|
 | callback_url | Callback URL for notifying the payout status change. The last POST constitute the final state of payout.|
 
@@ -3645,9 +3645,9 @@ Payment Order allows you to make payment to any account bank registered in Malay
 
 Payout Order implements the same collection concept as per [API Flow](#api-flow). You will have collection that consists of multiple payment orders.
 
-Before proceeding further, you need to ensure that you have enough payout API limit to perform payment order. To increase payout API limit, navigate to payment order tab and you will notice the payout API Limit at the top.
+Before proceeding further, you need to ensure that you have enough payout API balance to perform payment order. To increase payout API balance, navigate to payment order tab and you will notice the payout API Balance at the top.
 
-![Payout API Limit Interface Screenshot.](payoutlimit.png)
+![Payout API Balance Interface Screenshot.](payoutlimit.png)
 
 To start using the API, you would have to create a Payment Order Collection. Then the payment order will kicks in as per below:
 
@@ -3764,7 +3764,7 @@ To make a payment transfer to another bank account, simply create a Payment Orde
 To create a Payment Order, you would need the Payment Order collection's ID. Each Payment Order must be created within a Payment Order Collection.
 
 <aside class="warning">
-  It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout API Limit</strong>.
+  It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout API Balance</strong>.
 </aside>
 
 > Example request:
@@ -3891,7 +3891,7 @@ curl https://www.billplz.com/api/v5/payment_orders \
 | status | Payment Order status. It is either `processing` or `enquiring` or `executing` or `reviewing` or `completed` or `refunded`. |
 | notification | Boolean value. Sender will receive email notification if this is `true`. |
 | recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
-| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payment Order request;<br>while the total of each Payment Order will be deducted from your Payout API limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payment Order request;<br>while the total of each Payment Order will be deducted from your Payout API balance. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
 | reference_id | Payment Order's reference ID. Useful for identification on recipient part.|
 
 

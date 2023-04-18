@@ -1164,8 +1164,7 @@ curl https://www.billplz.com/api/v3/check/bank_account_number/1234567890 \
 
 ###### HTTP REQUEST
 
-`GET https://www.billplz.com/api/v3/check/bank_account_number/{BANKcurl https://www.billplz.com/api/v3/check/bank_account_number/1234567890 \
-  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:_ACCOUNT_NUMBER}`
+`GET https://www.billplz.com/api/v3/check/bank_account_number/{BANK_ACCOUNT_NUMBER}`
 
 ###### URL PARAMETER
 
@@ -2657,6 +2656,16 @@ V5 API introduces new security measures. Every request made in V5 endpoints must
 - **Checksum** calculation is specific to each endpoint, please refer to the **REQUIRED ARGUMENTS** of each endpoint for more information on this.
 
 Checksum signature must be calculated using **HMAC_SHA512** together with your account XSignature key
+
+The formation of checksum signature in API V5 is slightly differs from the way Billplz's XSignatureVerification is formatted.
+
+Below is an example:
+
+In the example of creating a payment order collection, the required values for checksum signature is **[ title, epoch ]** and assuming your parameters are `{title: "My payment order title", epoch: 1681724303}`, you are only required to join the values of the required arguments to form the raw string for checksum signature generation.
+
+Your raw string would look like this `"My payment order title1681724303"`
+
+Subsequently to get the valid checksum signature, you must calculate the raw string using **HMAC_SHA512** together with your account XSignature key
 
 *This version is in active development state. New Feature will be introduced in this version.*
 

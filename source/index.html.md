@@ -2655,19 +2655,31 @@ V5 API introduces new security measures. Every request made in V5 endpoints must
 - **Epoch** param must be in UNIX epoch time format
 - **Checksum** calculation is specific to each endpoint, please refer to the **REQUIRED ARGUMENTS** of each endpoint for more information on this.
 
+*This version is in active development state. New Feature will be introduced in this version.*
+
+## How to generate a V5 checksum
+
 Checksum signature must be calculated using **HMAC_SHA512** together with your account XSignature key
 
 The formation of checksum signature in API V5 is slightly differs from the way Billplz's XSignatureVerification is formatted.
 
-Below is an example:
+###### \#1. Format the raw_string with only the values of the following keys in strict order
 
 In the example of creating a payment order collection, the required values for checksum signature is **[ title, epoch ]** and assuming your parameters are `{title: "My payment order title", epoch: 1681724303}`, you are only required to join the values of the required arguments to form the raw string for checksum signature generation.
 
 Your raw string would look like this `"My payment order title1681724303"`
 
+###### \#2.Digest the raw_string together with your account XSignature key using **HMAC_SHA512**
+
 Subsequently to get the valid checksum signature, you must calculate the raw string using **HMAC_SHA512** together with your account XSignature key
 
-*This version is in active development state. New Feature will be introduced in this version.*
+For example with the string above `"My payment order title1681724303"` and using a sample XSignature key: `S-R5t3Uw6SrwXNWyZV-naVHg`
+
+The expected generated checksum signature would equal: `575c35c13ba37ccc2a434529e5082a71a574d304ba007592af44339d4436467d6a49107c95e51905cd80dce0f745760bd42fe73e2bc3bcd7ab79d07cc7fb4fa4`
+
+<aside class="notice">
+  Each endpoint will indicate the necessary values required to format the string for checksum generation
+</aside>
 
 ## Payment Order Flow
 
@@ -2704,7 +2716,8 @@ curl https://www.billplz.com/api/v5/payment_order_collections \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
   -d title="My First API Payment Order Collection"  \
   -d epoch=1668147670 \
-  -d checksum="7ea7b8aed3093b058bfee1d67387f0d6f3be1d776ae3ebd82462237ccf2ffc1ae8b9bf38ad43a81bb2b15f817970afdf656dc622258230b08aa26c7418274041"
+  -d callback_url="https://example.com/payment_order_collection_callback" \
+  -d checksum="7ea7b8aed3093b058bfee1d67387f0d6f3be1d776ae3ebd82462237ccf2ffc1ae8b9bf38ad43a81bb2b15f817970afdf656dc622258230b08aa26c7418274041" 
 ```
 
 > Response:
@@ -2715,7 +2728,8 @@ curl https://www.billplz.com/api/v5/payment_order_collections \
   "title": "My First API Payment Order Collection",
   "payment_orders_count": "0",
   "paid_amount": "0",
-  "status": "active"
+  "status": "active",
+  "callback_url": "https://example.com/payment_order_collection_callback"
 }
 ```
 
@@ -2731,7 +2745,13 @@ curl https://www.billplz.com/api/v5/payment_order_collections \
 | epoch | The current time in UNIX epoch time format. |
 | checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
 
-*Required values for checksum signature in this order:* **[ title, epoch ]**
+*Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order:* **[ title, epoch ]** 
+
+###### OPTIONAL ARGUMENTS
+
+| Parameter | Description |
+| --- | --- |
+| callback_url | Web hook URL to be called after payment order's transaction completed. It will POST a Payment Order object. [Find out more](#payment-completion-payment-order-callback) |
 
 ###### RESPONSE PARAMETER
 
@@ -2742,6 +2762,7 @@ curl https://www.billplz.com/api/v5/payment_order_collections \
 | payment_orders_count | The number of payment order belongs to this collection. |
 | paid_amount | Total paid amount for payment orders in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
 | status | Collection's status, it is either `active` and `inactive`. |
+| callback_url | Web hook URL to be called after payment order's transaction completed. It will POST a Payment Order object. [Find out more](#payment-completion-payment-order-callback) |
 
 
 ### Get a Payment Order Collection
@@ -2766,7 +2787,8 @@ curl -G https://www.billplz.com/api/v5/payment_order_collections/8f4e331f-ac71-4
   "title": "My First API Payment Order Collection",
   "payment_orders_count": "0",
   "paid_amount": "0",
-  "status": "active"
+  "status": "active",
+  "callback_url": "https://example.com/payment_order_collection_callback"
 }
 ```
 
@@ -2782,8 +2804,7 @@ curl -G https://www.billplz.com/api/v5/payment_order_collections/8f4e331f-ac71-4
 | epoch | The current time in UNIX epoch time format. |
 | checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
 
-*Required values for checksum signature in this order:* **[ PAYMENT_ORDER_COLLECTION_ID, epoch ]**
-
+*Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order:* **[ PAYMENT_ORDER_COLLECTION_ID, epoch ]**
 
 ## Payment Order
 
@@ -2895,7 +2916,7 @@ curl https://www.billplz.com/api/v5/payment_orders \
 | epoch | The current time in UNIX epoch time format. |
 | checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
 
-*Required values for checksum signature in this order:* **[  payment_order_collection_id, bank_account_number, total, epoch ]**
+*Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order:* **[  payment_order_collection_id, bank_account_number, total, epoch ]**
 
 ###### OPTIONAL ARGUMENTS
 
@@ -2972,7 +2993,7 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
 | epoch | The current time in UNIX epoch time format. |
 | checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
 
-*Required values for checksum signature in this order:* **[ PAYMENT_ORDER_ID, epoch ]**
+*Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order:* **[ PAYMENT_ORDER_ID, epoch ]**
 
 ###### RESPONSE PARAMETER
 
@@ -2996,8 +3017,8 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
   The usage of this API is not recommended as it is subject to our <a href="#rate-limit">Rate Limit</a> policy.
 </aside>
 
-<aside class="success">
-  Use <a href="#payment-completion-x-signature-payout-api">X Signature Payment Order API to validate the response parameter.</a>
+<aside class="info">
+  If your payment order collection was configured with a callback_url, billplz will POST a callback to the designated url with the result of your payment order. Find out more about <a href="#payment-completion-payment-order-callback">Payment Order Callbacks</a>
 </aside>
 
 
@@ -3482,6 +3503,10 @@ If they match, you can be sure that the redirection was sent from Billplz and th
 
 ## X Signature Payout API
 
+<aside class="warning">
+  Payout API is being sunsetted and will be discontinued on 10/05/2023, please configure your application to integrate with our Payment Order API instead <a href="#v5-payment-order-flow">[Payment Order]</a>
+</aside>
+
 X Signature Payout API allows your system to be notified in the event of the payout status change. This will ensure that your system can be hooked to perform an action in the event of payout status. The callback notification will be send when the status changed to `completed` or `refunded`.
 
 You are required to have this feature set-up if your system require an update on the payout status as <a href="#v4-payout-api-get-a-payout-api">Get a Payout API</a> is rate-limited.
@@ -3675,6 +3700,137 @@ with POST body,
 ###### \#6 Compare the computed x_signature with the x_signature passed in the request.
 
 If they match, you can be sure that the callback was sent from Billplz and the data has not been compromised, and you **do not need to trigger additional Get a Payout API for primary status validation**.
+
+<aside class="warning">
+  YOUR ACCOUNT RANK WILL BE DEGRADED BY 1 FOR EVERY UNSUCCESSFUL ATTEMPT OF CALLBACK AND WILL RESULT TO LOWER SCHEDULING PRIORITY FOR THE CALLBACK TO BE EXECUTED FOR YOUR ACCOUNT.
+</aside>
+
+## Payment Order Callback
+
+Payment order callbacks allows your system to be notified in the event of the payment order status change. This will ensure that your system can be hooked to perform an action in the event of payment order status. The callback notification will be send when the status changed to `completed` or `refunded`.
+
+###### SERVER SIDE REQUEST
+
+If `callback_url` exists in your payment order collection, Billplz will make a POST request with Payment Order object upon status change (`completed` or `refunded`).
+
+Each callback request includes a checksum which is generated using HMAC-SHA512 algorithm and your XSignature Key, along with certain key data sent in the request. The data integrity of the data from Billplz can be verified by calculating a checksum signature and comparing with the checksum value included within the posted callback object.
+
+If they match, you can be sure that the callback was sent from Billplz and the data has not been compromised.
+
+> Example Server Side Request from Billplz:
+
+```
+POST /webhook/ HTTP/1.1
+Connection: close
+Host: 127.0.0.1
+Content-Length: 346
+Content-Type: application/x-www-form-urlencoded
+
+  id="0b924e37-7418-4d17-b234-8de424dc48e5"
+  &payment_order_collection_id="0c78f8c6-5bd3-4663-8c08-9e2c805418a2"
+  &bank_code="PHBMMYKL"
+  &bank_account_number="1234567890"
+  &name="Michae Yap"
+  &description="Maecenas eu placerat ante."
+  &email="api@billplz.com"
+  &status="refunded"
+  &notification="false"
+  &recipient_notification="true"
+  &reference_id="My first payment order"
+  &display_name=""
+  &total=50000
+  &epoch=1681895891
+  &checksum="2720f5ef16c7d04677829789fb74bccb08b90041e4e27916d85cb6fbbece58a7ab48538e8b62bcedab3b236bd38e6517860b593b8fe9bfa77bed979994f2ca1a"
+```
+
+> Body formatted for readability.
+
+###### HTTP REQUEST
+
+`POST {CALLBACK_URL}`
+
+###### POST PARAMETER
+
+| Parameter | Description |
+| --- | --- |
+| id | ID that represents payment order. |
+| payment_order_collection_id | The payment order collection's id in string format. |
+| bank_code | Bank Code that represents bank, in string value. |
+| bank_account_number | Bank account number, in string value. |
+| identity_number | Bank account's IC Number/SSM Registration Number, in string value. |
+| name | Payment Order's recipient name. |
+| description | The Payment Order's description. |
+| email | The email address of recipient. |
+| status | Payment Order status. It is either `processing` or `completed` or `refunded` or `cancelled`. |
+| notification | Boolean value. |
+| recipient_notification | Boolean value. |
+| reference_id | Payment Order's reference ID. Useful for identification on recipient part. |
+| display_name | Bank Account Owner's name |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| epoch | Current time in UNIX epoch time format |
+| checksum | Computed signature of strict ordered values of key data present in object |
+
+Callback request will be timeout in 20 seconds.
+
+Billplz server also expecting the end point server responds with status code of 200.
+
+In a case of either the end point server does not able to respond within the limit seconds (20 secs) or does not respond with 200 status code, the callback will consider as failure.
+
+On failure, the job is rescheduled for 2nd attempt in `15 seconds + (random 0-300 seconds)`, while 3rd and 4th attempts will rescheduled at `15 minutes + (random 0-300 seconds)`. The 5th (last) attempt will be `24 hours + random (0-300 seconds)` after 4th attempt.
+
+Assuming the 1st callback is initiated at 13:00:00. The 2nd attempt will be at 13:00:15 + N seconds. The 3rd attempt will be at 13:15:15 + N seconds. The 4th attempt will be at 13:30:15 + N seconds. The fifth attempt will be at 13:30:15+ N seconds next day.
+
+Billplz will attempt for maximum of 5 times and the callback will be removed from the system queue permanently after that.
+
+> Sample of callback POST request Payment Order Object from Billplz:
+
+```json
+{
+  "id": "0b924e37-7418-4d17-b234-8de424dc48e5",
+  "payment_order_collection_id": "0c78f8c6-5bd3-4663-8c08-9e2c805418a2",
+  "bank_code":"PHBMMYKL",
+  "bank_account_number": "1234567890",
+  "name": "Michae Yap",
+  "description": "Maecenas eu placerat ante.",
+  "email": "api@billplz.com",
+  "status": "refunded",
+  "notification": "false",
+  "recipient_notification": "true",
+  "reference_id": "My first payment order",
+  "display_name": "",
+  "total": 50000,
+  "epoch": 1681895891,
+  "checksum": "2720f5ef16c7d04677829789fb74bccb08b90041e4e27916d85cb6fbbece58a7ab48538e8b62bcedab3b236bd38e6517860b593b8fe9bfa77bed979994f2ca1a"
+}
+```
+
+###### CHECKSUM FORMAT GUIDE
+
+In order to compare with the checksum sent together with the payment order object, you must first generate the checksum signature on your end first. *Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order:* **[id, bank_account_number, status, total, reference_id, epoch]**
+
+Here's an example of a HTTP request from a payment order callback
+
+`POST {CALLBACK_URL}` with POST body
+
+`{:id=>"0b924e37-7418-4d17-b234-8de424dc48e5",:payment_order_collection_id=>"0c78f8c6-5bd3-4663-8c08-9e2c805418a2",:bank_code=>"PHBMMYKL",:bank_account_number=>"1234567890",:name=>"Michae Yap",:description=>"Maecenas eu placerat ante.",:email=>"api@billplz.com",:status=>"refunded",:notification=>true,:recipient_notification=>true,:reference_id=>"My first payment order",:display_name=>nil,:total=>500000,:epoch=>1681895891, :checksum=>"2720f5ef16c7d04677829789fb74bccb08b90041e4e27916d85cb6fbbece58a7ab48538e8b62bcedab3b236bd38e6517860b593b8fe9bfa77bed979994f2ca1a"}`
+
+###### \#1. Format the raw_string with only the values of the following keys in strict order
+object_keys: `[:id, :bank_account_number, :status, :total, :reference_id, :epoch]`
+
+raw_string: `"0b924e37-7418-4d17-b234-8de424dc48e51234567890refunded500000My first payment order1681895891"`
+
+###### \#2.Digest the raw_string together with your account XSignature key using **HMAC_SHA512**
+example_XSignature: `S-R5t3Uw6SrwXNWyZV-naVHg`
+
+generated_checksum_value: `2720f5ef16c7d04677829789fb74bccb08b90041e4e27916d85cb6fbbece58a7ab48538e8b62bcedab3b236bd38e6517860b593b8fe9bfa77bed979994f2ca1a`
+
+###### \#3.Compare your generated checksum signature with the one included in the callback
+
+if the value of your checksum is the same as the one included within the callback object, you can be sure that the request is valid from Billplz and the data is not altered.
+
+<aside class="notice">
+  The order of the values must be in the specific order as noted above
+</aside>
 
 <aside class="warning">
   YOUR ACCOUNT RANK WILL BE DEGRADED BY 1 FOR EVERY UNSUCCESSFUL ATTEMPT OF CALLBACK AND WILL RESULT TO LOWER SCHEDULING PRIORITY FOR THE CALLBACK TO BE EXECUTED FOR YOUR ACCOUNT.

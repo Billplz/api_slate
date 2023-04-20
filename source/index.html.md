@@ -2743,9 +2743,7 @@ curl https://www.billplz.com/api/v5/payment_order_collections \
 | --- | --- |
 | title | The collection title. Will be displayed on bill template. String format. |
 | epoch | The current time in UNIX epoch time format. |
-| checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
-
-*Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order:* **[ title, epoch ]** 
+| checksum | Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order: **[ title, epoch ]**  |
 
 ###### OPTIONAL ARGUMENTS
 
@@ -2802,9 +2800,7 @@ curl -G https://www.billplz.com/api/v5/payment_order_collections/8f4e331f-ac71-4
 | --- | --- |
 | PAYMENT_ORDER_COLLECTION_ID | The Payment Order Collection ID. A string. |
 | epoch | The current time in UNIX epoch time format. |
-| checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
-
-*Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order:* **[ PAYMENT_ORDER_COLLECTION_ID, epoch ]**
+| checksum | Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order: **[ PAYMENT_ORDER_COLLECTION_ID, epoch ]** |
 
 ## Payment Order
 
@@ -2914,9 +2910,7 @@ curl https://www.billplz.com/api/v5/payment_orders \
 | description | The Payment Order API's description. Will be displayed on bill template. String format (Max of 200 characters). |
 | total | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
 | epoch | The current time in UNIX epoch time format. |
-| checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
-
-*Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order:* **[  payment_order_collection_id, bank_account_number, total, epoch ]**
+| checksum | Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order: **[  payment_order_collection_id, bank_account_number, total, epoch ]** |
 
 ###### OPTIONAL ARGUMENTS
 
@@ -2991,9 +2985,7 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
 | --- | --- |
 | PAYMENT_ORDER_ID | The Payment Order ID. A string. |
 | epoch | The current time in UNIX epoch time format. |
-| checksum | The calculated checksum signature using HMAC_SHA512 with your XSignature key |
-
-*Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order:* **[ PAYMENT_ORDER_ID, epoch ]**
+| checksum | Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order: **[ PAYMENT_ORDER_ID, epoch ]** |
 
 ###### RESPONSE PARAMETER
 

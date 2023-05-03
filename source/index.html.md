@@ -2685,11 +2685,11 @@ The expected generated checksum signature would equal: `575c35c13ba37ccc2a434529
 
 Payment Order allows you to make payment to any account bank registered in Malaysia. Since Bank doesn't provide way to programatically make payment to bank account, you can achieve that by using our Payment Order.
 
-Payout Order implements the same collection concept as per [API Flow](#api-flow). You will have collection that consists of multiple payment orders.
+Payment Order implements the same collection concept as per [API Flow](#api-flow). You will have collection that consists of multiple payment orders.
 
-Before proceeding further, you need to ensure that you have enough payout API balance to perform payment order. To increase payout API balance, navigate to payment order tab and you will notice the payout API Balance at the top.
+Before proceeding further, you need to ensure that you have enough payment order limit to perform payment order. To increase payment order limit, navigate to payment order tab and you will notice the payment order limit at the top.
 
-![Payout API Balance Interface Screenshot.](payoutlimit.png)
+![Payment Order Limit Interface Screenshot.](payoutlimit.png)
 
 To start using the API, you would have to create a Payment Order Collection. Then the payment order will kicks in as per below:
 
@@ -2706,7 +2706,7 @@ To start using the API, you would have to create a Payment Order Collection. The
 
 ### Create a Payment Order Collection
 
-Payment Order Collection used to group all your Payment Orders to make payout API transfers.
+Payment Order Collection used to group all your Payment Orders to make payment order transfers.
 
 > Example request:
 
@@ -2811,7 +2811,7 @@ To make a payment transfer to another bank account, simply create a Payment Orde
 To create a Payment Order, you would need the Payment Order collection's ID. Each Payment Order must be created within a Payment Order Collection.
 
 <aside class="warning">
-  It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payout API Balance</strong>.
+  It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payment Order Limit</strong>.
 </aside>
 
 > Example request:
@@ -2919,7 +2919,7 @@ curl https://www.billplz.com/api/v5/payment_orders \
 | email | The email address of recipient (it default to sender's email if not present). <br>A receipt will be sent to this email once the Payment Order has been processed. |
 | notification | Boolean value. As a sender, you can opt-in for email notification by setting this to `true`. Sender will receive email once a Payment Order has been completed. Default value is `false`. |
 | recipient_notification | Boolean value. If this is set to `true`, recipient of the Payment Order will receive email notification once the Payment Order has been completed. Default value is `true`. Set to false if you do not like the recipient to receive any email notifications. |
-| reference_id | Payment Order's unique reference ID scoped by [Payment Order Collection](#v5-payment-order-collections). This helps maintain data integrity by ensuring that no two rows of data in a payout API collection have identical reference_id value. Useful to prevent unintentional payment order creation. (Max of 255 characters).|
+| reference_id | Payment Order's unique reference ID scoped by [Payment Order Collection](#v5-payment-order-collections). This helps maintain data integrity by ensuring that no two rows of data in a payment order collection have identical reference_id value. Useful to prevent unintentional payment order creation. (Max of 255 characters).|
 
 ###### RESPONSE PARAMETER
 
@@ -2936,7 +2936,7 @@ curl https://www.billplz.com/api/v5/payment_orders \
 | status | Payment Order status. It is either `processing` or `enquiring` or `executing` or `reviewing` or `completed` or `refunded`. |
 | notification | Boolean value. Sender will receive email notification if this is `true`. |
 | recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
-| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payment Order request;<br>while the total of each Payment Order will be deducted from your Payout API balance. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
+| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payment Order request;<br>while the total of each Payment Order will be deducted from your Payment Order Limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
 | reference_id | Payment Order's reference ID. Useful for identification on recipient part.|
 
 
@@ -2947,7 +2947,7 @@ Use this API to query your Payment Order record.
 > Example request:
 
 ```shell
-# Get a Payout API
+# Get a Payment Order
 curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22a44afc7e26 \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
   -d epoch=1668149595 \

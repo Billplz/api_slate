@@ -2653,7 +2653,7 @@ curl https://www.billplz.com/api/v4/bills/awyzmy0m/preauth_capture \
 V5 API introduces new security measures. Every request made in V5 endpoints must include ***epoch*** and ***checksum*** values in addition to each endpoint's required arguments.
 
 - **Epoch** param must be in UNIX epoch time format
-- **Checksum** calculation is specific to each endpoint, please refer to the **REQUIRED ARGUMENTS** of each endpoint for more information on this.
+- **Checksum** calculation is specific to each endpoint, please refer to the **CHECKSUM ARGUMENTS** of each endpoint for more information on this.
 
 *This version is in active development state. New Feature will be introduced in this version.*
 
@@ -2677,8 +2677,24 @@ For example with the string above `"My payment order title1681724303"` and using
 
 The expected generated checksum signature would equal: `575c35c13ba37ccc2a434529e5082a71a574d304ba007592af44339d4436467d6a49107c95e51905cd80dce0f745760bd42fe73e2bc3bcd7ab79d07cc7fb4fa4`
 
+
+###### \#( Extra ) Formating checksum with optional arguments
+
+In some endpoints you may include certain optional arguments as well, these optional arguments may need to be included in the checksum signature formation following the strict order of the values indicated in each endpoints. 
+
+If you are not including these optional arguments in your parameters, you may omit the values in the checksum formation. The optional arguments for checksum formation are denoted with an asterisk (**\***) in each endpoint's checksum value guide.
+
+Here's an example:
+
+Assuming your parameters are `{title: "My payment order title", callback_url: 'https://myawesomeweb.site', epoch: 1681724303}`. Subsequently your raw string would look like this `"My payment order titlehttps://myawesomeweb.site1681724303"`
+
+
 <aside class="notice">
   Each endpoint will indicate the necessary values required to format the string for checksum generation
+</aside>
+
+<aside class="notice">
+  Optional values required to format the string for checksum generation are denoted with an asterisk (*)
 </aside>
 
 ## Payment Order Flow
@@ -2743,7 +2759,7 @@ curl https://www.billplz.com/api/v5/payment_order_collections \
 | --- | --- |
 | title | The collection title. Will be displayed on bill template. String format. |
 | epoch | The current time in UNIX epoch time format. |
-| checksum | Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order: **[ title, epoch ]**  |
+| checksum | Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order: **[ title, callback_url*, epoch ]**  |
 
 ###### OPTIONAL ARGUMENTS
 
@@ -2792,15 +2808,15 @@ curl -G https://www.billplz.com/api/v5/payment_order_collections/8f4e331f-ac71-4
 
 ###### HTTP REQUEST
 
-`GET https://www.billplz.com/api/v5/payment_order_collections/{PAYMENT_ORDER_COLLECTION_ID}`
+`GET https://www.billplz.com/api/v5/payment_order_collections/{payment_order_collection_id}`
 
 ###### REQUIRED ARGUMENTS
 
 | Parameter | Description |
 | --- | --- |
-| PAYMENT_ORDER_COLLECTION_ID | The Payment Order Collection ID. A string. |
+| payment_order_collection_id | The Payment Order Collection ID. A string. |
 | epoch | The current time in UNIX epoch time format. |
-| checksum | Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order: **[ PAYMENT_ORDER_COLLECTION_ID, epoch ]** |
+| checksum | Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order: **[ payment_order_collection_id, epoch ]** |
 
 ## Payment Order
 
@@ -2977,15 +2993,15 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
 
 ###### HTTP REQUEST
 
-`GET https://www.billplz.com/api/v5/payment_orders/{PAYMENT_ORDER_ID}`
+`GET https://www.billplz.com/api/v5/payment_orders/{payment_order_id}`
 
 ###### REQUIRED ARGUMENTS
 
 | Parameter | Description |
 | --- | --- |
-| PAYMENT_ORDER_ID | The Payment Order ID. A string. |
+| payment_order_id | The Payment Order ID. A string. |
 | epoch | The current time in UNIX epoch time format. |
-| checksum | Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order: **[ PAYMENT_ORDER_ID, epoch ]** |
+| checksum | Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order: **[ payment_order_id, epoch ]** |
 
 ###### RESPONSE PARAMETER
 
@@ -3564,11 +3580,9 @@ Billplz server also expecting the end point server responds with status code of 
 
 In a case of either the end point server does not able to respond within the limit seconds (20 secs) or does not respond with 200 status code, the callback will consider as failure.
 
-On failure, the job is rescheduled for 2nd attempt in `15 seconds + (random 0-300 seconds)`, while 3rd and 4th attempts will rescheduled at `15 minutes + (random 0-300 seconds)`. The 5th (last) attempt will be `24 hours + random (0-300 seconds)` after 4th attempt.
+On failure, the job is rescheduled for a 2nd attempt in one hour
 
-Assuming the 1st callback is initiated at 13:00:00. The 2nd attempt will be at 13:00:15 + N seconds. The 3rd attempt will be at 13:15:15 + N seconds. The 4th attempt will be at 13:30:15 + N seconds. The fifth attempt will be at 13:30:15+ N seconds next day.
-
-Billplz will attempt for maximum of 5 times and the callback will be removed from the system queue permanently after that.
+Billplz will attempt for maximum of 2 times and the callback will be removed from the system queue permanently after that.
 
 > Sample of callback POST request Payment Order Object from Billplz:
 

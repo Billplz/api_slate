@@ -2663,7 +2663,7 @@ V5 API introduces new security measures. Every request made in V5 endpoints must
 - **Epoch** param must be in UNIX epoch time format
 - **Checksum** calculation is specific to each endpoint, please refer to the **CHECKSUM ARGUMENTS** of each endpoint for more information on this.
 - Checksum signature must be calculated using **HMAC_SHA512** together with your account **XSignature key**
-- Please refer to the <a href="#v5-checksum">guide</a> on how to generate a v5 checksum signature
+- Please refer to the [guide](#v5-checksum) on how to generate a v5 checksum signature
 
 <aside class="warning">
   The formation of checksum signature in API V5 is different from the way Billplz's XSignatureVerification is formatted.
@@ -2681,7 +2681,7 @@ V5 API introduces new security measures. Every request made in V5 endpoints must
 
 Payment Order allows you to make payment to any account bank registered in Malaysia. Since Bank doesn't provide way to programatically make payment to bank account, you can achieve that by using our Payment Order.
 
-Payment Order implements the same collection concept as per [API Flow](#api-flow). You will have collection that consists of multiple payment orders.
+Payment Order implements the same collection concept as a bill. You will have collection that consists of multiple payment orders.
 
 Before proceeding further, you need to ensure that you have enough payment order limit to perform payment order. To increase payment order limit, navigate to payment order tab and you will notice the payment order limit at the top.
 
@@ -2738,7 +2738,7 @@ curl https://www.billplz.com/api/v5/payment_order_collections \
 | --------- | -------------------------------------------------------------------------------------------------------------------- |
 | title     | The collection title. Will be displayed on bill template. String format.                                             |
 | epoch     | The current time in UNIX epoch time format.                                                                          |
-| checksum  | Required values for <a href="#v5-checksum">checksum signature</a> in this order: **[ title, callback_url*, epoch ]** |
+| checksum  | Required values for [checksum signature](#v5-checksum) in this order: **[ title, callback_url*, epoch ]** |
 
 ###### OPTIONAL ARGUMENTS
 
@@ -2794,7 +2794,7 @@ curl -G https://www.billplz.com/api/v5/payment_order_collections/8f4e331f-ac71-4
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | payment_order_collection_id | The Payment Order Collection ID. A string.                                                                                  |
 | epoch                       | The current time in UNIX epoch time format.                                                                                 |
-| checksum                    | Required values for <a href="#v5-checksum">checksum signature</a> in this order: **[ payment_order_collection_id, epoch ]** |
+| checksum                    | Required values for [checksum signature](#v5-checksum) in this order: **[ payment_order_collection_id, epoch ]** |
 
 ## Payment Order
 
@@ -2904,7 +2904,7 @@ curl https://www.billplz.com/api/v5/payment_orders \
 | description                 | The Payment Order API's description. Will be displayed on bill template. String format (Max of 200 characters).                                                                                                                                                                                |
 | total                       | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00).                                                                                                                                              |
 | epoch                       | The current time in UNIX epoch time format.                                                                                                                                                                                                                                                    |
-| checksum                    | Required values for <a href="#v5-checksum">checksum signature</a> in this order: **[ payment_order_collection_id, bank_account_number, total, epoch ]**                                                                                                                                        |
+| checksum                    | Required values for [checksum signature](#v5-checksum) in this order: **[ payment_order_collection_id, bank_account_number, total, epoch ]**                                                                                                                                        |
 
 ###### OPTIONAL ARGUMENTS
 
@@ -2978,7 +2978,7 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
 | ---------------- | ---------------------------------------------------------------------------------------------------------------- |
 | payment_order_id | The Payment Order ID. A string.                                                                                  |
 | epoch            | The current time in UNIX epoch time format.                                                                      |
-| checksum         | Required values for <a href="#v5-checksum">checksum signature</a> in this order: **[ payment_order_id, epoch ]** |
+| checksum         | Required values for [checksum signature](#v5-checksum) in this order: **[ payment_order_id, epoch ]** |
 
 ###### RESPONSE PARAMETER
 
@@ -3628,7 +3628,7 @@ Billplz will attempt for maximum of 2 times and the callback will be removed fro
 
 ###### CHECKSUM FORMAT GUIDE
 
-In order to compare with the checksum sent together with the payment order object, you must first generate the checksum signature on your end first. _Required values for <a href="#v5-checksum">checksum signature</a> in this order:_ **[id, bank_account_number, status, total, reference_id, epoch]**
+In order to compare with the checksum sent together with the payment order object, you must first generate the checksum signature on your end first. _Required values for [checksum signature](#v5-checksum) in this order:_ **[id, bank_account_number, status, total, reference_id, epoch]**
 
 Here's an example of a HTTP request from a payment order callback
 

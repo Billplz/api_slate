@@ -61,19 +61,21 @@ A Bill represents the promise made to you by your customer. It's an invoice for 
 To start using the API, you would have to create a Collection. Then the payment flow will kick in as per below:
 
 ###### NORMAL COMPLETION FLOW
+
 1. Customer visits your site.
 1. Customer chooses to make payment.
 1. Your site creates a Bill via API call.
 1. Billplz API returns Bill's URL.
 1. Your site redirects the customer to Bill's URL.
 1. The customer makes payment via payment option of choice.
-1. Billplz sends a server-side update to your site upon payment failure or success. (Basic Callback URL / X Signature Callback URL depending on your configuration) ***[your backend server should capture the transaction update at this point]*** *refer to [X Signature Callback Url](#payment-completion-x-signature-callback-url)*.
+1. Billplz sends a server-side update to your site upon payment failure or success. (Basic Callback URL / X Signature Callback URL depending on your configuration) **_[your backend server should capture the transaction update at this point]_** _refer to [X Signature Callback Url](#payment-completion-x-signature-callback-url)_.
 1. Billplz redirects (Payment Completion) the customer back to your site if `redirect_url` is not empty (Basic Redirect URL / X Signature Redirect URL depending on your configuration)
-***[your server should capture the transaction update at this point and give your user an instant reflection on the page loaded]*** *refer to [X Signature Redirect Url](#payment-completion-x-signature-redirect-url)*
-or,
-The customer will see Billplz receipt if `redirect_url` is not present.
+   **_[your server should capture the transaction update at this point and give your user an instant reflection on the page loaded]_** _refer to [X Signature Redirect Url](#payment-completion-x-signature-redirect-url)_
+   or,
+   The customer will see Billplz receipt if `redirect_url` is not present.
 
 ###### COMPLETION FLOW WITHOUT REDIRECT_URL
+
 1. Customer visits your site.
 1. Customer chooses to make payment.
 1. Your site creates a Bill via API call.
@@ -81,8 +83,8 @@ The customer will see Billplz receipt if `redirect_url` is not present.
 1. Your site redirects the customer to Bill's URL.
 1. The customer makes payment via payment option of choice.
 1. Billplz sends a server-side update to your site upon payment failure or success. (Basic Callback URL / X Signature Callback URL depending on your configuration)
-***[your backend server should capture the transaction update at this point]*** *refer to [X Signature Callback Url](#payment-completion-x-signature-callback-url)*.
-Billplz does not redirects (Payment Completion) the customer back to your site, `redirect_url` (due to many possibilities, app hang, browser closed, disconnected, etc)
+   **_[your backend server should capture the transaction update at this point]_** _refer to [X Signature Callback Url](#payment-completion-x-signature-callback-url)_.
+   Billplz does not redirects (Payment Completion) the customer back to your site, `redirect_url` (due to many possibilities, app hang, browser closed, disconnected, etc)
 
 <aside class="warning">
   Integration with <code>callback_url</code> <strong>is compulsory</strong>.
@@ -176,10 +178,10 @@ curl https://www.billplz.com/api/v3/bills \
   "collection_id": "inbmmepb",
   "paid": false,
   "state": "due",
-  "amount": 200 ,
+  "amount": 200,
   "paid_amount": 0,
   "due_at": "2015-3-9",
-  "email" :"api@billplz.com",
+  "email": "api@billplz.com",
   "mobile": null,
   "name": "SARA",
   "url": "https://www.billplz.com/bills/8X0Iyzaw",
@@ -197,11 +199,14 @@ curl https://www.billplz.com/api/v3/bills \
 Use this feature if you would like to bypass Billplz bill page, and direct payers straight from bill URL to the selected payment gateway seamlessly.
 
 1. Create bills through Billplz API with a present of `reference_1_label` and `reference_1`.
-  - Always set `reference_1_label` as **Bank Code**
-  - Always set a bank code to `reference_1`. Please refer to section [Get Payment Gateways](#v4-get-payment-gateways) for more details on how to get the bank codes.
+
+- Always set `reference_1_label` as **Bank Code**
+- Always set a bank code to `reference_1`. Please refer to section [Get Payment Gateways](#v4-get-payment-gateways) for more details on how to get the bank codes.
+
 1. Always append parameter, auto_submit=true to the bill's URL return from API [Create a Bill](#v3-bills-create-a-bill).
-  - Example: [https://www.billplz.com/bills/abcdef]() becomes;
-  - [https://www.billplz.com/bills/abcdef?auto_submit=true]()
+
+- Example: [https://www.billplz.com/bills/abcdef]() becomes;
+- [https://www.billplz.com/bills/abcdef?auto_submit=true]()
 
 Direct Payment Gateway feature will fallback to Billplz bill page for invalid `reference_1`, `reference_1_label`, or the selected payment gateway is not enabled or active.
 
@@ -268,13 +273,11 @@ curl https://www.billplz.com/api/v3/collections \
 {
   "id": "inbmmepb",
   "title": "My First API Collection",
-  "logo":
-  {
+  "logo": {
     "thumb_url": null,
     "avatar_url": null
   },
-  "split_payment":
-  {
+  "split_payment": {
     "email": null,
     "fixed_cut": null,
     "variable_cut": null,
@@ -301,13 +304,11 @@ curl https://www.billplz.com/api/v3/collections \
 {
   "id": "inbmmepb",
   "title": "My First API Collection",
-  "logo":
-  {
+  "logo": {
     "thumb_url": "https://sample.net/assets/uploadPhoto.png",
     "avatar_url": "https://sample.net/assets/uploadPhoto.png"
   },
-  "split_payment":
-  {
+  "split_payment": {
     "email": "verified@account.com",
     "fixed_cut": 100,
     "variable_cut": null,
@@ -322,32 +323,32 @@ curl https://www.billplz.com/api/v3/collections \
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| title | The collection title. Will be displayed on bill template. String format.|
+| Parameter | Description                                                              |
+| --------- | ------------------------------------------------------------------------ |
+| title     | The collection title. Will be displayed on bill template. String format. |
 
 ###### OPTIONAL ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| logo | This image will be resized to avatar (40x40) and thumb (180x180) dimensions. Whitelisted formats are `jpg`, `jpeg`, `gif` and `png`. |
-| split_payment[email] | The email address of the split rule's recipient. (The account must be a verified account.)|
-| split_payment[fixed_cut] | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00) <br>This field is required if `split_payment[variable_cut]` is not present.|
-| split_payment[variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present.|
-| split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to true. |
+| Parameter                   | Description                                                                                                                                                                                  |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| logo                        | This image will be resized to avatar (40x40) and thumb (180x180) dimensions. Whitelisted formats are `jpg`, `jpeg`, `gif` and `png`.                                                         |
+| split_payment[email]        | The email address of the split rule's recipient. (The account must be a verified account.)                                                                                                   |
+| split_payment[fixed_cut]    | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00) <br>This field is required if `split_payment[variable_cut]` is not present. |
+| split_payment[variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present.                                                |
+| split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to true.                                                                          |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | ID that represents a collection. |
-| title | The collection's title in string format. |
-| logo[thumb_url] | The thumb dimension's (180x180) URL. |
-| logo[avatar_url] | The avatar dimension's (40x40) URL. |
-| split_payment[email] | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to V4 [Create a Collection](#v4-collections-create-a-collection). |
-| split_payment[fixed_cut] | The 1st recipient's fixed cut in smallest and positive currency unit. |
-| split_payment[variable_cut] | The 1st recipient's percentage cut in positive integer format. |
-| split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to true. |
+| Parameter                   | Description                                                                                                                                                                                                                      |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id                          | ID that represents a collection.                                                                                                                                                                                                 |
+| title                       | The collection's title in string format.                                                                                                                                                                                         |
+| logo[thumb_url]             | The thumb dimension's (180x180) URL.                                                                                                                                                                                             |
+| logo[avatar_url]            | The avatar dimension's (40x40) URL.                                                                                                                                                                                              |
+| split_payment[email]        | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to V4 [Create a Collection](#v4-collections-create-a-collection). |
+| split_payment[fixed_cut]    | The 1st recipient's fixed cut in smallest and positive currency unit.                                                                                                                                                            |
+| split_payment[variable_cut] | The 1st recipient's percentage cut in positive integer format.                                                                                                                                                                   |
+| split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to true.                                                                                                              |
 
 <aside class="notice">
   API <code>V4</code> now supports Split Rule for 2 recipients. Please refer <a href="#v4-collections-create-a-collection">API#v4-create-a-collection</a>.
@@ -371,13 +372,11 @@ curl https://www.billplz.com/api/v3/collections/inbmmepb \
 {
   "id": "inbmmepb",
   "title": "My First API Collection",
-  "logo":
-  {
+  "logo": {
     "thumb_url": null,
     "avatar_url": null
   },
-  "split_payment":
-  {
+  "split_payment": {
     "email": null,
     "fixed_cut": null,
     "variable_cut": null,
@@ -393,23 +392,23 @@ curl https://www.billplz.com/api/v3/collections/inbmmepb \
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
+| Parameter     | Description                                  |
+| ------------- | -------------------------------------------- |
 | COLLECTION_ID | Collection ID returned in Collection object. |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | ID that represents a collection. |
-| title | The collection's title in string format. |
-| logo[thumb_url] | The thumb dimension's (180x180) URL. |
-| logo[avatar_url] | The avatar dimension's (40x40) URL. |
-| split_payment[email] | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to V4 [Create a Collection](#v4-collections-create-a-collection). |
-| split_payment[fixed_cut] | The 1st recipient's fixed cut in smallest and positive currency unit. |
-| split_payment[variable_cut] | The 1st recipient's percentage cut in positive integer format. |
-| split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to true. |
-| status | Collection's status, it is either active and inactive. |
+| Parameter                   | Description                                                                                                                                                                                                                      |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id                          | ID that represents a collection.                                                                                                                                                                                                 |
+| title                       | The collection's title in string format.                                                                                                                                                                                         |
+| logo[thumb_url]             | The thumb dimension's (180x180) URL.                                                                                                                                                                                             |
+| logo[avatar_url]            | The avatar dimension's (40x40) URL.                                                                                                                                                                                              |
+| split_payment[email]        | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to V4 [Create a Collection](#v4-collections-create-a-collection). |
+| split_payment[fixed_cut]    | The 1st recipient's fixed cut in smallest and positive currency unit.                                                                                                                                                            |
+| split_payment[variable_cut] | The 1st recipient's percentage cut in positive integer format.                                                                                                                                                                   |
+| split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to true.                                                                                                              |
+| status                      | Collection's status, it is either active and inactive.                                                                                                                                                                           |
 
 ### Get Collection Index
 
@@ -427,24 +426,23 @@ curl https://www.billplz.com/api/v3/collections \
 
 ```json
 {
-  "collections":
-  [{
-    "id": "inbmmepb",
-    "title": "My First API Collection",
-    "logo":
+  "collections": [
     {
-      "thumb_url": null,
-      "avatar_url": null
-    },
-    "split_payment":
-    {
-      "email": null,
-      "fixed_cut": null,
-      "variable_cut": null,
-      "split_header": false
-    },
-    "status": "active"
-  }],
+      "id": "inbmmepb",
+      "title": "My First API Collection",
+      "logo": {
+        "thumb_url": null,
+        "avatar_url": null
+      },
+      "split_payment": {
+        "email": null,
+        "fixed_cut": null,
+        "variable_cut": null,
+        "split_header": false
+      },
+      "status": "active"
+    }
+  ],
   "page": 1
 }
 ```
@@ -461,24 +459,23 @@ curl https://www.billplz.com/api/v3/collections?page=2&status=active \
 
 ```json
 {
-  "collections":
-  [{
-    "id": "inbmmepb",
-    "title": "My First API Collection",
-    "logo":
+  "collections": [
     {
-      "thumb_url": null,
-      "avatar_url": null
-    },
-    "split_payment":
-    {
-      "email": null,
-      "fixed_cut": null,
-      "variable_cut": null,
-      "split_header": false
-    },
-    "status": "active"
-  }],
+      "id": "inbmmepb",
+      "title": "My First API Collection",
+      "logo": {
+        "thumb_url": null,
+        "avatar_url": null
+      },
+      "split_payment": {
+        "email": null,
+        "fixed_cut": null,
+        "variable_cut": null,
+        "split_header": false
+      },
+      "status": "active"
+    }
+  ],
   "page": 2
 }
 ```
@@ -489,10 +486,10 @@ curl https://www.billplz.com/api/v3/collections?page=2&status=active \
 
 ###### OPTIONAL ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| page | Up to 15 collections will be returned in a single API call per specified page. Default to **1** if not present. |
-| status | Parameter to filter collection's status, valid value are `active` and `inactive`. |
+| Parameter | Description                                                                                                     |
+| --------- | --------------------------------------------------------------------------------------------------------------- |
+| page      | Up to 15 collections will be returned in a single API call per specified page. Default to **1** if not present. |
+| status    | Parameter to filter collection's status, valid value are `active` and `inactive`.                               |
 
 ### Create an Open Collection
 
@@ -528,13 +525,11 @@ curl https://www.billplz.com/api/v3/open_collections \
   "tax": null,
   "fixed_quantity": true,
   "payment_button": "pay",
-  "photo":
-  {
-    "retina_url":  null,
-    "avatar_url":  null
+  "photo": {
+    "retina_url": null,
+    "avatar_url": null
   },
-  "split_payment":
-  {
+  "split_payment": {
     "email": null,
     "fixed_cut": null,
     "variable_cut": null,
@@ -580,13 +575,11 @@ curl https://www.billplz.com/api/v3/open_collections \
   "tax": 1,
   "fixed_quantity": false,
   "payment_button": "buy",
-  "photo":
-  {
-    "retina_url":  "https://sample.net/assets/uploadPhoto.png",
-    "avatar_url":  "https://sample.net/assets/uploadPhoto.png"
+  "photo": {
+    "retina_url": "https://sample.net/assets/uploadPhoto.png",
+    "avatar_url": "https://sample.net/assets/uploadPhoto.png"
   },
-  "split_payment":
-  {
+  "split_payment": {
     "email": "verified@account.com",
     "fixed_cut": null,
     "variable_cut": 20,
@@ -602,51 +595,51 @@ curl https://www.billplz.com/api/v3/open_collections \
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| title | The collection title. It's showing up on the payment form. String format. (Max of 50 characters) |
-| description | The collection description. Will be displayed on payment form. String format. (Max of 200 characters) |
-|amount | A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00) <br> Required if fixed_amount is true; Ignored if fixed_amount is false|
+| Parameter   | Description                                                                                                                                                |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| title       | The collection title. It's showing up on the payment form. String format. (Max of 50 characters)                                                           |
+| description | The collection description. Will be displayed on payment form. String format. (Max of 200 characters)                                                      |
+| amount      | A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00) <br> Required if fixed_amount is true; Ignored if fixed_amount is false |
 
 ###### OPTIONAL ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| fixed_amount | Boolean value. Set this to false for Open Amount. Default value is `true` |
-| fixed_quantity | Boolean value. Set this to false for Open Quantity. Default value is `true` |
-| payment_button | Payment button's text. Available options are `buy` and `pay`. Default value is `pay` |
-| reference_1_label | Label #1 to reconcile payments (Max of 20 characters). <br>Default value is `Reference 1`. |
-| reference_2_label | Label #2 to reconcile payments. (Max of 20 characters). <br>Default value is `Reference 2`. |
-| email_link | A URL that email to customer after payment is successful. |
-| tax | Tax rate in positive integer format. |
-| photo | This image will be resized to retina (Yx960) and avatar (180x180) dimensions. Whitelisted formats are jpg, jpeg, gif and png.
-| split_payment[email] | The email address of the split rule's recipient. (The account must be a verified account.) |
-| split_payment[fixed_cut] | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00). <br> This field is required if `split_payment[variable_cut]` is not present |
-| split_payment[variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present|
-| split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to true. |
+| Parameter                   | Description                                                                                                                                                                                   |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| fixed_amount                | Boolean value. Set this to false for Open Amount. Default value is `true`                                                                                                                     |
+| fixed_quantity              | Boolean value. Set this to false for Open Quantity. Default value is `true`                                                                                                                   |
+| payment_button              | Payment button's text. Available options are `buy` and `pay`. Default value is `pay`                                                                                                          |
+| reference_1_label           | Label #1 to reconcile payments (Max of 20 characters). <br>Default value is `Reference 1`.                                                                                                    |
+| reference_2_label           | Label #2 to reconcile payments. (Max of 20 characters). <br>Default value is `Reference 2`.                                                                                                   |
+| email_link                  | A URL that email to customer after payment is successful.                                                                                                                                     |
+| tax                         | Tax rate in positive integer format.                                                                                                                                                          |
+| photo                       | This image will be resized to retina (Yx960) and avatar (180x180) dimensions. Whitelisted formats are jpg, jpeg, gif and png.                                                                 |
+| split_payment[email]        | The email address of the split rule's recipient. (The account must be a verified account.)                                                                                                    |
+| split_payment[fixed_cut]    | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00). <br> This field is required if `split_payment[variable_cut]` is not present |
+| split_payment[variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present                                                  |
+| split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to true.                                                                           |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | The collection ID. |
-| title | The collection's title. |
-| description | The collection description. |
-| reference_1_label | Label #1 to reconcile payments. |
-| reference_2_label | Label #2 to reconcile payments. |
-| email_link | A URL that email to customer after payment is successful.|
-| amount | The collection's fixed amount to create bill in the smallest currency unit (cents). |
-| fixed_amount | Boolean value. It returns to `false` if Open Amount.|
-| tax | Tax rate in positive integer format. |
-| fixed_quantity | Boolean value. It returns `false` if Open Quantity.|
-| payment_button | Payment button's text.|
-| photo[retina_url] | The retina dimension's (960x960) URL.|
-| photo[avatar_url] | The avatar dimension's (180x180) URL.|
-| split_payment[email] | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to [API#v4-create-an-open-collection](#v4-collections-create-an-open-collection).|
-| split_payment[fixed_cut] | The 1st recipient's fixed cut in smallest and positive currency unit (cents).|
-| split_payment[variable_cut] | The 1st recipient's percentage cut in positive integer format.|
-| split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
-| url | URL to the collection.|
+| Parameter                   | Description                                                                                                                                                                                                                                      |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| id                          | The collection ID.                                                                                                                                                                                                                               |
+| title                       | The collection's title.                                                                                                                                                                                                                          |
+| description                 | The collection description.                                                                                                                                                                                                                      |
+| reference_1_label           | Label #1 to reconcile payments.                                                                                                                                                                                                                  |
+| reference_2_label           | Label #2 to reconcile payments.                                                                                                                                                                                                                  |
+| email_link                  | A URL that email to customer after payment is successful.                                                                                                                                                                                        |
+| amount                      | The collection's fixed amount to create bill in the smallest currency unit (cents).                                                                                                                                                              |
+| fixed_amount                | Boolean value. It returns to `false` if Open Amount.                                                                                                                                                                                             |
+| tax                         | Tax rate in positive integer format.                                                                                                                                                                                                             |
+| fixed_quantity              | Boolean value. It returns `false` if Open Quantity.                                                                                                                                                                                              |
+| payment_button              | Payment button's text.                                                                                                                                                                                                                           |
+| photo[retina_url]           | The retina dimension's (960x960) URL.                                                                                                                                                                                                            |
+| photo[avatar_url]           | The avatar dimension's (180x180) URL.                                                                                                                                                                                                            |
+| split_payment[email]        | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to [API#v4-create-an-open-collection](#v4-collections-create-an-open-collection). |
+| split_payment[fixed_cut]    | The 1st recipient's fixed cut in smallest and positive currency unit (cents).                                                                                                                                                                    |
+| split_payment[variable_cut] | The 1st recipient's percentage cut in positive integer format.                                                                                                                                                                                   |
+| split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`.                                                                                                                            |
+| url                         | URL to the collection.                                                                                                                                                                                                                           |
 
 <aside class="notice">
   API <code>V4</code> now supports Split Rule for 2 recipients. Please refer <a href="#v4-create-an-open-collection">API#v4-create-an-open-collection</a>.
@@ -679,13 +672,11 @@ curl https://www.billplz.com/api/v3/open_collections/0pp87t_6 \
   "tax": null,
   "fixed_quantity": true,
   "payment_button": "pay",
-  "photo":
-  {
-    "retina_url":  null,
-    "avatar_url":  null
+  "photo": {
+    "retina_url": null,
+    "avatar_url": null
   },
-  "split_payment":
-  {
+  "split_payment": {
     "email": null,
     "fixed_cut": null,
     "variable_cut": null,
@@ -702,33 +693,33 @@ curl https://www.billplz.com/api/v3/open_collections/0pp87t_6 \
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
+| Parameter     | Description                                  |
+| ------------- | -------------------------------------------- |
 | COLLECTION_ID | Collection ID returned in Collection object. |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | The collection ID. |
-| title | The collection's title. |
-| description | The collection description. |
-| reference_1_label | Label #1 to reconcile payments. |
-| reference_2_label | Label #2 to reconcile payments. |
-| email_link | A URL that email to customer after payment is successful.
-| amount | The collection's fixed amount to create bill in the smallest currency unit (cents). |
-| fixed_amount | Boolean value. It returns to `false` if Open Amount.|
-| tax | Tax rate in positive integer format.|
-| fixed_quantity | Boolean value. It returns `false` if Open Quantity. |
-| payment_button | Payment button's text. |
-| photo[retina_url] | The retina dimension's (960x960) URL. |
-| photo[avatar_url] | The avatar dimension's (180x180) URL.|
-| split_payment[email] | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to [API#v4-create-an-open-collection](#v4-collections-create-an-open-collection). |
-| split_payment[fixed_cut] | The 1st recipient's fixed cut in smallest and positive currency unit.|
-| split_payment[variable_cut] | The 1st recipient's percentage cut in positive integer format. |
-| split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
-| url | URL to the collection. |
-| status | Collection's status, it is either `active` or `inactive`. |
+| Parameter                   | Description                                                                                                                                                                                                                                      |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| id                          | The collection ID.                                                                                                                                                                                                                               |
+| title                       | The collection's title.                                                                                                                                                                                                                          |
+| description                 | The collection description.                                                                                                                                                                                                                      |
+| reference_1_label           | Label #1 to reconcile payments.                                                                                                                                                                                                                  |
+| reference_2_label           | Label #2 to reconcile payments.                                                                                                                                                                                                                  |
+| email_link                  | A URL that email to customer after payment is successful.                                                                                                                                                                                        |
+| amount                      | The collection's fixed amount to create bill in the smallest currency unit (cents).                                                                                                                                                              |
+| fixed_amount                | Boolean value. It returns to `false` if Open Amount.                                                                                                                                                                                             |
+| tax                         | Tax rate in positive integer format.                                                                                                                                                                                                             |
+| fixed_quantity              | Boolean value. It returns `false` if Open Quantity.                                                                                                                                                                                              |
+| payment_button              | Payment button's text.                                                                                                                                                                                                                           |
+| photo[retina_url]           | The retina dimension's (960x960) URL.                                                                                                                                                                                                            |
+| photo[avatar_url]           | The avatar dimension's (180x180) URL.                                                                                                                                                                                                            |
+| split_payment[email]        | The 1st recipient's email. It only returns the 1st recipient eventhough there is multiple recipients being set. If you wish to have 2 recipients, please refer to [API#v4-create-an-open-collection](#v4-collections-create-an-open-collection). |
+| split_payment[fixed_cut]    | The 1st recipient's fixed cut in smallest and positive currency unit.                                                                                                                                                                            |
+| split_payment[variable_cut] | The 1st recipient's percentage cut in positive integer format.                                                                                                                                                                                   |
+| split_payment[split_header] | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`.                                                                                                                            |
+| url                         | URL to the collection.                                                                                                                                                                                                                           |
+| status                      | Collection's status, it is either `active` or `inactive`.                                                                                                                                                                                        |
 
 ### Get an Open Collection Index
 
@@ -746,34 +737,33 @@ curl https://www.billplz.com/api/v3/open_collections \
 
 ```json
 {
-  "open_collections":
-  [{
-    "id": "0pp87t_6",
-    "title": "MY FIRST API OPEN COLLECTION",
-    "description": "Maecenas eu placerat ante.",
-    "reference_1_label": "ID No",
-    "reference_2_label": "First Name",
-    "email_link": "http://www.test.com",
-    "amount": null,
-    "fixed_amount": false,
-    "tax": 1,
-    "fixed_quantity": false,
-    "payment_button": "buy",
-    "photo":
+  "open_collections": [
     {
-      "retina_url":  "https://sample.net/assets/uploadPhoto.png",
-      "avatar_url":  "https://sample.net/assets/uploadPhoto.png"
-    },
-    "split_payment":
-    {
-      "email": "verified@account.com",
-      "fixed_cut": null,
-      "variable_cut": 20,
-      "split_header": false
-    },
-    "url": "https://www.billplz.com/0pp87t_6",
-    "status": "active"
-  }],
+      "id": "0pp87t_6",
+      "title": "MY FIRST API OPEN COLLECTION",
+      "description": "Maecenas eu placerat ante.",
+      "reference_1_label": "ID No",
+      "reference_2_label": "First Name",
+      "email_link": "http://www.test.com",
+      "amount": null,
+      "fixed_amount": false,
+      "tax": 1,
+      "fixed_quantity": false,
+      "payment_button": "buy",
+      "photo": {
+        "retina_url": "https://sample.net/assets/uploadPhoto.png",
+        "avatar_url": "https://sample.net/assets/uploadPhoto.png"
+      },
+      "split_payment": {
+        "email": "verified@account.com",
+        "fixed_cut": null,
+        "variable_cut": 20,
+        "split_header": false
+      },
+      "url": "https://www.billplz.com/0pp87t_6",
+      "status": "active"
+    }
+  ],
   "page": 1
 }
 ```
@@ -790,34 +780,33 @@ curl https://www.billplz.com/api/v3/open_collections?page=2&status=active \
 
 ```json
 {
-  "open_collections":
-  [{
-    "id": "0pp87t_6",
-    "title": "MY FIRST API OPEN COLLECTION",
-    "description": "Maecenas eu placerat ante. Fusce ut neque justo, et aliquet enim. In hac habitasse platea dictumst.",
-    "reference_1_label": "ID No",
-    "reference_2_label": "First Name",
-    "email_link": "http://www.test.com",
-    "amount": null,
-    "fixed_amount": false,
-    "tax": 1,
-    "fixed_quantity": false,
-    "payment_button": "buy",
-    "photo":
+  "open_collections": [
     {
-      "retina_url":  "https://sample.net/assets/uploadPhoto.png",
-      "avatar_url":  "https://sample.net/assets/uploadPhoto.png"
-    },
-    "split_payment":
-    {
-      "email": "verified@account.com",
-      "fixed_cut": null,
-      "variable_cut": 20,
-      "split_header": false
-    },
-    "url": "https://www.billplz.com/0pp87t_6",
-    "status": "active"
-  }],
+      "id": "0pp87t_6",
+      "title": "MY FIRST API OPEN COLLECTION",
+      "description": "Maecenas eu placerat ante. Fusce ut neque justo, et aliquet enim. In hac habitasse platea dictumst.",
+      "reference_1_label": "ID No",
+      "reference_2_label": "First Name",
+      "email_link": "http://www.test.com",
+      "amount": null,
+      "fixed_amount": false,
+      "tax": 1,
+      "fixed_quantity": false,
+      "payment_button": "buy",
+      "photo": {
+        "retina_url": "https://sample.net/assets/uploadPhoto.png",
+        "avatar_url": "https://sample.net/assets/uploadPhoto.png"
+      },
+      "split_payment": {
+        "email": "verified@account.com",
+        "fixed_cut": null,
+        "variable_cut": 20,
+        "split_header": false
+      },
+      "url": "https://www.billplz.com/0pp87t_6",
+      "status": "active"
+    }
+  ],
   "page": 2
 }
 ```
@@ -828,10 +817,10 @@ curl https://www.billplz.com/api/v3/open_collections?page=2&status=active \
 
 ###### OPTIONAL ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| page | Up to 15 open collections will be returned in a single API call per specified page. Default to **1** if not present. |
-| status | Parameter to filter open collection's status, valid value are `active` and `inactive`. |
+| Parameter | Description                                                                                                          |
+| --------- | -------------------------------------------------------------------------------------------------------------------- |
+| page      | Up to 15 open collections will be returned in a single API call per specified page. Default to **1** if not present. |
+| status    | Parameter to filter open collection's status, valid value are `active` and `inactive`.                               |
 
 ### Deactivate a Collection
 
@@ -862,8 +851,8 @@ https://www.billplz.com/api/v3/collections/qag4fe_o6/deactivate \
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
+| Parameter     | Description                                  |
+| ------------- | -------------------------------------------- |
 | COLLECTION_ID | Collection ID returned in Collection object. |
 
 ### Activate a Collection
@@ -895,8 +884,8 @@ https://www.billplz.com/api/v3/collections/qag4fe_o6/activate \
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
+| Parameter     | Description                                  |
+| ------------- | -------------------------------------------- |
 | COLLECTION_ID | Collection ID returned in Collection object. |
 
 ## Bills
@@ -935,10 +924,10 @@ curl https://www.billplz.com/api/v3/bills \
   "collection_id": "inbmmepb",
   "paid": false,
   "state": "due",
-  "amount": 200 ,
+  "amount": 200,
   "paid_amount": 0,
   "due_at": "2015-3-9",
-  "email" :"api@billplz.com",
+  "email": "api@billplz.com",
   "mobile": null,
   "name": "Sara",
   "url": "https://www.billplz.com/bills/8X0Iyzaw",
@@ -973,6 +962,7 @@ curl https://www.billplz.com/api/v3/bills \
   -d deliver=false \
   -d redirect_url="http://example.com/redirect/"
 ```
+
 > Response:
 
 ```json
@@ -981,10 +971,10 @@ curl https://www.billplz.com/api/v3/bills \
   "collection_id": "inbmmepb",
   "paid": false,
   "state": "due",
-  "amount": 200 ,
+  "amount": 200,
   "paid_amount": 0,
   "due_at": "2020-12-31",
-  "email" :"api@billplz.com",
+  "email": "api@billplz.com",
   "mobile": "+60112223333",
   "name": "Sara",
   "url": "https://www.billplz.com/bills/8X0Iyzaw",
@@ -1004,34 +994,34 @@ curl https://www.billplz.com/api/v3/bills \
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| collection_id | The collection ID. A string. |
-| email | The email address of the bill's recipient (Email is required if mobile is not present). |
-| mobile | Recipient's mobile number. Be sure that all mobile numbers include country code, area code and number without spaces or dashes. (e.g., `+60122345678` or `60122345678`). Use Google libphonenumber library to help. Mobile is required if email is not present. |
-| name | Bill's recipient name. Useful for identification on recipient part. (Max of 255 characters). |
-| amount | A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
-| callback_url | Web hook URL to be called after payment's transaction completed. It will POST a Bill object. |
-| description | The bill's description. Will be displayed on bill template. String format (Max of 200 characters). |
+| Parameter     | Description                                                                                                                                                                                                                                                     |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| collection_id | The collection ID. A string.                                                                                                                                                                                                                                    |
+| email         | The email address of the bill's recipient (Email is required if mobile is not present).                                                                                                                                                                         |
+| mobile        | Recipient's mobile number. Be sure that all mobile numbers include country code, area code and number without spaces or dashes. (e.g., `+60122345678` or `60122345678`). Use Google libphonenumber library to help. Mobile is required if email is not present. |
+| name          | Bill's recipient name. Useful for identification on recipient part. (Max of 255 characters).                                                                                                                                                                    |
+| amount        | A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00).                                                                                                                                                                             |
+| callback_url  | Web hook URL to be called after payment's transaction completed. It will POST a Bill object.                                                                                                                                                                    |
+| description   | The bill's description. Will be displayed on bill template. String format (Max of 200 characters).                                                                                                                                                              |
 
 ###### OPTIONAL ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| due_at | Due date for the bill. The format `YYYY-MM-DD`, default value is today. Year range is **19xx** to **2xxx** |
-| redirect_url | URL to redirect the customer after payment completed. It will do a GET to `redirect_url` together with bill's status and ID.|
-| deliver | Boolean value to set email and SMS (if mobile is present) delivery. Default value is `false`. ___SMS is subjected to charges depending on subscribed plan___. |
-| reference_1_label | Label #1 to reconcile payments (Max of 20 characters). <br> Default value is `Reference 1`. |
-| reference_1 | Value for `reference_1_label` (Max of 120 characters). |
-| reference_2_label | Label #2 to reconcile payments (Max of 20 characters). <br> Default value is `Reference 2`. |
-| reference_2 | Value for `reference_2_label` (Max of 120 characters). |
+| Parameter         | Description                                                                                                                                                   |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| due_at            | Due date for the bill. The format `YYYY-MM-DD`, default value is today. Year range is **19xx** to **2xxx**                                                    |
+| redirect_url      | URL to redirect the customer after payment completed. It will do a GET to `redirect_url` together with bill's status and ID.                                  |
+| deliver           | Boolean value to set email and SMS (if mobile is present) delivery. Default value is `false`. **_SMS is subjected to charges depending on subscribed plan_**. |
+| reference_1_label | Label #1 to reconcile payments (Max of 20 characters). <br> Default value is `Reference 1`.                                                                   |
+| reference_1       | Value for `reference_1_label` (Max of 120 characters).                                                                                                        |
+| reference_2_label | Label #2 to reconcile payments (Max of 20 characters). <br> Default value is `Reference 2`.                                                                   |
+| reference_2       | Value for `reference_2_label` (Max of 120 characters).                                                                                                        |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | Bill ID that represents a bill. |
-| url | URL to the bill. |
+| Parameter | Description                     |
+| --------- | ------------------------------- |
+| id        | Bill ID that represents a bill. |
+| url       | URL to the bill.                |
 
 <aside class="notice">
   SMS will be ignored if your account's credit balance is insufficient.
@@ -1069,10 +1059,10 @@ curl https://www.billplz.com/api/v3/bills/8X0Iyzaw \
   "collection_id": "inbmmepb",
   "paid": false,
   "state": "due",
-  "amount": 200 ,
+  "amount": 200,
   "paid_amount": 0,
   "due_at": "2020-12-31",
-  "email" :"api@billplz.com",
+  "email": "api@billplz.com",
   "mobile": "+60112223333",
   "name": "SARA",
   "url": "https://www.billplz.com/bills/8X0Iyzaw",
@@ -1092,16 +1082,16 @@ curl https://www.billplz.com/api/v3/bills/8X0Iyzaw \
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| BILL_ID | Bill ID returned in Bill object. |
+| Parameter | Description                      |
+| --------- | -------------------------------- |
+| BILL_ID   | Bill ID returned in Bill object. |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| paid | Boolean value to tell if a bill has paid. It will return `false` for due bills; `true` for paid bills. |
-| state | State that representing the bill's status, possible states are `due`, `paid` and `deleted`. |
+| Parameter | Description                                                                                            |
+| --------- | ------------------------------------------------------------------------------------------------------ |
+| paid      | Boolean value to tell if a bill has paid. It will return `false` for due bills; `true` for paid bills. |
+| state     | State that representing the bill's status, possible states are `due`, `paid` and `deleted`.            |
 
 <aside class="warning">
   ABUSING THIS API WILL RESULT TO YOUR IP ADDRESS WILL BE BLOCKED.
@@ -1133,9 +1123,9 @@ curl -X DELETE https://www.billplz.com/api/v3/bills/8X0Iyzaw \
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| BILL_ID | Bill ID returned in Bill object. |
+| Parameter | Description                      |
+| --------- | -------------------------------- |
+| BILL_ID   | Bill ID returned in Bill object. |
 
 <aside class="notice">
   Deleted bill will always reappeared once the customer make payment. Attempting to delete paid bill will throw 422 http status code.
@@ -1168,15 +1158,15 @@ curl https://www.billplz.com/api/v3/check/bank_account_number/1234567890 \
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
+| Parameter           | Description                   |
+| ------------------- | ----------------------------- |
 | BANK_ACCOUNT_NUMBER | Bank account number to check. |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| name | State that representing the bank account number's status, possible states are `verified`, `unverified` and `not found`. |
+| Parameter | Description                                                                                                             |
+| --------- | ----------------------------------------------------------------------------------------------------------------------- |
+| name      | State that representing the bank account number's status, possible states are `verified`, `unverified` and `not found`. |
 
 <aside class="notice">
    This registration check is only for checking the status for Company-Registered account. For Bank Direct Verification status, use <a href="#v3-bank-account-direct-verification-get-a-bank-account">Get a Bank Account</a> API instead.
@@ -1201,18 +1191,20 @@ curl https://www.billplz.com/api/v3/bills/inbmmepb/transactions \
 ```json
 {
   "bill_id": "inbmmepb",
-  "transactions":
-  [{
-    "id": "60793D4707CD",
-    "status": "completed",
-    "completed_at": "2017-02-23T12:49:23.612+08:00",
-    "payment_channel": "FPX"
-  },{
-    "id": "28F3D3194138",
-    "status": "failed",
-    "completed_at": null,
-    "payment_channel": "FPX"
-  }],
+  "transactions": [
+    {
+      "id": "60793D4707CD",
+      "status": "completed",
+      "completed_at": "2017-02-23T12:49:23.612+08:00",
+      "payment_channel": "FPX"
+    },
+    {
+      "id": "28F3D3194138",
+      "status": "failed",
+      "completed_at": null,
+      "payment_channel": "FPX"
+    }
+  ],
   "page": 1
 }
 ```
@@ -1229,13 +1221,14 @@ curl https://www.billplz.com/api/v3/bills/inbmmepb/transactions?page=1&status=co
 ```json
 {
   "bill_id": "inbmmepb",
-  "transactions":
-  [{
-    "id": "60793D4707CD",
-    "status": "completed",
-    "completed_at": "2017-02-23T12:49:23.612+08:00",
-    "payment_channel": "FPX"
-  }],
+  "transactions": [
+    {
+      "id": "60793D4707CD",
+      "status": "completed",
+      "completed_at": "2017-02-23T12:49:23.612+08:00",
+      "payment_channel": "FPX"
+    }
+  ],
   "page": 1
 }
 ```
@@ -1246,19 +1239,19 @@ curl https://www.billplz.com/api/v3/bills/inbmmepb/transactions?page=1&status=co
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| page | Up to 15 transactions will be returned in a single API call per specified page. Default to *1* if not present. |
-| status | Parameter to filter transaction's status. <br>Valid values are `pending`, `completed` and `failed`. |
+| Parameter | Description                                                                                                    |
+| --------- | -------------------------------------------------------------------------------------------------------------- |
+| page      | Up to 15 transactions will be returned in a single API call per specified page. Default to _1_ if not present. |
+| status    | Parameter to filter transaction's status. <br>Valid values are `pending`, `completed` and `failed`.            |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| bill_id | ID that represent the bill. |
-| id | ID that represent the transaction. |
-| status | Status that representing the transaction's status, possible statuses are `pending`, `completed` and `failed`. |
-| completed_at | Datetime format when the transaction is completed. ISO 8601 format is used. |
+| Parameter       | Description                                                                                                                                                                                                                                                                                          |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| bill_id         | ID that represent the bill.                                                                                                                                                                                                                                                                          |
+| id              | ID that represent the transaction.                                                                                                                                                                                                                                                                   |
+| status          | Status that representing the transaction's status, possible statuses are `pending`, `completed` and `failed`.                                                                                                                                                                                        |
+| completed_at    | Datetime format when the transaction is completed. ISO 8601 format is used.                                                                                                                                                                                                                          |
 | payment_channel | Payment channel that the transaction is made.<br>Possible values are `AMEXMBB`, `BANKISLAM`, `BILLPLZ`, `BOOST`, `TOUCHNGO`, `EBPGMBB`, `FPX`, `FPXB2B1`, `ISUPAYPAL`, `MPGS`, `OCBC`, `PAYDEE`, `RAZERPAYWALLET`, `SECUREACCEPTANCE`, `SENANGPAY`, `TWOCTWOP`, `TWOCTWOPIPP`, and `TWOCTWOPWALLET`. |
 
 ## Payment Methods
@@ -1279,16 +1272,18 @@ curl https://www.billplz.com/api/v3/collections/0idsxnh5/payment_methods \
 
 ```json
 {
-  "payment_methods":
-  [{
-    "code": "paypal",
-    "name": "PAYPAL",
-    "active": true
-  },{
-    "code": "fpx",
-    "name": "Online Banking",
-    "active": false
-  }]
+  "payment_methods": [
+    {
+      "code": "paypal",
+      "name": "PAYPAL",
+      "active": true
+    },
+    {
+      "code": "fpx",
+      "name": "Online Banking",
+      "active": false
+    }
+  ]
 }
 ```
 
@@ -1298,17 +1293,17 @@ curl https://www.billplz.com/api/v3/collections/0idsxnh5/payment_methods \
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
+| Parameter     | Description                                                            |
+| ------------- | ---------------------------------------------------------------------- |
 | COLLECTION_ID | ID that represents the collection where the payment methods belong to. |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| code | Unique payment method's specific code, in string value. |
-| name | Payment method's general name, in string value. |
-| active | The API will return payment method's status for a collection, in boolean value. It returns true if this payment method has enabled for the collection. |
+| Parameter | Description                                                                                                                                            |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| code      | Unique payment method's specific code, in string value.                                                                                                |
+| name      | Payment method's general name, in string value.                                                                                                        |
+| active    | The API will return payment method's status for a collection, in boolean value. It returns true if this payment method has enabled for the collection. |
 
 ### Update Payment Methods
 
@@ -1328,16 +1323,18 @@ curl -X PUT -d payment_methods[][code]='fpx' -d payment_methods[][code]='paypal'
 
 ```json
 {
-  "payment_methods":
-  [{
-    "code": "paypal",
-    "name": "PAYPAL",
-    "active": true
-  },{
-    "code": "fpx",
-    "name": "Online Banking",
-    "active": true
-  }]
+  "payment_methods": [
+    {
+      "code": "paypal",
+      "name": "PAYPAL",
+      "active": true
+    },
+    {
+      "code": "fpx",
+      "name": "Online Banking",
+      "active": true
+    }
+  ]
 }
 ```
 
@@ -1347,18 +1344,18 @@ curl -X PUT -d payment_methods[][code]='fpx' -d payment_methods[][code]='paypal'
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| COLLECTION_ID | ID that represents the collection where the payment methods belong to. |
-| payment_methods | Array that contains all codes in hash format.  <br>`code` in hash represents the unique payment method's code that you would like to enable. <br>Do not pass the code if you would like to disable a payment method. <br>Ex, `"payment_methods"=>[{"code"=>"fpx"}]` would enable fpx (Online Banking) and disable paypal (PAYPAL). <br>Possible values are `amexmbb`, `bankislam`, `billplz`, `boost`, `touchngo`, `ebpgmbb`, `fpx`, `fpxb2b1`, `isupaypal`, `mpgs`, `ocbc`, `paydee`, `razerpaywallet`, `secureacceptance`, `senangpay`, `twoctwop`, `twoctwopipp`, and `twoctwopwallet`.|
+| Parameter       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| COLLECTION_ID   | ID that represents the collection where the payment methods belong to.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| payment_methods | Array that contains all codes in hash format. <br>`code` in hash represents the unique payment method's code that you would like to enable. <br>Do not pass the code if you would like to disable a payment method. <br>Ex, `"payment_methods"=>[{"code"=>"fpx"}]` would enable fpx (Online Banking) and disable paypal (PAYPAL). <br>Possible values are `amexmbb`, `bankislam`, `billplz`, `boost`, `touchngo`, `ebpgmbb`, `fpx`, `fpxb2b1`, `isupaypal`, `mpgs`, `ocbc`, `paydee`, `razerpaywallet`, `secureacceptance`, `senangpay`, `twoctwop`, `twoctwopipp`, and `twoctwopwallet`. |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| code | Unique payment method's specific code, in string value. |
-| name | Payment method's general name, in string value. |
-| active | Payment method current's status for the collection, in boolean value. It is true if this payment method has enabled for the collection. |
+| Parameter | Description                                                                                                                             |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| code      | Unique payment method's specific code, in string value.                                                                                 |
+| name      | Payment method's general name, in string value.                                                                                         |
+| active    | Payment method current's status for the collection, in boolean value. It is true if this payment method has enabled for the collection. |
 
 ## Get FPX Banks
 
@@ -1382,17 +1379,20 @@ curl https://www.billplz.com/api/v3/fpx_banks \
 
 ```json
 {
-  "banks":
-  [{
-    "name": "MBU0227",
-    "active": true
-    },{
-    "name": "OCBC0229",
-    "active": false
-    },{
-    "name": "MB2U0227",
-    "active": true
-  }]
+  "banks": [
+    {
+      "name": "MBU0227",
+      "active": true
+    },
+    {
+      "name": "OCBC0229",
+      "active": false
+    },
+    {
+      "name": "MB2U0227",
+      "active": true
+    }
+  ]
 }
 ```
 
@@ -1402,45 +1402,45 @@ curl https://www.billplz.com/api/v3/fpx_banks \
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| name | This is the bank code that need to set to `reference_1`. Case sensitive. |
-| active | `true` or `false` boolean that represents bank's availability. If an inactive bank was set to `reference_1`, the payment process will show Billplz page for payer to choose another bank from the list. |
+| Parameter | Description                                                                                                                                                                                             |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| name      | This is the bank code that need to set to `reference_1`. Case sensitive.                                                                                                                                |
+| active    | `true` or `false` boolean that represents bank's availability. If an inactive bank was set to `reference_1`, the payment process will show Billplz page for payer to choose another bank from the list. |
 
 #### Fpx Bank Abbreviations
 
-| Bank Code | Bank Name |
-| --- | --- |
-| ABMB0212 | allianceonline |
-| ABB0233 | affinOnline |
-| ABB0234* | Affin Bank |
-| AMBB0209 | AmOnline |
-| BCBB0235 | CIMB Clicks |
-| BIMB0340 | Bank Islam Internet Banking |
-| BKRM0602 | i-Rakyat |
-| BMMB0341 | i-Muamalat |
-| BOCM01* | Bank of China |
-| BSN0601 | myBSN |
-| CIT0219 | Citibank Online |
-| HLB0224 | HLB Connect |
-| HSBC0223 | HSBC Online Banking |
-| KFH0346 | KFH Online |
-| MB2U0227 | Maybank2u |
-| MBB0227 | Maybank2E |
-| MBB0228 | Maybank2E |
-| OCBC0229 | OCBC Online Banking |
-| PBB0233 | PBe |
-| RHB0218 | RHB Now |
-| SCB0216 | SC Online Banking |
-| UOB0226 | UOB Internet Banking |
-| UOB0229* | UOB Bank |
-| TEST0001\* | Test 0001 |
-| TEST0002\* | Test 0002 |
-| TEST0003\* | Test 0003 |
-| TEST0004\* | Test 0004 |
-| TEST0021\* | Test 0021 |
-| TEST0022\* | Test 0022 |
-| TEST0023\* | Test 0023 |
+| Bank Code  | Bank Name                   |
+| ---------- | --------------------------- |
+| ABMB0212   | allianceonline              |
+| ABB0233    | affinOnline                 |
+| ABB0234\*  | Affin Bank                  |
+| AMBB0209   | AmOnline                    |
+| BCBB0235   | CIMB Clicks                 |
+| BIMB0340   | Bank Islam Internet Banking |
+| BKRM0602   | i-Rakyat                    |
+| BMMB0341   | i-Muamalat                  |
+| BOCM01\*   | Bank of China               |
+| BSN0601    | myBSN                       |
+| CIT0219    | Citibank Online             |
+| HLB0224    | HLB Connect                 |
+| HSBC0223   | HSBC Online Banking         |
+| KFH0346    | KFH Online                  |
+| MB2U0227   | Maybank2u                   |
+| MBB0227    | Maybank2E                   |
+| MBB0228    | Maybank2E                   |
+| OCBC0229   | OCBC Online Banking         |
+| PBB0233    | PBe                         |
+| RHB0218    | RHB Now                     |
+| SCB0216    | SC Online Banking           |
+| UOB0226    | UOB Internet Banking        |
+| UOB0229\*  | UOB Bank                    |
+| TEST0001\* | Test 0001                   |
+| TEST0002\* | Test 0002                   |
+| TEST0003\* | Test 0003                   |
+| TEST0004\* | Test 0004                   |
+| TEST0021\* | Test 0021                   |
+| TEST0022\* | Test 0022                   |
+| TEST0023\* | Test 0023                   |
 
 \* Only applicable in staging environment.
 
@@ -1475,8 +1475,7 @@ curl https://www.billplz.com/api/v4/collections \
 {
   "id": "inbmmepb",
   "title": "My First V4 API Collection",
-  "logo":
-  {
+  "logo": {
     "thumb_url": null,
     "avatar_url": null
   },
@@ -1507,8 +1506,7 @@ curl https://www.billplz.com/api/v4/collections \
 {
   "id": "inbmmepb",
   "title": "My First V4 API Collection",
-  "logo":
-  {
+  "logo": {
     "thumb_url": null,
     "avatar_url": null
   },
@@ -1526,7 +1524,7 @@ curl https://www.billplz.com/api/v4/collections \
       "variable_cut": 3,
       "stack_order": 1
     }
-   ]
+  ]
 }
 ```
 
@@ -1536,34 +1534,34 @@ curl https://www.billplz.com/api/v4/collections \
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| title | The collection title. Will be displayed on bill template. String format.|
+| Parameter | Description                                                              |
+| --------- | ------------------------------------------------------------------------ |
+| title     | The collection title. Will be displayed on bill template. String format. |
 
 ###### OPTIONAL ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| split_payments[][email] | The email address of the split rule's recipient (The account must be a verified account). |
-| split_payments[][fixed_cut] | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00). <br>This field is required if `split_payment[variable_cut]` is not present. |
-| split_payments[][variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present. |
-| split_payments[][stack_order] | Integer format that defines the sequence of the split rule recipients. <br>This field is required and must be in correct order starts from 0 and increment by 1 subsequently if you want to set a split rule. <br>This input is crucial to determine a precise recipient's order. |
-| split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
+| Parameter                      | Description                                                                                                                                                                                                                                                                       |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| split_payments[][email]        | The email address of the split rule's recipient (The account must be a verified account).                                                                                                                                                                                         |
+| split_payments[][fixed_cut]    | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00). <br>This field is required if `split_payment[variable_cut]` is not present.                                                                                     |
+| split_payments[][variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present.                                                                                                                                     |
+| split_payments[][stack_order]  | Integer format that defines the sequence of the split rule recipients. <br>This field is required and must be in correct order starts from 0 and increment by 1 subsequently if you want to set a split rule. <br>This input is crucial to determine a precise recipient's order. |
+| split_header                   | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`.                                                                                                                                                             |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | ID that represents a collection. |
-| title | The collection's title in string format. |
-| logo[thumb_url] | The thumb dimension's (180x180) URL. |
-| logo[avatar_url] | The avatar dimension's (40x40) URL. |
-| split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
-| split_payments | Array that contains all split rule recipients in hash format. |
-| email | in hash represents the recipient's email. |
-| fixed_cut | in hash represents the recipient's fixed cut in smallest and positive currency unit. |
-| variable_cut | The recipient's percentage cut in positive integer format. |
-| stack_order | The order of the recipient defined in split rules. |
+| Parameter        | Description                                                                                                           |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------- |
+| id               | ID that represents a collection.                                                                                      |
+| title            | The collection's title in string format.                                                                              |
+| logo[thumb_url]  | The thumb dimension's (180x180) URL.                                                                                  |
+| logo[avatar_url] | The avatar dimension's (40x40) URL.                                                                                   |
+| split_header     | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
+| split_payments   | Array that contains all split rule recipients in hash format.                                                         |
+| email            | in hash represents the recipient's email.                                                                             |
+| fixed_cut        | in hash represents the recipient's fixed cut in smallest and positive currency unit.                                  |
+| variable_cut     | The recipient's percentage cut in positive integer format.                                                            |
+| stack_order      | The order of the recipient defined in split rules.                                                                    |
 
 ### Get a Collection
 
@@ -1583,8 +1581,7 @@ curl https://www.billplz.com/api/v4/collections/inbmmepb \
 {
   "id": "inbmmepb",
   "title": "My First API Collection",
-  "logo":
-  {
+  "logo": {
     "thumb_url": null,
     "avatar_url": null
   },
@@ -1602,7 +1599,7 @@ curl https://www.billplz.com/api/v4/collections/inbmmepb \
       "variable_cut": 3,
       "stack_order": 1
     }
-   ],
+  ],
   "status": "active"
 }
 ```
@@ -1613,15 +1610,15 @@ curl https://www.billplz.com/api/v4/collections/inbmmepb \
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | ID that represents a collection. |
-| title | The collection's title in string format. |
-| logo[thumb_url] | The thumb dimension's (180x180) URL. |
-| logo[avatar_url] | The avatar dimension's (40x40) URL. |
-| split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
-| split_payments | Array that contains all split rule recipients in hash format. <br>`email` in hash represents the recipient's email. <br>`fixed_cut` in hash represents the recipient's fixed cut in smallest and positive currency unit. <br>`variable_cut` is the recipient's percentage cut in positive integer format.<br>`stack_order` is the order of the recipient defined in split rules. |
-| status | Collection's status, it is either `active` and `inactive`. |
+| Parameter        | Description                                                                                                                                                                                                                                                                                                                                                                      |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id               | ID that represents a collection.                                                                                                                                                                                                                                                                                                                                                 |
+| title            | The collection's title in string format.                                                                                                                                                                                                                                                                                                                                         |
+| logo[thumb_url]  | The thumb dimension's (180x180) URL.                                                                                                                                                                                                                                                                                                                                             |
+| logo[avatar_url] | The avatar dimension's (40x40) URL.                                                                                                                                                                                                                                                                                                                                              |
+| split_header     | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`.                                                                                                                                                                                                                                                            |
+| split_payments   | Array that contains all split rule recipients in hash format. <br>`email` in hash represents the recipient's email. <br>`fixed_cut` in hash represents the recipient's fixed cut in smallest and positive currency unit. <br>`variable_cut` is the recipient's percentage cut in positive integer format.<br>`stack_order` is the order of the recipient defined in split rules. |
+| status           | Collection's status, it is either `active` and `inactive`.                                                                                                                                                                                                                                                                                                                       |
 
 <aside class="notice">
    It will return <code>404</code> status code, and a message of <code>RecordNotFound</code> if the collection you trying to query is not exists.
@@ -1643,19 +1640,19 @@ curl https://www.billplz.com/api/v4/collections \
 
 ```json
 {
-  "collections":
-  [{
-    "id": "inbmmepb",
-    "title": "My First API Collection",
-    "logo":
+  "collections": [
     {
-      "thumb_url": null,
-      "avatar_url": null
-    },
-    "split_header": false,
-    "split_payments": [],
-    "status": "active"
-  }],
+      "id": "inbmmepb",
+      "title": "My First API Collection",
+      "logo": {
+        "thumb_url": null,
+        "avatar_url": null
+      },
+      "split_header": false,
+      "split_payments": [],
+      "status": "active"
+    }
+  ],
   "page": 1
 }
 ```
@@ -1672,19 +1669,19 @@ curl https://www.billplz.com/api/v4/collections?page=2&status=active \
 
 ```json
 {
-  "collections":
-  [{
-    "id": "inbmmepb",
-    "title": "My First API Collection",
-    "logo":
+  "collections": [
     {
-      "thumb_url": null,
-      "avatar_url": null
-    },
-    "split_header": false,
-    "split_payments": [],
-    "status": "active"
-  }],
+      "id": "inbmmepb",
+      "title": "My First API Collection",
+      "logo": {
+        "thumb_url": null,
+        "avatar_url": null
+      },
+      "split_header": false,
+      "split_payments": [],
+      "status": "active"
+    }
+  ],
   "page": 2
 }
 ```
@@ -1695,10 +1692,10 @@ curl https://www.billplz.com/api/v4/collections?page=2&status=active \
 
 ###### OPTIONAL ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| page | Up to 15 collections will be returned in a single API call per specified page. Default to **1** if not present. |
-| status | Parameter to filter collection's status, valid value are `active` and `inactive`. |
+| Parameter | Description                                                                                                     |
+| --------- | --------------------------------------------------------------------------------------------------------------- |
+| page      | Up to 15 collections will be returned in a single API call per specified page. Default to **1** if not present. |
+| status    | Parameter to filter collection's status, valid value are `active` and `inactive`.                               |
 
 ### Create an Open Collection
 
@@ -1730,10 +1727,9 @@ curl https://www.billplz.com/api/v4/open_collections \
   "tax": null,
   "fixed_quantity": true,
   "payment_button": "pay",
-  "photo":
-  {
-    "retina_url":  null,
-    "avatar_url":  null
+  "photo": {
+    "retina_url": null,
+    "avatar_url": null
   },
   "split_header": false,
   "split_payments": [],
@@ -1780,10 +1776,9 @@ curl https://www.billplz.com/api/v4/open_collections \
   "tax": 1,
   "fixed_quantity": false,
   "payment_button": "buy",
-  "photo":
-  {
-    "retina_url":  "https://sample.net/assets/uploadPhoto.png",
-    "avatar_url":  "https://sample.net/assets/uploadPhoto.png"
+  "photo": {
+    "retina_url": "https://sample.net/assets/uploadPhoto.png",
+    "avatar_url": "https://sample.net/assets/uploadPhoto.png"
   },
   "split_header": true,
   "split_payments": [
@@ -1805,52 +1800,52 @@ curl https://www.billplz.com/api/v4/open_collections \
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| title | The collection title. Will be displayed on payment form. String format (Max of 50 characters). |
-| description | The collection description. Will be displayed on payment form. String format (Max of 200 characters). |
-| amount | A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br>Required if `fixed_amount` is `true`; Ignored if `fixed_amount` is `false`. |
+| Parameter   | Description                                                                                                                                                         |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| title       | The collection title. Will be displayed on payment form. String format (Max of 50 characters).                                                                      |
+| description | The collection description. Will be displayed on payment form. String format (Max of 200 characters).                                                               |
+| amount      | A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br>Required if `fixed_amount` is `true`; Ignored if `fixed_amount` is `false`. |
 
 ###### OPTIONAL ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| fixed_amount | Boolean value. Set `fixed_amount` to `false` for Open Amount. Default value is `true`. |
-| fixed_quantity | Boolean value. Set `fixed_quantity` to `false` for Open Quantity. Default value is `true`. |
-| payment_button | Payment button's text. Available options are `buy` and `pay`. Default value is `pay`. |
-| reference_1_label | Label #1 to reconcile payments (Max of 20 characters). <br>Default value is `Reference 1`. |
-| reference_2_label | Label #2 to reconcile payments (Max of 20 characters). <br>Default value is `Reference 2`. |
-| email_link | A URL that email to customer after payment is successful. |
-| tax | Tax rate in positive integer format. |
-| photo | This image will be resized to retina (960x960) and avatar (180x180) dimensions. Whitelisted formats are `jpg`, `jpeg`, `gif` and `png`. |
-| split_payments[][email] | The email address of the split rule's recipient (The account must be a verified account). |
-| split_payments[][fixed_cut] | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00) <br>This field is required if `split_payment[variable_cut]` is not present. |
-| split_payments[][variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present. |
-| split_payments[][stack_order] | Integer format that defines the sequence of the split rule recipients. <br>This field is required and must be in correct order starts from 0 and increment by 1 subsequently if you want to set a split rule. <br>This input is crucial to determine a precise recipient's order. |
-| split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
-| redirect_uri | URL to redirect the customer after payment <i>(completed or failed)</i>. Billplz will do a GET to redirect_uri, with bill's `ID` appended to the URL <i>(additional `paid`, `paid_at` and `x_signature` if <a href="#x-signature">x_signature</a> is enabled)</i>. |
+| Parameter                      | Description                                                                                                                                                                                                                                                                       |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| fixed_amount                   | Boolean value. Set `fixed_amount` to `false` for Open Amount. Default value is `true`.                                                                                                                                                                                            |
+| fixed_quantity                 | Boolean value. Set `fixed_quantity` to `false` for Open Quantity. Default value is `true`.                                                                                                                                                                                        |
+| payment_button                 | Payment button's text. Available options are `buy` and `pay`. Default value is `pay`.                                                                                                                                                                                             |
+| reference_1_label              | Label #1 to reconcile payments (Max of 20 characters). <br>Default value is `Reference 1`.                                                                                                                                                                                        |
+| reference_2_label              | Label #2 to reconcile payments (Max of 20 characters). <br>Default value is `Reference 2`.                                                                                                                                                                                        |
+| email_link                     | A URL that email to customer after payment is successful.                                                                                                                                                                                                                         |
+| tax                            | Tax rate in positive integer format.                                                                                                                                                                                                                                              |
+| photo                          | This image will be resized to retina (960x960) and avatar (180x180) dimensions. Whitelisted formats are `jpg`, `jpeg`, `gif` and `png`.                                                                                                                                           |
+| split_payments[][email]        | The email address of the split rule's recipient (The account must be a verified account).                                                                                                                                                                                         |
+| split_payments[][fixed_cut]    | A positive integer in the smallest currency unit that is going in your account (e.g 100 cents to charge RM 1.00) <br>This field is required if `split_payment[variable_cut]` is not present.                                                                                      |
+| split_payments[][variable_cut] | Percentage in positive integer format that is going in your account. <br>This field is required if `split_payment[fixed_cut]` is not present.                                                                                                                                     |
+| split_payments[][stack_order]  | Integer format that defines the sequence of the split rule recipients. <br>This field is required and must be in correct order starts from 0 and increment by 1 subsequently if you want to set a split rule. <br>This input is crucial to determine a precise recipient's order. |
+| split_header                   | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`.                                                                                                                                                             |
+| redirect_uri                   | URL to redirect the customer after payment <i>(completed or failed)</i>. Billplz will do a GET to redirect_uri, with bill's `ID` appended to the URL <i>(additional `paid`, `paid_at` and `x_signature` if <a href="#x-signature">x_signature</a> is enabled)</i>.                |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | The collection ID. |
-| title | The collection's title. |
-| description | The collection description. |
-| reference_1_label | Label #1 to reconcile payments. |
-| reference_2_label | Label #2 to reconcile payments. |
-| email_link | A URL that email to customer after payment is successful. |
-| amount | The collection's fixed amount to create bill in the smallest currency unit. |
-| fixed_amount | Boolean value. It returns to `false` if Open Amount.
-tax | Tax rate in positive integer format. |
-| fixed_quantity | Boolean value. It returns `false` if Open Quantity.
-| payment_button | Payment button's text. |
-| photo[retina_url] | The retina dimension's (960x960) URL. |
-| photo[avatar_url] | The avatar dimension's (180x180) URL. |
-| split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`.|
-| split_payments | Array that contains all split rule recipients in hash format. <br>`email` in hash represents the recipient's email. <br>`fixed_cut` in hash represents the recipient's fixed cut in smallest and positive currency unit. <br>`variable_cut` is the recipient's percentage cut in positive integer format. <br>`stack_order` is the order of the recipient defined in split rules. |
-| url | URL to the collection. |
-| redirect_uri | URL to redirect the customer after payment <i>(completed or failed)</i>. Billplz will do a GET to redirect_uri, with bill's `ID` appended to the URL <i>(additional `paid`, `paid_at` and `x_signature` if <a href="#x-signature">x_signature</a> is enabled)</i>. |
+| Parameter         | Description                                                                                                                                                                                                                                                                                                                                                                       |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id                | The collection ID.                                                                                                                                                                                                                                                                                                                                                                |
+| title             | The collection's title.                                                                                                                                                                                                                                                                                                                                                           |
+| description       | The collection description.                                                                                                                                                                                                                                                                                                                                                       |
+| reference_1_label | Label #1 to reconcile payments.                                                                                                                                                                                                                                                                                                                                                   |
+| reference_2_label | Label #2 to reconcile payments.                                                                                                                                                                                                                                                                                                                                                   |
+| email_link        | A URL that email to customer after payment is successful.                                                                                                                                                                                                                                                                                                                         |
+| amount            | The collection's fixed amount to create bill in the smallest currency unit.                                                                                                                                                                                                                                                                                                       |
+| fixed_amount      | Boolean value. It returns to `false` if Open Amount.                                                                                                                                                                                                                                                                                                                              |
+| tax               | Tax rate in positive integer format.                                                                                                                                                                                                                                                                                                                                              |
+| fixed_quantity    | Boolean value. It returns `false` if Open Quantity.                                                                                                                                                                                                                                                                                                                               |
+| payment_button    | Payment button's text.                                                                                                                                                                                                                                                                                                                                                            |
+| photo[retina_url] | The retina dimension's (960x960) URL.                                                                                                                                                                                                                                                                                                                                             |
+| photo[avatar_url] | The avatar dimension's (180x180) URL.                                                                                                                                                                                                                                                                                                                                             |
+| split_header      | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`.                                                                                                                                                                                                                                                             |
+| split_payments    | Array that contains all split rule recipients in hash format. <br>`email` in hash represents the recipient's email. <br>`fixed_cut` in hash represents the recipient's fixed cut in smallest and positive currency unit. <br>`variable_cut` is the recipient's percentage cut in positive integer format. <br>`stack_order` is the order of the recipient defined in split rules. |
+| url               | URL to the collection.                                                                                                                                                                                                                                                                                                                                                            |
+| redirect_uri      | URL to redirect the customer after payment <i>(completed or failed)</i>. Billplz will do a GET to redirect_uri, with bill's `ID` appended to the URL <i>(additional `paid`, `paid_at` and `x_signature` if <a href="#x-signature">x_signature</a> is enabled)</i>.                                                                                                                |
 
 ### Get an Open Collection
 
@@ -1879,10 +1874,9 @@ curl https://www.billplz.com/api/v4/open_collections/0pp87t_6 \
   "tax": null,
   "fixed_quantity": true,
   "payment_button": "pay",
-  "photo":
-  {
-    "retina_url":  null,
-    "avatar_url":  null
+  "photo": {
+    "retina_url": null,
+    "avatar_url": null
   },
   "split_header": false,
   "split_payments": [],
@@ -1898,26 +1892,26 @@ curl https://www.billplz.com/api/v4/open_collections/0pp87t_6 \
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | The collection ID. |
-| title | The collection's title. |
-| description | The collection description. |
-| reference_1_label | Label #1 to reconcile payments. |
-| reference_2_label | Label #2 to reconcile payments. |
-| email_link | A URL that email to customer after payment is successful. |
-| amount | The collection's fixed amount to create bill in the smallest currency unit. |
-| fixed_amount | Boolean value. It returns to `false` if Open Amount. |
-| tax | Tax rate in positive integer format. |
-| fixed_quantity | Boolean value. It returns `false` if Open Quantity. |
-| payment_button | Payment button's text. |
-| photo[retina_url] | The retina dimension's (960x960) URL. |
-| photo[avatar_url] | The avatar dimension's (180x180) URL. |
-| split_header | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`. |
-| split_payments | Array that contains all split rule recipients in hash format. <br>`email` in hash represents the recipient's email. <br>`fixed_cut` in hash represents the recipient's fixed cut in smallest and positive currency unit. <br>`variable_cut` is the recipient's percentage cut in positive integer format. <br>`stack_order` is the order of the recipient defined in split rules.
-| url | URL to the collection. |
-| status | Collection's status, it is either `active` and `inactive`.|
-| redirect_uri | URL to redirect the customer after payment <i>(completed or failed)</i>. Billplz will do a GET to redirect_uri, with bill's `ID` appended to the URL <i>(additional `paid`, `paid_at` and `x_signature` if <a href="#x-signature">x_signature</a> is enabled)</i>. |
+| Parameter         | Description                                                                                                                                                                                                                                                                                                                                                                       |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id                | The collection ID.                                                                                                                                                                                                                                                                                                                                                                |
+| title             | The collection's title.                                                                                                                                                                                                                                                                                                                                                           |
+| description       | The collection description.                                                                                                                                                                                                                                                                                                                                                       |
+| reference_1_label | Label #1 to reconcile payments.                                                                                                                                                                                                                                                                                                                                                   |
+| reference_2_label | Label #2 to reconcile payments.                                                                                                                                                                                                                                                                                                                                                   |
+| email_link        | A URL that email to customer after payment is successful.                                                                                                                                                                                                                                                                                                                         |
+| amount            | The collection's fixed amount to create bill in the smallest currency unit.                                                                                                                                                                                                                                                                                                       |
+| fixed_amount      | Boolean value. It returns to `false` if Open Amount.                                                                                                                                                                                                                                                                                                                              |
+| tax               | Tax rate in positive integer format.                                                                                                                                                                                                                                                                                                                                              |
+| fixed_quantity    | Boolean value. It returns `false` if Open Quantity.                                                                                                                                                                                                                                                                                                                               |
+| payment_button    | Payment button's text.                                                                                                                                                                                                                                                                                                                                                            |
+| photo[retina_url] | The retina dimension's (960x960) URL.                                                                                                                                                                                                                                                                                                                                             |
+| photo[avatar_url] | The avatar dimension's (180x180) URL.                                                                                                                                                                                                                                                                                                                                             |
+| split_header      | Boolean value. All bill and receipt templates will show split rule recipient's infographic if this was set to `true`.                                                                                                                                                                                                                                                             |
+| split_payments    | Array that contains all split rule recipients in hash format. <br>`email` in hash represents the recipient's email. <br>`fixed_cut` in hash represents the recipient's fixed cut in smallest and positive currency unit. <br>`variable_cut` is the recipient's percentage cut in positive integer format. <br>`stack_order` is the order of the recipient defined in split rules. |
+| url               | URL to the collection.                                                                                                                                                                                                                                                                                                                                                            |
+| status            | Collection's status, it is either `active` and `inactive`.                                                                                                                                                                                                                                                                                                                        |
+| redirect_uri      | URL to redirect the customer after payment <i>(completed or failed)</i>. Billplz will do a GET to redirect_uri, with bill's `ID` appended to the URL <i>(additional `paid`, `paid_at` and `x_signature` if <a href="#x-signature">x_signature</a> is enabled)</i>.                                                                                                                |
 
 <aside class="notice">
   It will return 404 status code, and a message of RecordNotFound if the open collection you trying to query is not exists.
@@ -1939,37 +1933,37 @@ curl https://www.billplz.com/api/v4/open_collections \
 
 ```json
 {
-  "open_collections":
-  [{
-    "id": "0pp87t_6",
-    "title": "MY FIRST API OPEN COLLECTION",
-    "description": "Maecenas eu placerat ante. Fusce ut neque justo, et aliquet enim. In hac habitasse platea dictumst.",
-    "reference_1_label": "ID No",
-    "reference_2_label": "First Name",
-    "email_link": "http://www.test.com",
-    "amount": null,
-    "fixed_amount": false,
-    "tax": 1,
-    "fixed_quantity": false,
-    "payment_button": "buy",
-    "photo":
+  "open_collections": [
     {
-      "retina_url":  "https://sample.net/assets/uploadPhoto.png",
-      "avatar_url":  "https://sample.net/assets/uploadPhoto.png"
-    },
-    "split_header": false,
-    "split_payments": [
-      {
-        "email": "verified@account.com",
-        "fixed_cut": null,
-        "variable_cut": 20,
-        "stack_order": 0
-      }
-    ],
-    "url": "https://www.billplz.com/0pp87t_6",
-    "status": "active",
-    "redirect_uri": null
-  }],
+      "id": "0pp87t_6",
+      "title": "MY FIRST API OPEN COLLECTION",
+      "description": "Maecenas eu placerat ante. Fusce ut neque justo, et aliquet enim. In hac habitasse platea dictumst.",
+      "reference_1_label": "ID No",
+      "reference_2_label": "First Name",
+      "email_link": "http://www.test.com",
+      "amount": null,
+      "fixed_amount": false,
+      "tax": 1,
+      "fixed_quantity": false,
+      "payment_button": "buy",
+      "photo": {
+        "retina_url": "https://sample.net/assets/uploadPhoto.png",
+        "avatar_url": "https://sample.net/assets/uploadPhoto.png"
+      },
+      "split_header": false,
+      "split_payments": [
+        {
+          "email": "verified@account.com",
+          "fixed_cut": null,
+          "variable_cut": 20,
+          "stack_order": 0
+        }
+      ],
+      "url": "https://www.billplz.com/0pp87t_6",
+      "status": "active",
+      "redirect_uri": null
+    }
+  ],
   "page": 1
 }
 ```
@@ -1986,37 +1980,37 @@ curl https://www.billplz.com/api/v4/open_collections?page=2&status=active \
 
 ```json
 {
-  "open_collections":
-  [{
-    "id": "0pp87t_6",
-    "title": "MY FIRST API OPEN COLLECTION",
-    "description": "Maecenas eu placerat ante. Fusce ut neque justo, et aliquet enim. In hac habitasse platea dictumst.",
-    "reference_1_label": "ID No",
-    "reference_2_label": "First Name",
-    "email_link": "http://www.test.com",
-    "amount": null,
-    "fixed_amount": false,
-    "tax": 1,
-    "fixed_quantity": false,
-    "payment_button": "buy",
-    "photo":
+  "open_collections": [
     {
-      "retina_url":  "https://sample.net/assets/uploadPhoto.png",
-      "avatar_url":  "https://sample.net/assets/uploadPhoto.png"
-    },
-    "split_header": false,
-    "split_payments": [
-      {
-        "email": "verified@account.com",
-        "fixed_cut": null,
-        "variable_cut": 20,
-        "stack_order": 0
-      }
-    ],
-    "url": "https://www.billplz.com/0pp87t_6",
-    "status": "active",
-    "redirect_uri": null
-  }],
+      "id": "0pp87t_6",
+      "title": "MY FIRST API OPEN COLLECTION",
+      "description": "Maecenas eu placerat ante. Fusce ut neque justo, et aliquet enim. In hac habitasse platea dictumst.",
+      "reference_1_label": "ID No",
+      "reference_2_label": "First Name",
+      "email_link": "http://www.test.com",
+      "amount": null,
+      "fixed_amount": false,
+      "tax": 1,
+      "fixed_quantity": false,
+      "payment_button": "buy",
+      "photo": {
+        "retina_url": "https://sample.net/assets/uploadPhoto.png",
+        "avatar_url": "https://sample.net/assets/uploadPhoto.png"
+      },
+      "split_header": false,
+      "split_payments": [
+        {
+          "email": "verified@account.com",
+          "fixed_cut": null,
+          "variable_cut": 20,
+          "stack_order": 0
+        }
+      ],
+      "url": "https://www.billplz.com/0pp87t_6",
+      "status": "active",
+      "redirect_uri": null
+    }
+  ],
   "page": 2
 }
 ```
@@ -2027,17 +2021,19 @@ curl https://www.billplz.com/api/v4/open_collections?page=2&status=active \
 
 ###### OPTIONAL ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| page | Up to 15 open collections will be returned in a single API call per specified page. Default to **1** if not present. |
-| status | Parameter to filter open collection's status, valid value are `active` and `inactive`. |
+| Parameter | Description                                                                                                          |
+| --------- | -------------------------------------------------------------------------------------------------------------------- |
+| page      | Up to 15 open collections will be returned in a single API call per specified page. Default to **1** if not present. |
+| status    | Parameter to filter open collection's status, valid value are `active` and `inactive`.                               |
 
 ### Customer Receipt Delivery
+
 By default, all collections follow the Global Customer Receipt Notification configuration in your Account settings.
 
 You can override the Global configuration on individual collections by calling [activate](#v4-collections-customer-receipt-delivery-activate) and [deactivate](#v4-collections-customer-receipt-delivery-deactivate).
 
 #### Activate
+
 If you wish to ignore the Global configuration and always send a receipt email to your customers, you may activate it per individual collection by calling to this API.
 
 > Example request:
@@ -2061,11 +2057,12 @@ https://www.billplz.com/api/v4/collections/qag4fe_o6/customer_receipt_delivery/a
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
+| Parameter     | Description                                  |
+| ------------- | -------------------------------------------- |
 | COLLECTION_ID | Collection ID returned in Collection object. |
 
 #### Deactivate
+
 If you wish to ignore the Global configuration and always not to send a receipt email to your customers, you may deactivate it per individual collection by calling to this API.
 
 > Example request:
@@ -2089,11 +2086,12 @@ https://www.billplz.com/api/v4/collections/qag4fe_o6/customer_receipt_delivery/d
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
+| Parameter     | Description                                  |
+| ------------- | -------------------------------------------- |
 | COLLECTION_ID | Collection ID returned in Collection object. |
 
 #### Set Global
+
 Use this API to set your individual collections to follow Global Customer Receipt Notification configuration if you want your collection to send the email base on Global configuration. By default, all collections are following Global configuration.
 
 > Example request:
@@ -2117,11 +2115,12 @@ https://www.billplz.com/api/v4/collections/qag4fe_o6/customer_receipt_delivery/g
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
+| Parameter     | Description                                  |
+| ------------- | -------------------------------------------- |
 | COLLECTION_ID | Collection ID returned in Collection object. |
 
 #### Get Status
+
 Use this API to get a Collection's Customer Receipt Notification status.
 
 > Example request:
@@ -2147,15 +2146,15 @@ curl https://www.billplz.com/api/v4/collections/qag4fe_o6/customer_receipt_deliv
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
+| Parameter     | Description                                  |
+| ------------- | -------------------------------------------- |
 | COLLECTION_ID | Collection ID returned in Collection object. |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | ID that represents a collection. |
+| Parameter                 | Description                                                                                       |
+| ------------------------- | ------------------------------------------------------------------------------------------------- |
+| id                        | ID that represents a collection.                                                                  |
 | customer_receipt_delivery | Collection's Customer Receipt Notification status, it is either `active`, `inactive` or `global`. |
 
 ## Webhook Rank
@@ -2181,15 +2180,16 @@ curl https://www.billplz.com/api/v4/webhook_rank \
   "rank": 0.0
 }
 ```
+
 ###### HTTP REQUEST
 
 `GET https://www.billplz.com/api/v4/webhook_rank`
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| rank | Ranking Number (0.0 - 10.0) |
+| Parameter | Description                 |
+| --------- | --------------------------- |
+| rank      | Ranking Number (0.0 - 10.0) |
 
 ## Get Payment Gateways
 
@@ -2212,32 +2212,38 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 
 ```json
 {
-  "payment_gateways":
-  [{
-    "code": "MBU0227",
-    "active": true,
-    "category": "fpx"
-    },{
-    "code": "OCBC0229",
-    "active": false,
-    "category": "fpx"
-    },{
-    "code": "BP-FKR01",
-    "active": true,
-    "category": "billplz"
-    },{
-    "code": "BP-PPL01",
-    "active": true,
-    "category": "paypal"
-    },{
-    "code": "BP-2C2P1",
-    "active": false,
-    "category": "2c2p"
-    },{
-    "code": "BP-OCBC1",
-    "active": true,
-    "category": "ocbc"
-  }]
+  "payment_gateways": [
+    {
+      "code": "MBU0227",
+      "active": true,
+      "category": "fpx"
+    },
+    {
+      "code": "OCBC0229",
+      "active": false,
+      "category": "fpx"
+    },
+    {
+      "code": "BP-FKR01",
+      "active": true,
+      "category": "billplz"
+    },
+    {
+      "code": "BP-PPL01",
+      "active": true,
+      "category": "paypal"
+    },
+    {
+      "code": "BP-2C2P1",
+      "active": false,
+      "category": "2c2p"
+    },
+    {
+      "code": "BP-OCBC1",
+      "active": true,
+      "category": "ocbc"
+    }
+  ]
 }
 ```
 
@@ -2247,98 +2253,99 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| code | This is the bank code that need to set to `reference_1`. Case sensitive. |
-| active | `true` or `false` boolean that represents payment gateway's availability. If an inactive / invalid payment gateway was set to `reference_1`, the payment process will show Billplz page for payer to choose another payment option from the list. |
-| category | Category this payment gateway belongs to. |
+| Parameter | Description                                                                                                                                                                                                                                       |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| code      | This is the bank code that need to set to `reference_1`. Case sensitive.                                                                                                                                                                          |
+| active    | `true` or `false` boolean that represents payment gateway's availability. If an inactive / invalid payment gateway was set to `reference_1`, the payment process will show Billplz page for payer to choose another payment option from the list. |
+| category  | Category this payment gateway belongs to.                                                                                                                                                                                                         |
 
 #### Payment Gateway Abbreviations
-| Code | Name |
-| --- | --- |
-| ABMB0212 | allianceonline |
-| ABB0233 | affinOnline |
-| ABB0234* | Affin Bank |
-| AMBB0209 | AmOnline |
-| AGRO01 | AGRONet |
-| BCBB0235 | CIMB Clicks |
-| BIMB0340 | Bank Islam Internet Banking |
-| BKRM0602 | i-Rakyat |
-| BMMB0341 | i-Muamalat |
-| BOCM01* | Bank of China |
-| BSN0601 | myBSN |
-| CIT0219 | Citibank Online |
-| HLB0224 | HLB Connect |
-| HSBC0223 | HSBC Online Banking |
-| KFH0346 | KFH Online |
-| MB2U0227 | Maybank2u |
-| MBB0227 | Maybank2E |
-| MBB0228 | Maybank2E |
-| OCBC0229 | OCBC Online Banking |
-| PBB0233 | PBe |
-| RHB0218 | RHB Now |
-| SCB0216 | SC Online Banking |
-| UOB0226 | UOB Internet Banking |
-| UOB0229* | UOB Bank |
-| TEST0001* | Test 0001 |
-| TEST0002* | Test 0002 |
-| TEST0003* | Test 0003 |
-| TEST0004* | Test 0004 |
-| TEST0021* | Test 0021 |
-| TEST0022* | Test 0022 |
-| TEST0023* | Test 0023 |
-| BP-FKR01* | Billplz Simulator |
-| BP-PPL01  | PayPal |
-| BP-OCBC1  | Visa / Mastercard |
-| BP-2C2P1  | e-pay |
-| BP-2C2PC  | Visa / Mastercard |
-| BP-2C2PU  | UnionPay |
-| BP-2C2PGRB  | Grab |
-| BP-2C2PBST  | Boost |
-| BP-2C2PTNG  | TnG |
-| BP-2C2PSHPE | Shopee Pay |
-| BP-2C2PIPP  | IPP |
-| BP-BST01  | Boost |
-| BP-TNG01  | TouchNGo E-Wallet |
-| BP-SGP01  | Senangpay |
-| BP-BILM1 | Visa / Mastercard |
-| BP-RZRGRB | Grab |
-| BP-RZRBST | Boost |
-| BP-RZRTNG | TnG |
-| BP-RZRPAY | RazerPay |
-| BP-RZRMB2QR | Maybank QR |
-| BP-RZRWCTP | WeChat Pay |
-| BP-RZRSHPE | Shopee Pay |
-| BP-MPGS1 | MPGS |
-| BP-CYBS1 | Secure Acceptance |
-| BP-EBPG1 | Visa / Mastercard |
-| BP-EBPG2 | AMEX |
-| BP-PAYDE | Paydee |
-| BP-MGATE1 | Visa / Mastercard / AMEX |
-| B2B1-ABB0235 | AFFINMAX |
-| B2B1-ABMB0213 | Alliance BizSmart |
-| B2B1-AGRO02 | AGRONetBIZ |
-| B2B1-AMBB0208 | AmAccess Biz |
-| B2B1-BCBB0235 | BizChannel@CIMB |
-| B2B1-BIMB0340 | Bank Islam eBanker |
-| B2B1-BKRM0602 | i-bizRAKYAT |
-| B2B1-BMMB0342 | iBiz Muamalat |
-| B2B1-BNP003 | BNP Paribas |
-| B2B1-CIT0218 | CitiDirect BE |
-| B2B1-DBB0199 | Deutsche Bank Autobahn |
-| B2B1-HLB0224 | HLB ConnectFirst |
-| B2B1-HSBC0223 | HSBCnet |
-| B2B1-KFH0346 | KFH Online |
-| B2B1-MBB0228 | Maybank2E |
-| B2B1-OCBC0229 | Velocity@ocbc |
-| B2B1-PBB0233 | PBe |
-| B2B1-PBB0234 | PB enterprise |
-| B2B1-RHB0218 | RHB Reflex |
-| B2B1-SCB0215 | SC Straight2Bank |
-| B2B1-TEST0021* | SBI Bank A |
-| B2B1-TEST0022* | SBI Bank B |
-| B2B1-TEST0023* | SBI Bank C |
-| B2B1-UOB0228 | UOB BIBPlus |
+
+| Code            | Name                        |
+| --------------- | --------------------------- |
+| ABMB0212        | allianceonline              |
+| ABB0233         | affinOnline                 |
+| ABB0234\*       | Affin Bank                  |
+| AMBB0209        | AmOnline                    |
+| AGRO01          | AGRONet                     |
+| BCBB0235        | CIMB Clicks                 |
+| BIMB0340        | Bank Islam Internet Banking |
+| BKRM0602        | i-Rakyat                    |
+| BMMB0341        | i-Muamalat                  |
+| BOCM01\*        | Bank of China               |
+| BSN0601         | myBSN                       |
+| CIT0219         | Citibank Online             |
+| HLB0224         | HLB Connect                 |
+| HSBC0223        | HSBC Online Banking         |
+| KFH0346         | KFH Online                  |
+| MB2U0227        | Maybank2u                   |
+| MBB0227         | Maybank2E                   |
+| MBB0228         | Maybank2E                   |
+| OCBC0229        | OCBC Online Banking         |
+| PBB0233         | PBe                         |
+| RHB0218         | RHB Now                     |
+| SCB0216         | SC Online Banking           |
+| UOB0226         | UOB Internet Banking        |
+| UOB0229\*       | UOB Bank                    |
+| TEST0001\*      | Test 0001                   |
+| TEST0002\*      | Test 0002                   |
+| TEST0003\*      | Test 0003                   |
+| TEST0004\*      | Test 0004                   |
+| TEST0021\*      | Test 0021                   |
+| TEST0022\*      | Test 0022                   |
+| TEST0023\*      | Test 0023                   |
+| BP-FKR01\*      | Billplz Simulator           |
+| BP-PPL01        | PayPal                      |
+| BP-OCBC1        | Visa / Mastercard           |
+| BP-2C2P1        | e-pay                       |
+| BP-2C2PC        | Visa / Mastercard           |
+| BP-2C2PU        | UnionPay                    |
+| BP-2C2PGRB      | Grab                        |
+| BP-2C2PBST      | Boost                       |
+| BP-2C2PTNG      | TnG                         |
+| BP-2C2PSHPE     | Shopee Pay                  |
+| BP-2C2PIPP      | IPP                         |
+| BP-BST01        | Boost                       |
+| BP-TNG01        | TouchNGo E-Wallet           |
+| BP-SGP01        | Senangpay                   |
+| BP-BILM1        | Visa / Mastercard           |
+| BP-RZRGRB       | Grab                        |
+| BP-RZRBST       | Boost                       |
+| BP-RZRTNG       | TnG                         |
+| BP-RZRPAY       | RazerPay                    |
+| BP-RZRMB2QR     | Maybank QR                  |
+| BP-RZRWCTP      | WeChat Pay                  |
+| BP-RZRSHPE      | Shopee Pay                  |
+| BP-MPGS1        | MPGS                        |
+| BP-CYBS1        | Secure Acceptance           |
+| BP-EBPG1        | Visa / Mastercard           |
+| BP-EBPG2        | AMEX                        |
+| BP-PAYDE        | Paydee                      |
+| BP-MGATE1       | Visa / Mastercard / AMEX    |
+| B2B1-ABB0235    | AFFINMAX                    |
+| B2B1-ABMB0213   | Alliance BizSmart           |
+| B2B1-AGRO02     | AGRONetBIZ                  |
+| B2B1-AMBB0208   | AmAccess Biz                |
+| B2B1-BCBB0235   | BizChannel@CIMB             |
+| B2B1-BIMB0340   | Bank Islam eBanker          |
+| B2B1-BKRM0602   | i-bizRAKYAT                 |
+| B2B1-BMMB0342   | iBiz Muamalat               |
+| B2B1-BNP003     | BNP Paribas                 |
+| B2B1-CIT0218    | CitiDirect BE               |
+| B2B1-DBB0199    | Deutsche Bank Autobahn      |
+| B2B1-HLB0224    | HLB ConnectFirst            |
+| B2B1-HSBC0223   | HSBCnet                     |
+| B2B1-KFH0346    | KFH Online                  |
+| B2B1-MBB0228    | Maybank2E                   |
+| B2B1-OCBC0229   | Velocity@ocbc               |
+| B2B1-PBB0233    | PBe                         |
+| B2B1-PBB0234    | PB enterprise               |
+| B2B1-RHB0218    | RHB Reflex                  |
+| B2B1-SCB0215    | SC Straight2Bank            |
+| B2B1-TEST0021\* | SBI Bank A                  |
+| B2B1-TEST0022\* | SBI Bank B                  |
+| B2B1-TEST0023\* | SBI Bank C                  |
+| B2B1-UOB0228    | UOB BIBPlus                 |
 
 \* Only applicable in staging environment.
 
@@ -2348,9 +2355,9 @@ This feature allows you to exchange for a card's tokenization from our provider'
 
 ###### Providers
 
-| Provider | Type | Eligibility |
-| --- | --- | --- |
-| Senangpay | 3DS | Any paid membership plan |
+| Provider  | Type | Eligibility              |
+| --------- | ---- | ------------------------ |
+| Senangpay | 3DS  | Any paid membership plan |
 
 ### Senangpay
 
@@ -2378,7 +2385,6 @@ Use this API to create a card token for 3DS Visa / Mastercard cards. Remember to
 1. Upon 3DS verifcation success, Billplz will send a POST request to merchant's callback_url containing masked card details together with CARD_ID and TOKEN.
 1. Merchant compares the checksum sent, and store card details if they match.
 
-
 To charge a card with the token generated, refer to [Charge Card](#v4-tokenization-senangpay-charge-card) API.
 
 > Example request:
@@ -2396,15 +2402,15 @@ curl https://www.billplz.com/api/v4/cards \
 > Response:
 
 ```json
-  {
-    "id": "8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6",
-    "card_number": null,
-    "provider": null,
-    "token": null,
-    "status": "pending",
-    "authentication_redirect_url": "https://senangpay.my/some_link",
-    "callback_url": "https://example.com/callback_url"
-  }
+{
+  "id": "8727fc3a-c04c-4c2b-9b67-947b5cfc2fb6",
+  "card_number": null,
+  "provider": null,
+  "token": null,
+  "status": "pending",
+  "authentication_redirect_url": "https://senangpay.my/some_link",
+  "callback_url": "https://example.com/callback_url"
+}
 ```
 
 ###### HTTP REQUEST
@@ -2412,11 +2418,12 @@ curl https://www.billplz.com/api/v4/cards \
 `POST https://www.billplz.com/api/v4/cards`
 
 ###### REQUIRED ARGUMENTS
-| Parameter | Description |
-| --- | --- |
-| name | Name on the card / name of the card owner. |
-| email | Email of the card owner. |
-| phone | Contact number of card owner. |
+
+| Parameter    | Description                                                                        |
+| ------------ | ---------------------------------------------------------------------------------- |
+| name         | Name on the card / name of the card owner.                                         |
+| email        | Email of the card owner.                                                           |
+| phone        | Contact number of card owner.                                                      |
 | callback_url | Web hook URL to be called after card token is created. It will POST a Card object. |
 
 <aside class="notice">
@@ -2454,9 +2461,9 @@ curl -X DELETE https://www.billplz.com/api/v4/cards/8727fc3a-c04c-4c2b-9b67-947b
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| token | Card's token. |
+| Parameter | Description   |
+| --------- | ------------- |
+| token     | Card's token. |
 
 #### 3D Secure Update
 
@@ -2485,13 +2492,13 @@ curl https://www.example.com/callback \
 
 ###### POST PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | ID that represents card. |
-| card_number | Last 4 digits of card's number. |
-| token | Card's token. |
-| status | Status that represents the card's status, possible values are `pending`, `active`, `failed`, and `deleted`. |
-| checksum | Digital signature computed with posted data and shared XSignature Key. |
+| Parameter   | Description                                                                                                 |
+| ----------- | ----------------------------------------------------------------------------------------------------------- |
+| id          | ID that represents card.                                                                                    |
+| card_number | Last 4 digits of card's number.                                                                             |
+| token       | Card's token.                                                                                               |
+| status      | Status that represents the card's status, possible values are `pending`, `active`, `failed`, and `deleted`. |
+| checksum    | Digital signature computed with posted data and shared XSignature Key.                                      |
 
 ###### CHECKSUM
 
@@ -2535,7 +2542,7 @@ curl https://www.billplz.com/api/v4/bills/awyzmy0m/charge \
   "status": "success",
   "reference_id": "15681981586116610",
   "hash_value": "1b66606732d846192b0b6aa4b754b3c8addd59072fce4bdd066b5d631c31d5e8",
-  "message": "Payment was successful",
+  "message": "Payment was successful"
 }
 ```
 
@@ -2545,10 +2552,10 @@ curl https://www.billplz.com/api/v4/bills/awyzmy0m/charge \
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| card_id | ID that represents a card. |
-| token | Card token. |
+| Parameter | Description                |
+| --------- | -------------------------- |
+| card_id   | ID that represents a card. |
+| token     | Card token.                |
 
 #### Pre-Auth
 
@@ -2592,10 +2599,10 @@ curl https://www.billplz.com/api/v4/bills/awyzmy0m/preauth \
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| card_id | ID that represents a card. |
-| token | Card token. |
+| Parameter | Description                |
+| --------- | -------------------------- |
+| card_id   | ID that represents a card. |
+| token     | Card token.                |
 
 #### Pre-Auth Capture
 
@@ -2641,53 +2648,26 @@ curl https://www.billplz.com/api/v4/bills/awyzmy0m/preauth_capture \
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| card_id | ID that represents a card. |
-| token | Card token. |
+| Parameter  | Description                   |
+| ---------- | ----------------------------- |
+| card_id    | ID that represents a card.    |
+| token      | Card token.                   |
 | preauth_id | ID for pre-authed transaction |
-
 
 # V5
 
-V5 API introduces new security measures. Every request made in V5 endpoints must include ***epoch*** and ***checksum*** values in addition to each endpoint's required arguments.
+_This version is in active development state. New Feature will be introduced in this version._
+
+V5 API introduces new security measures. Every request made in V5 endpoints must include **_epoch_** and **_checksum_** values in addition to each endpoint's required arguments.
 
 - **Epoch** param must be in UNIX epoch time format
 - **Checksum** calculation is specific to each endpoint, please refer to the **CHECKSUM ARGUMENTS** of each endpoint for more information on this.
+- Checksum signature must be calculated using **HMAC_SHA512** together with your account **XSignature key**
+- Please refer to the <a href="#v5-checksum">guide</a> on how to generate a v5 checksum signature
 
-*This version is in active development state. New Feature will be introduced in this version.*
-
-## How to generate a V5 checksum
-
-Checksum signature must be calculated using **HMAC_SHA512** together with your account XSignature key
-
-The formation of checksum signature in API V5 is slightly differs from the way Billplz's XSignatureVerification is formatted.
-
-###### \#1. Format the raw_string with only the values of the following keys in strict order
-
-In the example of creating a payment order collection, the required values for checksum signature is **[ title, epoch ]** and assuming your parameters are `{title: "My payment order title", epoch: 1681724303}`, you are only required to join the values of the required arguments to form the raw string for checksum signature generation.
-
-Your raw string would look like this `"My payment order title1681724303"`
-
-###### \#2.Digest the raw_string together with your account XSignature key using **HMAC_SHA512**
-
-Subsequently to get the valid checksum signature, you must calculate the raw string using **HMAC_SHA512** together with your account XSignature key
-
-For example with the string above `"My payment order title1681724303"` and using a sample XSignature key: `S-R5t3Uw6SrwXNWyZV-naVHg`
-
-The expected generated checksum signature would equal: `575c35c13ba37ccc2a434529e5082a71a574d304ba007592af44339d4436467d6a49107c95e51905cd80dce0f745760bd42fe73e2bc3bcd7ab79d07cc7fb4fa4`
-
-
-###### \#( Extra ) Formating checksum with optional arguments
-
-In some endpoints you may include certain optional arguments as well, these optional arguments may need to be included in the checksum signature formation following the strict order of the values indicated in each endpoints. 
-
-If you are not including these optional arguments in your parameters, you may omit the values in the checksum formation. The optional arguments for checksum formation are denoted with an asterisk (**\***) in each endpoint's checksum value guide.
-
-Here's an example:
-
-Assuming your parameters are `{title: "My payment order title", callback_url: 'https://myawesomeweb.site', epoch: 1681724303}`. Subsequently your raw string would look like this `"My payment order titlehttps://myawesomeweb.site1681724303"`
-
+<aside class="warning">
+  The formation of checksum signature in API V5 is different from the way Billplz's XSignatureVerification is formatted.
+</aside>
 
 <aside class="notice">
   Each endpoint will indicate the necessary values required to format the string for checksum generation
@@ -2717,7 +2697,6 @@ To start using the API, you would have to create a Payment Order Collection. The
   The Payment Order feature is in the testing phase and only opened to selected merchants.
 </aside>
 
-
 ## Payment Order Collections
 
 ### Create a Payment Order Collection
@@ -2733,7 +2712,7 @@ curl https://www.billplz.com/api/v5/payment_order_collections \
   -d title="My First API Payment Order Collection"  \
   -d epoch=1668147670 \
   -d callback_url="https://example.com/payment_order_collection_callback" \
-  -d checksum="7ea7b8aed3093b058bfee1d67387f0d6f3be1d776ae3ebd82462237ccf2ffc1ae8b9bf38ad43a81bb2b15f817970afdf656dc622258230b08aa26c7418274041" 
+  -d checksum="7ea7b8aed3093b058bfee1d67387f0d6f3be1d776ae3ebd82462237ccf2ffc1ae8b9bf38ad43a81bb2b15f817970afdf656dc622258230b08aa26c7418274041"
 ```
 
 > Response:
@@ -2755,29 +2734,28 @@ curl https://www.billplz.com/api/v5/payment_order_collections \
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| title | The collection title. Will be displayed on bill template. String format. |
-| epoch | The current time in UNIX epoch time format. |
-| checksum | Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order: **[ title, callback_url*, epoch ]**  |
+| Parameter | Description                                                                                                          |
+| --------- | -------------------------------------------------------------------------------------------------------------------- |
+| title     | The collection title. Will be displayed on bill template. String format.                                             |
+| epoch     | The current time in UNIX epoch time format.                                                                          |
+| checksum  | Required values for <a href="#v5-checksum">checksum signature</a> in this order: **[ title, callback_url*, epoch ]** |
 
 ###### OPTIONAL ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
+| Parameter    | Description                                                                                                                                                             |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | callback_url | Web hook URL to be called after payment order's transaction completed. It will POST a Payment Order object. [Find out more](#payment-completion-payment-order-callback) |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | ID that represents a collection. |
-| title | The collection's title in string format. |
-| payment_orders_count | The number of payment order belongs to this collection. |
-| paid_amount | Total paid amount for payment orders in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
-| status | Collection's status, it is either `active` and `inactive`. |
-| callback_url | Web hook URL to be called after payment order's transaction completed. It will POST a Payment Order object. [Find out more](#payment-completion-payment-order-callback) |
-
+| Parameter            | Description                                                                                                                                                             |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id                   | ID that represents a collection.                                                                                                                                        |
+| title                | The collection's title in string format.                                                                                                                                |
+| payment_orders_count | The number of payment order belongs to this collection.                                                                                                                 |
+| paid_amount          | Total paid amount for payment orders in this collection. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00).                        |
+| status               | Collection's status, it is either `active` and `inactive`.                                                                                                              |
+| callback_url         | Web hook URL to be called after payment order's transaction completed. It will POST a Payment Order object. [Find out more](#payment-completion-payment-order-callback) |
 
 ### Get a Payment Order Collection
 
@@ -2812,11 +2790,11 @@ curl -G https://www.billplz.com/api/v5/payment_order_collections/8f4e331f-ac71-4
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| payment_order_collection_id | The Payment Order Collection ID. A string. |
-| epoch | The current time in UNIX epoch time format. |
-| checksum | Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order: **[ payment_order_collection_id, epoch ]** |
+| Parameter                   | Description                                                                                                                 |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| payment_order_collection_id | The Payment Order Collection ID. A string.                                                                                  |
+| epoch                       | The current time in UNIX epoch time format.                                                                                 |
+| checksum                    | Required values for <a href="#v5-checksum">checksum signature</a> in this order: **[ payment_order_collection_id, epoch ]** |
 
 ## Payment Order
 
@@ -2855,10 +2833,10 @@ curl https://www.billplz.com/api/v5/payment_orders \
   "payment_order_collection_id": "8f4e331f-ac71-435e-a870-72fe520b4563",
   "bank_code": "MBBEMYKL",
   "bank_account_number": "543478924652",
-  "identity_number": 820808062202 ,
+  "identity_number": 820808062202,
   "name": "Michael Yap",
   "description": "Maecenas eu placerat ante.",
-  "email" :"hello@billplz.com",
+  "email": "hello@billplz.com",
   "status": "enquiring",
   "notification": false,
   "recipient_notification": true,
@@ -2897,10 +2875,10 @@ curl https://www.billplz.com/api/v5/payment_orders \
   "payment_order_collection_id": "8f4e331f-ac71-435e-a870-72fe520b4563",
   "bank_code": "MBBEMYKL",
   "bank_account_number": "543478924652",
-  "identity_number": 820808062202 ,
+  "identity_number": 820808062202,
   "name": "Michael Yap",
   "description": "Maecenas eu placerat ante.",
-  "email":"recipient@email.com",
+  "email": "recipient@email.com",
   "status": "enquiring",
   "notification": true,
   "recipient_notification": false,
@@ -2916,45 +2894,44 @@ curl https://www.billplz.com/api/v5/payment_orders \
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| payment_order_collection_id | The Payment Order Collection ID. A string. |
-| bank_code | Bank Code that represents bank, in string value. Case sensitive. <br><br> Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. |
-| bank_account_number | Bank account number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. |
-| identity_number | Bank account's IC Number/SSM Registration Number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. |
-| name | Payment Order API's recipient name. Useful for identification on recipient part. |
-| description | The Payment Order API's description. Will be displayed on bill template. String format (Max of 200 characters). |
-| total | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
-| epoch | The current time in UNIX epoch time format. |
-| checksum | Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order: **[  payment_order_collection_id, bank_account_number, total, epoch ]** |
+| Parameter                   | Description                                                                                                                                                                                                                                                                                    |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| payment_order_collection_id | The Payment Order Collection ID. A string.                                                                                                                                                                                                                                                     |
+| bank_code                   | Bank Code that represents bank, in string value. Case sensitive. <br><br> Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct.  |
+| bank_account_number         | Bank account number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct.                              |
+| identity_number             | Bank account's IC Number/SSM Registration Number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. |
+| name                        | Payment Order API's recipient name. Useful for identification on recipient part.                                                                                                                                                                                                               |
+| description                 | The Payment Order API's description. Will be displayed on bill template. String format (Max of 200 characters).                                                                                                                                                                                |
+| total                       | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00).                                                                                                                                              |
+| epoch                       | The current time in UNIX epoch time format.                                                                                                                                                                                                                                                    |
+| checksum                    | Required values for <a href="#v5-checksum">checksum signature</a> in this order: **[ payment_order_collection_id, bank_account_number, total, epoch ]**                                                                                                                                        |
 
 ###### OPTIONAL ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| email | The email address of recipient (it default to sender's email if not present). <br>A receipt will be sent to this email once the Payment Order has been processed. |
-| notification | Boolean value. As a sender, you can opt-in for email notification by setting this to `true`. Sender will receive email once a Payment Order has been completed. Default value is `false`. |
-| recipient_notification | Boolean value. If this is set to `true`, recipient of the Payment Order will receive email notification once the Payment Order has been completed. Default value is `true`. Set to false if you do not like the recipient to receive any email notifications. |
-| reference_id | Payment Order's unique reference ID scoped by [Payment Order Collection](#v5-payment-order-collections). This helps maintain data integrity by ensuring that no two rows of data in a payment order collection have identical reference_id value. Useful to prevent unintentional payment order creation. (Max of 255 characters).|
+| Parameter              | Description                                                                                                                                                                                                                                                                                                                        |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| email                  | The email address of recipient (it default to sender's email if not present). <br>A receipt will be sent to this email once the Payment Order has been processed.                                                                                                                                                                  |
+| notification           | Boolean value. As a sender, you can opt-in for email notification by setting this to `true`. Sender will receive email once a Payment Order has been completed. Default value is `false`.                                                                                                                                          |
+| recipient_notification | Boolean value. If this is set to `true`, recipient of the Payment Order will receive email notification once the Payment Order has been completed. Default value is `true`. Set to false if you do not like the recipient to receive any email notifications.                                                                      |
+| reference_id           | Payment Order's unique reference ID scoped by [Payment Order Collection](#v5-payment-order-collections). This helps maintain data integrity by ensuring that no two rows of data in a payment order collection have identical reference_id value. Useful to prevent unintentional payment order creation. (Max of 255 characters). |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | ID that represents a Payment Order. |
-| payment_order_collection_id | The Payment order collection's title in string format. |
-| bank_code | Bank Code that represents bank, in string value. Case sensitive. |
-| bank_account_number | Bank account number, in string value. |
-| identity_number | Bank account's IC Number/SSM Registration Number, in string value. |
-| name | Payment Order's recipient name. |
-| description | The Payment Order's description. |
-| email | The email address of recipient (it default to sender's email if not present). |
-| status | Payment Order status. It is either `processing` or `enquiring` or `executing` or `reviewing` or `completed` or `refunded`. |
-| notification | Boolean value. Sender will receive email notification if this is `true`. |
-| recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
-| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payment Order request;<br>while the total of each Payment Order will be deducted from your Payment Order Limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
-| reference_id | Payment Order's reference ID. Useful for identification on recipient part.|
-
+| Parameter                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id                          | ID that represents a Payment Order.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| payment_order_collection_id | The Payment order collection's title in string format.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| bank_code                   | Bank Code that represents bank, in string value. Case sensitive.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| bank_account_number         | Bank account number, in string value.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| identity_number             | Bank account's IC Number/SSM Registration Number, in string value.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| name                        | Payment Order's recipient name.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| description                 | The Payment Order's description.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| email                       | The email address of recipient (it default to sender's email if not present).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| status                      | Payment Order status. It is either `processing` or `enquiring` or `executing` or `reviewing` or `completed` or `refunded`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| notification                | Boolean value. Sender will receive email notification if this is `true`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| recipient_notification      | Boolean value. Recipient will receive email notification if this is `true`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| total                       | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payment Order request;<br>while the total of each Payment Order will be deducted from your Payment Order Limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
+| reference_id                | Payment Order's reference ID. Useful for identification on recipient part.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 
 ### Get a Payment Order
 
@@ -2978,10 +2955,10 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
   "payment_order_collection_id": "8f4e331f-ac71-435e-a870-72fe520b4563",
   "bank_code": "MBBEMYKL",
   "bank_account_number": "543478924652",
-  "identity_number": 820808062202 ,
+  "identity_number": 820808062202,
   "name": "Michael Yap",
   "description": "Maecenas eu placerat ante.",
-  "email" :"recipient@email.com",
+  "email": "recipient@email.com",
   "status": "enquiring",
   "notification": true,
   "recipient_notification": false,
@@ -2997,29 +2974,29 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter | Description |
-| --- | --- |
-| payment_order_id | The Payment Order ID. A string. |
-| epoch | The current time in UNIX epoch time format. |
-| checksum | Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order: **[ payment_order_id, epoch ]** |
+| Parameter        | Description                                                                                                      |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------- |
+| payment_order_id | The Payment Order ID. A string.                                                                                  |
+| epoch            | The current time in UNIX epoch time format.                                                                      |
+| checksum         | Required values for <a href="#v5-checksum">checksum signature</a> in this order: **[ payment_order_id, epoch ]** |
 
 ###### RESPONSE PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | ID that represents a Payment Order. |
-| payment_order_collection_id | The Payment order collection's title in string format. |
-| bank_code | Bank Code that represents bank, in string value. Case sensitive. |
-| bank_account_number | Bank account number, in string value. |
-| identity_number | Bank account's IC Number/ROC/ROB/ROS Number, in string value. |
-| name | Payment Order's recipient name. |
-| description | The Payment Order's description. |
-| email | The email address of recipient (it default to sender's email if not present). |
-| status | Payment Order status. It is either `processing` or `enquiring` or `executing` or `reviewing` or `completed` or `refunded`. |
-| notification | Boolean value. Sender will receive email notification if this is `true`. |
-| recipient_notification | Boolean value. Recipient will receive email notification if this is `true`. |
-| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
-| reference_id | Payment Order API's reference ID. Useful for identification on recipient part.|
+| Parameter                   | Description                                                                                                                 |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| id                          | ID that represents a Payment Order.                                                                                         |
+| payment_order_collection_id | The Payment order collection's title in string format.                                                                      |
+| bank_code                   | Bank Code that represents bank, in string value. Case sensitive.                                                            |
+| bank_account_number         | Bank account number, in string value.                                                                                       |
+| identity_number             | Bank account's IC Number/ROC/ROB/ROS Number, in string value.                                                               |
+| name                        | Payment Order's recipient name.                                                                                             |
+| description                 | The Payment Order's description.                                                                                            |
+| email                       | The email address of recipient (it default to sender's email if not present).                                               |
+| status                      | Payment Order status. It is either `processing` or `enquiring` or `executing` or `reviewing` or `completed` or `refunded`.  |
+| notification                | Boolean value. Sender will receive email notification if this is `true`.                                                    |
+| recipient_notification      | Boolean value. Recipient will receive email notification if this is `true`.                                                 |
+| total                       | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| reference_id                | Payment Order API's reference ID. Useful for identification on recipient part.                                              |
 
 <aside class="warning">
   The usage of this API is not recommended as it is subject to our <a href="#rate-limit">Rate Limit</a> policy.
@@ -3029,8 +3006,11 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
   If your payment order collection was configured with a callback_url, billplz will POST a callback to the designated url with the result of your payment order. Find out more about <a href="#payment-completion-payment-order-callback">Payment Order Callbacks</a>
 </aside>
 
-
 # X Signature
+
+<aside class="notice">
+  This section is not to be confused with V5 Checksum, please refer <a href="#v5-checksum">here</a> to find out how to generate a V5 Checksum.
+</aside>
 
 ###### X SIGNATURE CALCULATION
 
@@ -3086,6 +3066,46 @@ To get `transaction_id` and `transaction_status`, enable **Extra Payment Complet
   You are advised to activate this option when integrating with FPX B2B banks for better user experience.
 </aside>
 
+# V5 Checksum
+
+V5 API introduces new security measures. Every request made in V5 endpoints must include **_epoch_** and **_checksum_** values in addition to each endpoint's required arguments.
+
+- **Epoch** param must be in UNIX epoch time format
+- **Checksum** calculation is specific to each endpoint, please refer to the **CHECKSUM ARGUMENTS** of each endpoint for more information on this.
+- Checksum signature must be calculated using **HMAC_SHA512** together with your account **XSignature key**
+
+###### \#1. Format the raw_string with only the values of the following keys in strict order
+
+In the example of creating a payment order collection, the required values for checksum signature is **[ title, epoch ]** and assuming your parameters are `{title: "My payment order title", epoch: 1681724303}`, you are only required to join the values of the required arguments to form the raw string for checksum signature generation.
+
+Your raw string would look like this `"My payment order title1681724303"`
+
+###### \#2.Digest the raw_string together with your account XSignature key using **HMAC_SHA512**
+
+Subsequently to get the valid checksum signature, you must calculate the raw string using **HMAC_SHA512** together with your account XSignature key
+
+For example with the string above `"My payment order title1681724303"` and using a sample XSignature key: `S-R5t3Uw6SrwXNWyZV-naVHg`
+
+The expected generated checksum signature would equal: `575c35c13ba37ccc2a434529e5082a71a574d304ba007592af44339d4436467d6a49107c95e51905cd80dce0f745760bd42fe73e2bc3bcd7ab79d07cc7fb4fa4`
+
+###### \#( Extra ) Formating checksum with optional arguments
+
+In some endpoints you may include certain optional arguments as well, these optional arguments may need to be included in the checksum signature formation following the strict order of the values indicated in each endpoints.
+
+If you are not including these optional arguments in your parameters, you may omit the values in the checksum formation. The optional arguments for checksum formation are denoted with an asterisk (**\***) in each endpoint's checksum value guide.
+
+Here's an example:
+
+Assuming your parameters are `{title: "My payment order title", callback_url: 'https://myawesomeweb.site', epoch: 1681724303}`. Subsequently your raw string would look like this `"My payment order titlehttps://myawesomeweb.site1681724303"`
+
+<aside class="notice">
+  Each endpoint will indicate the necessary values required to format the string for checksum generation
+</aside>
+
+<aside class="notice">
+  Optional values required to format the string for checksum generation are denoted with an asterisk (*)
+</aside>
+
 # Payment Completion
 
 ## Basic Callback Url
@@ -3094,7 +3114,7 @@ To get `transaction_id` and `transaction_status`, enable **Extra Payment Complet
 
 `callback_url` feature integration is **compulsory** but `redirect_url` feature is **optional**.
 
-\*\****you are strongly advised to integrate both redirect_url feature (for better user experience) and callback_url feature (for 100% transaction update)***
+\*\***_you are strongly advised to integrate both redirect_url feature (for better user experience) and callback_url feature (for 100% transaction update)_**
 
 > Example Server Side Request from Billplz:
 
@@ -3141,21 +3161,21 @@ By default, `Basic Callback URL` feature is disabled due to security reason.
 
 ###### POST PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | ID that represents bill. |
-| collection_id | ID that represents the collection where the bill belongs to. |
-| paid | Boolean value to tell if a bill has paid. It will return `false` for `due` and `deleted` bills; `true` for paid bills. |
-| state | State that representing the bill's status, possible states are `due`, `deleted`, and `paid`. |
-| amount | Bill's amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00). |
-| paid_amount | Bill's paid amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00). |
-| due_at | Due date for the bill, in format `YYYY-MM-DD`. Example, `2020-12-31`. |
-| email | The email address of the bill's recipient. |
-| mobile | Recipient's mobile number, in format `+601XXXXXXXX` |
-| name | Recipient's name. |
-| metadata | Deprecated hash value data. |
-| URL | URL to the bill page. |
-| paid_at | Date time when the bill was paid, in format `YYYY-MM-DD HH:MM:SS TimeZone`. Example, `2017-02-13 05:43:43 +0800` |
+| Parameter     | Description                                                                                                            |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| id            | ID that represents bill.                                                                                               |
+| collection_id | ID that represents the collection where the bill belongs to.                                                           |
+| paid          | Boolean value to tell if a bill has paid. It will return `false` for `due` and `deleted` bills; `true` for paid bills. |
+| state         | State that representing the bill's status, possible states are `due`, `deleted`, and `paid`.                           |
+| amount        | Bill's amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00).                           |
+| paid_amount   | Bill's paid amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00).                      |
+| due_at        | Due date for the bill, in format `YYYY-MM-DD`. Example, `2020-12-31`.                                                  |
+| email         | The email address of the bill's recipient.                                                                             |
+| mobile        | Recipient's mobile number, in format `+601XXXXXXXX`                                                                    |
+| name          | Recipient's name.                                                                                                      |
+| metadata      | Deprecated hash value data.                                                                                            |
+| URL           | URL to the bill page.                                                                                                  |
+| paid_at       | Date time when the bill was paid, in format `YYYY-MM-DD HH:MM:SS TimeZone`. Example, `2017-02-13 05:43:43 +0800`       |
 
 Callback request will be timeout at 20 seconds.
 
@@ -3185,7 +3205,7 @@ But it is good to have, to provide better user experience (front-end instant bil
 
 `callback_url` feature integration is **compulsory** but `redirect_url` feature is **optional**.
 
-\*\****you are strongly advised to integrate both redirect_url feature (for better user experience) and callback_url feature (for 100% transaction update)***
+\*\***_you are strongly advised to integrate both redirect_url feature (for better user experience) and callback_url feature (for 100% transaction update)_**
 
 ###### CLIENT SIDE REQUEST
 
@@ -3203,8 +3223,8 @@ By default, `Basic Redirect URL` feature is disabled due to security reason.
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
+| Parameter   | Description              |
+| ----------- | ------------------------ |
 | billplz[id] | ID that represents bill. |
 
 <aside class="warning">
@@ -3217,7 +3237,7 @@ By default, `Basic Redirect URL` feature is disabled due to security reason.
 
 `callback_url` feature integration is **compulsory** but `redirect_url` feature is **optional**.
 
-\*\****you are strongly advised to integrate both redirect_url feature (for better user experience) and callback_url feature (for 100% transaction update)***
+\*\***_you are strongly advised to integrate both redirect_url feature (for better user experience) and callback_url feature (for 100% transaction update)_**
 
 ###### SERVER SIDE REQUEST
 
@@ -3295,23 +3315,23 @@ Content-Type: application/x-www-form-urlencoded
 
 ###### POST PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | ID that represents bill. |
-| collection_id | ID that represents the collection where the bill belongs to. |
-| paid | Boolean value to tell if a bill has paid. It will return `false` for `due` and `deleted` bills; `true` for `paid` bills. |
-| state | State that representing the bill's status, possible states are `due`, `deleted` and `paid`. |
-| amount | Bill's amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00). |
-| paid_amount | Bill's paid amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00). |
-| due_at | Due date for the bill, in format `YYYY-MM-DD`. Example, `2020-12-31`. |
-| email | The email address of the bill's recipient. |
-| mobile | Recipient's mobile number. |
-| name | Recipient's name. |
-| URL | URL to the bill page. |
-| paid_at | Date time when the bill was paid, in format `YYYY-MM-DD HH:MM:SS TimeZone`. Example, `2015-03-09 16:23:59 +0800`. |
-| transaction_id |  ID that represent the transaction. (Enable `Extra Payment Completion Information` option to receive this parameter) |
+| Parameter          | Description                                                                                                                                                                                    |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id                 | ID that represents bill.                                                                                                                                                                       |
+| collection_id      | ID that represents the collection where the bill belongs to.                                                                                                                                   |
+| paid               | Boolean value to tell if a bill has paid. It will return `false` for `due` and `deleted` bills; `true` for `paid` bills.                                                                       |
+| state              | State that representing the bill's status, possible states are `due`, `deleted` and `paid`.                                                                                                    |
+| amount             | Bill's amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00).                                                                                                   |
+| paid_amount        | Bill's paid amount in positive integer, smallest currency unit (e.g 100 cents to charge RM 1.00).                                                                                              |
+| due_at             | Due date for the bill, in format `YYYY-MM-DD`. Example, `2020-12-31`.                                                                                                                          |
+| email              | The email address of the bill's recipient.                                                                                                                                                     |
+| mobile             | Recipient's mobile number.                                                                                                                                                                     |
+| name               | Recipient's name.                                                                                                                                                                              |
+| URL                | URL to the bill page.                                                                                                                                                                          |
+| paid_at            | Date time when the bill was paid, in format `YYYY-MM-DD HH:MM:SS TimeZone`. Example, `2015-03-09 16:23:59 +0800`.                                                                              |
+| transaction_id     | ID that represent the transaction. (Enable `Extra Payment Completion Information` option to receive this parameter)                                                                            |
 | transaction_status | Status that representing the transaction's status, possible statuses are `pending`, `completed` and `failed`. (Enable `Extra Payment Completion Information` option to receive this parameter) |
-| x_signature | Digital signature computed with posted data and shared XSignature Key. |
+| x_signature        | Digital signature computed with posted data and shared XSignature Key.                                                                                                                         |
 
 Callback request will be timeout in 20 seconds.
 
@@ -3436,7 +3456,7 @@ But it is good to have, to provide better user experience (front-end instant bil
 
 `callback_url` feature integration is **compulsory** but `redirect_url` feature is **optional**.
 
-\*\****you are strongly advised to integrate both redirect_url feature (for better user experience) and callback_url feature (for 100% transaction update)***
+\*\***_you are strongly advised to integrate both redirect_url feature (for better user experience) and callback_url feature (for 100% transaction update)_**
 
 ###### CLIENT SIDE REQUEST
 
@@ -3458,14 +3478,14 @@ To verify that the request came from Billplz, compute the HMAC-SHA256 digest acc
 
 ###### URL PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| billplz[id] | ID that represents bill. |
-| billplz[paid] | Boolean value to tell if a bill has paid. It will return `false` for `due` and `deleted` bills; `true` for paid bills. |
-| billplz[paid_at] | Date time when the bill was paid, in format `YYYY-MM-DD HH:MM:SS TimeZone`. Example, `2017-01-04 13:10:45 +0800`. |
-| billplz[transaction_id] |  ID that represent the transaction. (Enable `Extra Payment Completion Information` option to receive this parameter) |
+| Parameter                   | Description                                                                                                                                                                                    |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| billplz[id]                 | ID that represents bill.                                                                                                                                                                       |
+| billplz[paid]               | Boolean value to tell if a bill has paid. It will return `false` for `due` and `deleted` bills; `true` for paid bills.                                                                         |
+| billplz[paid_at]            | Date time when the bill was paid, in format `YYYY-MM-DD HH:MM:SS TimeZone`. Example, `2017-01-04 13:10:45 +0800`.                                                                              |
+| billplz[transaction_id]     | ID that represent the transaction. (Enable `Extra Payment Completion Information` option to receive this parameter)                                                                            |
 | billplz[transaction_status] | Status that representing the transaction's status, possible statuses are `pending`, `completed` and `failed`. (Enable `Extra Payment Completion Information` option to receive this parameter) |
-| billplz[x_signature] | Digital signature computed with passing parameters and shared XSignature Key. |
+| billplz[x_signature]        | Digital signature computed with passing parameters and shared XSignature Key.                                                                                                                  |
 
 ###### SAMPLE HTTP REQUEST FROM X SIGNATURE REDIRECT URL FEATURE
 
@@ -3555,24 +3575,24 @@ Content-Type: application/x-www-form-urlencoded
 
 ###### POST PARAMETER
 
-| Parameter | Description |
-| --- | --- |
-| id | ID that represents payment order. |
-| payment_order_collection_id | The payment order collection's id in string format. |
-| bank_code | Bank Code that represents bank, in string value. |
-| bank_account_number | Bank account number, in string value. |
-| identity_number | Bank account's IC Number/SSM Registration Number, in string value. |
-| name | Payment Order's recipient name. |
-| description | The Payment Order's description. |
-| email | The email address of recipient. |
-| status | Payment Order status. It is either `processing` or `completed` or `refunded` or `cancelled`. |
-| notification | Boolean value. |
-| recipient_notification | Boolean value. |
-| reference_id | Payment Order's reference ID. Useful for identification on recipient part. |
-| display_name | Bank Account Owner's name |
-| total | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
-| epoch | Current time in UNIX epoch time format |
-| checksum | Computed signature of strict ordered values of key data present in object |
+| Parameter                   | Description                                                                                                                 |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| id                          | ID that represents payment order.                                                                                           |
+| payment_order_collection_id | The payment order collection's id in string format.                                                                         |
+| bank_code                   | Bank Code that represents bank, in string value.                                                                            |
+| bank_account_number         | Bank account number, in string value.                                                                                       |
+| identity_number             | Bank account's IC Number/SSM Registration Number, in string value.                                                          |
+| name                        | Payment Order's recipient name.                                                                                             |
+| description                 | The Payment Order's description.                                                                                            |
+| email                       | The email address of recipient.                                                                                             |
+| status                      | Payment Order status. It is either `processing` or `completed` or `refunded` or `cancelled`.                                |
+| notification                | Boolean value.                                                                                                              |
+| recipient_notification      | Boolean value.                                                                                                              |
+| reference_id                | Payment Order's reference ID. Useful for identification on recipient part.                                                  |
+| display_name                | Bank Account Owner's name                                                                                                   |
+| total                       | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| epoch                       | Current time in UNIX epoch time format                                                                                      |
+| checksum                    | Computed signature of strict ordered values of key data present in object                                                   |
 
 Callback request will be timeout in 20 seconds.
 
@@ -3590,7 +3610,7 @@ Billplz will attempt for maximum of 2 times and the callback will be removed fro
 {
   "id": "0b924e37-7418-4d17-b234-8de424dc48e5",
   "payment_order_collection_id": "0c78f8c6-5bd3-4663-8c08-9e2c805418a2",
-  "bank_code":"PHBMMYKL",
+  "bank_code": "PHBMMYKL",
   "bank_account_number": "1234567890",
   "name": "Michae Yap",
   "description": "Maecenas eu placerat ante.",
@@ -3608,7 +3628,7 @@ Billplz will attempt for maximum of 2 times and the callback will be removed fro
 
 ###### CHECKSUM FORMAT GUIDE
 
-In order to compare with the checksum sent together with the payment order object, you must first generate the checksum signature on your end first. *Required values for <a href="#v5-how-to-generate-a-v5-checksum">checksum signature</a> in this order:* **[id, bank_account_number, status, total, reference_id, epoch]**
+In order to compare with the checksum sent together with the payment order object, you must first generate the checksum signature on your end first. _Required values for <a href="#v5-checksum">checksum signature</a> in this order:_ **[id, bank_account_number, status, total, reference_id, epoch]**
 
 Here's an example of a HTTP request from a payment order callback
 
@@ -3617,11 +3637,13 @@ Here's an example of a HTTP request from a payment order callback
 `{:id=>"0b924e37-7418-4d17-b234-8de424dc48e5",:payment_order_collection_id=>"0c78f8c6-5bd3-4663-8c08-9e2c805418a2",:bank_code=>"PHBMMYKL",:bank_account_number=>"1234567890",:name=>"Michae Yap",:description=>"Maecenas eu placerat ante.",:email=>"api@billplz.com",:status=>"refunded",:notification=>true,:recipient_notification=>true,:reference_id=>"My first payment order",:display_name=>nil,:total=>500000,:epoch=>1681895891, :checksum=>"2720f5ef16c7d04677829789fb74bccb08b90041e4e27916d85cb6fbbece58a7ab48538e8b62bcedab3b236bd38e6517860b593b8fe9bfa77bed979994f2ca1a"}`
 
 ###### \#1. Format the raw_string with only the values of the following keys in strict order
+
 object_keys: `[:id, :bank_account_number, :status, :total, :reference_id, :epoch]`
 
 raw_string: `"0b924e37-7418-4d17-b234-8de424dc48e51234567890refunded500000My first payment order1681895891"`
 
 ###### \#2.Digest the raw_string together with your account XSignature key using **HMAC_SHA512**
+
 example_XSignature: `S-R5t3Uw6SrwXNWyZV-naVHg`
 
 generated_checksum_value: `2720f5ef16c7d04677829789fb74bccb08b90041e4e27916d85cb6fbbece58a7ab48538e8b62bcedab3b236bd38e6517860b593b8fe9bfa77bed979994f2ca1a`
@@ -3673,10 +3695,10 @@ RateLimit-Remaining: 0
 RateLimit-Reset: 299
 Content-Type: application/json;
 ```
+
 ```json
 {
-  "error":
-  {
+  "error": {
     "type": "RateLimit",
     "message": "Too many requests"
   }
@@ -3693,11 +3715,11 @@ The limit can be either **100 requests per request window (5 minutes period)** o
 
 ###### RESPONSE HEADER
 
-| Parameter | Description |
-| --- | --- |
-| RateLimit-Limit | Total requests allowed per request window. It's either `unlimited`, or `100` or `10`.|
+| Parameter           | Description                                                                                                                         |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| RateLimit-Limit     | Total requests allowed per request window. It's either `unlimited`, or `100` or `10`.                                               |
 | RateLimit-Remaining | Total available requests allowed per request window. It's either `unlimited`, or less than or equal to `RateLimit-Limit` parameter. |
-| RateLimit-Reset | Time remaining (in seconds) for next request window restart. It's either `unlimited`, or less than or equal to `300`. |
+| RateLimit-Reset     | Time remaining (in seconds) for next request window restart. It's either `unlimited`, or less than or equal to `300`.               |
 
 <aside class="notice">
   Exceeding the rate limit will result to <code>429</code> Too Many Requests.
@@ -3711,7 +3733,7 @@ The limit can be either **100 requests per request window (5 minutes period)** o
 
 Response parameter will be as usual if didn't exceed the rate limit. Otherwise, the response parameters will be as follows:
 
-| Parameter | Value |
-| --- | --- |
-| error[type] | `RateLimit` |
+| Parameter      | Value               |
+| -------------- | ------------------- |
+| error[type]    | `RateLimit`         |
 | error[message] | `Too many requests` |

@@ -2894,7 +2894,7 @@ curl https://www.billplz.com/api/v5/payment_orders \
 ```json
 {
   "id": "cc92738f-dfda-4969-91dc-22a44afc7e26",
-  "mass_payment_instruction_collection_id": "8f4e331f-ac71-435e-a870-72fe520b4563",
+  "payment_order_collection_id": "8f4e331f-ac71-435e-a870-72fe520b4563",
   "bank_code": "MBBEMYKL",
   "bank_account_number": "543478924652",
   "identity_number": 820808062202 ,
@@ -2975,7 +2975,7 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
 ```json
 {
   "id": "cc92738f-dfda-4969-91dc-22a44afc7e26",
-  "mass_payment_instruction_collection_id": "8f4e331f-ac71-435e-a870-72fe520b4563",
+  "payment_order_collection_id": "8f4e331f-ac71-435e-a870-72fe520b4563",
   "bank_code": "MBBEMYKL",
   "bank_account_number": "543478924652",
   "identity_number": 820808062202 ,

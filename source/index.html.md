@@ -2897,7 +2897,7 @@ curl https://www.billplz.com/api/v5/payment_orders \
 | Parameter                   | Description                                                                                                                                                                                                                                                                                    |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | payment_order_collection_id | The Payment Order Collection ID. A string.                                                                                                                                                                                                                                                     |
-| bank_code                   | Bank Code that represents bank, in string value. Case sensitive. <br><br> Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct.  |
+| bank_code                   | [SWIFT Bank Code](#v5-payment-order-swift-bank-code-table) that represents bank, in string value. Case sensitive. <br><br> Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct.  |
 | bank_account_number         | Bank account number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct.                              |
 | identity_number             | Bank account's IC Number/SSM Registration Number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. |
 | name                        | Payment Order API's recipient name. Useful for identification on recipient part.                                                                                                                                                                                                               |
@@ -2921,7 +2921,7 @@ curl https://www.billplz.com/api/v5/payment_orders \
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | id                          | ID that represents a Payment Order.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | payment_order_collection_id | The Payment order collection's title in string format.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| bank_code                   | Bank Code that represents bank, in string value. Case sensitive.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| bank_code                   | SWIFT Bank Code that represents bank, in string value. Case sensitive.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | bank_account_number         | Bank account number, in string value.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | identity_number             | Bank account's IC Number/SSM Registration Number, in string value.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | name                        | Payment Order's recipient name.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
@@ -2986,7 +2986,7 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | id                          | ID that represents a Payment Order.                                                                                         |
 | payment_order_collection_id | The Payment order collection's title in string format.                                                                      |
-| bank_code                   | Bank Code that represents bank, in string value. Case sensitive.                                                            |
+| bank_code                   | SWIFT Bank Code that represents bank, in string value. Case sensitive.                                                            |
 | bank_account_number         | Bank account number, in string value.                                                                                       |
 | identity_number             | Bank account's IC Number/ROC/ROB/ROS Number, in string value.                                                               |
 | name                        | Payment Order's recipient name.                                                                                             |
@@ -3005,6 +3005,31 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
 <aside class="info">
   If your payment order collection was configured with a callback_url, billplz will POST a callback to the designated url with the result of your payment order. Find out more about <a href="#payment-completion-payment-order-callback">Payment Order Callbacks</a>
 </aside>
+
+### SWIFT Bank Code Table
+
+| Bank | Code |
+| --- | --- |
+| Affin Bank Berhad | PHBMMYKL |
+| AGROBANK / BANK PERTANIAN MALAYSIA BERHAD | BPMBMYKL |
+| Alliance Bank Malaysia Berhad | MFBBMYKL |
+| AL RAJHI BANKING & INVESTMENT CORPORATION (MALAYSIA) BERHAD | RJHIMYKL |
+| AmBank (M) Berhad | ARBKMYKL |
+| Bank Islam Malaysia Berhad | BIMBMYKL |
+| Bank Kerjasama Rakyat Malaysia Berhad | BKRMMYKL |
+| Bank Muamalat (Malaysia) Berhad | BMMBMYKL |
+| Bank Simpanan Nasional Berhad | BSNAMYK1 |
+| CIMB Bank Berhad | CIBBMYKL |
+| Citibank Berhad | CITIMYKL |
+| Hong Leong Bank Berhad | HLBBMYKL |
+| HSBC Bank Malaysia Berhad | HBMBMYKL |
+| Kuwait Finance House | KFHOMYKL |
+| Maybank / Malayan Banking Berhad | MBBEMYKL |
+| OCBC Bank (Malaysia) Berhad | OCBCMYKL |
+| Public Bank Berhad | PBBEMYKL |
+| RHB Bank Berhad | RHBBMYKL |
+| Standard Chartered Bank (Malaysia) Berhad | SCBLMYKX |
+| United Overseas Bank (Malaysia) Berhad | UOVBMYKL |
 
 # X Signature
 

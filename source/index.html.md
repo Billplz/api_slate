@@ -3031,6 +3031,52 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
 | Standard Chartered Bank (Malaysia) Berhad | SCBLMYKX |
 | United Overseas Bank (Malaysia) Berhad | UOVBMYKL |
 
+## Payment Order Limit
+
+### Get a Payment Order Limit
+
+Use this API to query your Payment Order Limit record.
+
+> Example request:
+
+```shell
+# Get a Payment Order Limit
+curl -G https://www.billplz.com/api/v5/payment_order_limit \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \ 
+  -d epoch=1685591208 \
+  -d checksum="e18c50ca130db623d350123ed9cc0c83120361d1045737eb172396b3b41b0141c24c26de6ca41b66dfa476c2c5299a31df21c1fdbf6e0b585ea6e7a975fbd555"
+```
+
+> Response:
+
+```json
+{
+  "total": "9600"
+}
+```
+
+###### HTTP REQUEST
+
+`GET https://www.billplz.com/api/v5/payment_order_limit`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter        | Description                                                                                                      |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------- |
+| epoch            | The current time in UNIX epoch time format.                                                                      |
+| checksum         | Required values for [checksum signature](#v5-checksum) in this order: **[ epoch ]** |
+
+###### RESPONSE PARAMETER
+
+| Parameter                   | Description                                                                                                                 |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| total                       | Total amount available in your Payment Order Limit that you can use to perform payment order. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). 
+
+<aside class="notice">
+  The usage of this API is subject to our <a href="#rate-limit">Rate Limit</a> policy.<br>
+  The <strong>total</strong> in the API's response is cached for an hour from the time it last triggered.
+</aside>
+
 # X Signature
 
 <aside class="notice">

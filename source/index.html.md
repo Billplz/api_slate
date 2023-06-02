@@ -3073,8 +3073,7 @@ curl -G https://www.billplz.com/api/v5/payment_order_limit \
 | total                       | Total amount available in your Payment Order Limit that you can use to perform payment order. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). 
 
 <aside class="notice">
-  The usage of this API is subject to our <a href="#rate-limit">Rate Limit</a> policy.<br>
-  The <strong>total</strong> in the API's response is cached for an hour from the time it last triggered.
+  In sandbox, you are limited to 1 request / 10 seconds. In production you are limited to 3 requests / 10 minutes.
 </aside>
 
 # X Signature

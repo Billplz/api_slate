@@ -3012,7 +3012,7 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
 | Bank | Code |
 | --- | --- |
 | Affin Bank Berhad | PHBMMYKL |
-| AGROBANK / BANK PERTANIAN MALAYSIA BERHAD | BPMBMYKL |
+| AGROBANK / BANK PERTANIAN MALAYSIA BERHAD | AGOBMYKL |
 | Alliance Bank Malaysia Berhad | MFBBMYKL |
 | AL RAJHI BANKING & INVESTMENT CORPORATION (MALAYSIA) BERHAD | RJHIMYKL |
 | AmBank (M) Berhad | ARBKMYKL |

@@ -2306,6 +2306,7 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | BP-2C2PBST      | Boost                       |
 | BP-2C2PTNG      | TnG                         |
 | BP-2C2PSHPE     | Shopee Pay                  |
+| BP-2C2PSHPQR    | Shopee Pay QR               |
 | BP-2C2PIPP      | IPP                         |
 | BP-BST01        | Boost                       |
 | BP-TNG01        | TouchNGo E-Wallet           |

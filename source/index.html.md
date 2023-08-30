@@ -1131,46 +1131,6 @@ curl -X DELETE https://www.billplz.com/api/v3/bills/8X0Iyzaw \
   Deleted bill will always reappeared once the customer make payment. Attempting to delete paid bill will throw 422 http status code.
 </aside>
 
-## Registration Check
-
-### By Bank Account Number
-
-At any given time, you can request to check on a registration status by bank account number.
-
-> Example Request:
-
-```shell
-curl https://www.billplz.com/api/v3/check/bank_account_number/1234567890 \
-  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
-```
-
-> Response:
-
-```json
-{
-  "name": "verified"
-}
-```
-
-###### HTTP REQUEST
-
-`GET https://www.billplz.com/api/v3/check/bank_account_number/{BANK_ACCOUNT_NUMBER}`
-
-###### URL PARAMETER
-
-| Parameter           | Description                   |
-| ------------------- | ----------------------------- |
-| BANK_ACCOUNT_NUMBER | Bank account number to check. |
-
-###### RESPONSE PARAMETER
-
-| Parameter | Description                                                                                                             |
-| --------- | ----------------------------------------------------------------------------------------------------------------------- |
-| name      | State that representing the bank account number's status, possible states are `verified`, `unverified` and `not found`. |
-
-<aside class="notice">
-   This registration check is only for checking the status for Company-Registered account. For Bank Direct Verification status, use <a href="#v3-bank-account-direct-verification-get-a-bank-account">Get a Bank Account</a> API instead.
-</aside>
 
 ## Transactions
 

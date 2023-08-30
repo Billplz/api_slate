@@ -2737,10 +2737,10 @@ curl https://www.billplz.com/api/v5/payment_order_collections \
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter | Description                                                                                                          |
-| --------- | -------------------------------------------------------------------------------------------------------------------- |
-| title     | The collection title. Will be displayed on bill template. String format.                                             |
-| epoch     | The current time in UNIX epoch time format.                                                                          |
+| Parameter | Description                                                                                               |
+| --------- | --------------------------------------------------------------------------------------------------------- |
+| title     | The collection title. Will be displayed on bill template. String format.                                  |
+| epoch     | The current time in UNIX epoch time format.                                                               |
 | checksum  | Required values for [checksum signature](#v5-checksum) in this order: **[ title, callback_url*, epoch ]** |
 
 ###### OPTIONAL ARGUMENTS
@@ -2793,10 +2793,10 @@ curl -G https://www.billplz.com/api/v5/payment_order_collections/8f4e331f-ac71-4
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter                   | Description                                                                                                                 |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| payment_order_collection_id | The Payment Order Collection ID. A string.                                                                                  |
-| epoch                       | The current time in UNIX epoch time format.                                                                                 |
+| Parameter                   | Description                                                                                                      |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| payment_order_collection_id | The Payment Order Collection ID. A string.                                                                       |
+| epoch                       | The current time in UNIX epoch time format.                                                                      |
 | checksum                    | Required values for [checksum signature](#v5-checksum) in this order: **[ payment_order_collection_id, epoch ]** |
 
 ## Payment Order
@@ -2804,8 +2804,11 @@ curl -G https://www.billplz.com/api/v5/payment_order_collections/8f4e331f-ac71-4
 ### Create a Payment Order
 
 To make a payment transfer to another bank account, simply create a Payment Order.
-
 To create a Payment Order, you would need the Payment Order collection's ID. Each Payment Order must be created within a Payment Order Collection.
+
+<aside class=info>
+ Depending on your plan, a fee might be charged from your credits when you successfully created a Payment Order request
+</aside>
 
 <aside class="warning">
   It returns status code of 422 with message 'You do not have enough payments' if you are trying to make a payment with total that are exceeding your <strong>Payment Order Limit</strong>.
@@ -2897,17 +2900,17 @@ curl https://www.billplz.com/api/v5/payment_orders \
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter                   | Description                                                                                                                                                                                                                                                                                    |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| payment_order_collection_id | The Payment Order Collection ID. A string.                                                                                                                                                                                                                                                     |
-| bank_code                   | [SWIFT Bank Code](#v5-payment-order-swift-bank-code-table) that represents bank, in string value. Case sensitive. <br><br> Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct.  |
-| bank_account_number         | Bank account number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct.                              |
-| identity_number             | Bank account's IC Number/SSM Registration Number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. |
-| name                        | Payment Order API's recipient name. Useful for identification on recipient part.                                                                                                                                                                                                               |
-| description                 | The Payment Order API's description. Will be displayed on bill template. String format (Max of 200 characters).                                                                                                                                                                                |
-| total                       | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00).                                                                                                                                              |
-| epoch                       | The current time in UNIX epoch time format.                                                                                                                                                                                                                                                    |
-| checksum                    | Required values for [checksum signature](#v5-checksum) in this order: **[ payment_order_collection_id, bank_account_number, total, epoch ]**                                                                                                                                        |
+| Parameter                   | Description                                                                                                                                                                                                                                                                                                                                    |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| payment_order_collection_id | The Payment Order Collection ID. A string.                                                                                                                                                                                                                                                                                                     |
+| bank_code                   | [SWIFT Bank Code](#v5-payment-order-swift-bank-code-table) that represents bank, in string value. Case sensitive. <br><br> Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. |
+| bank_account_number         | Bank account number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct.                                                                              |
+| identity_number             | Bank account's IC Number/SSM Registration Number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct.                                                 |
+| name                        | Payment Order API's recipient name. Useful for identification on recipient part.                                                                                                                                                                                                                                                               |
+| description                 | The Payment Order API's description. Will be displayed on bill template. String format (Max of 200 characters).                                                                                                                                                                                                                                |
+| total                       | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00).                                                                                                                                                                                              |
+| epoch                       | The current time in UNIX epoch time format.                                                                                                                                                                                                                                                                                                    |
+| checksum                    | Required values for [checksum signature](#v5-checksum) in this order: **[ payment_order_collection_id, bank_account_number, total, epoch ]**                                                                                                                                                                                                   |
 
 ###### OPTIONAL ARGUMENTS
 
@@ -2920,21 +2923,21 @@ curl https://www.billplz.com/api/v5/payment_orders \
 
 ###### RESPONSE PARAMETER
 
-| Parameter                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| id                          | ID that represents a Payment Order.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| payment_order_collection_id | The Payment order collection's title in string format.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| bank_code                   | SWIFT Bank Code that represents bank, in string value. Case sensitive.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| bank_account_number         | Bank account number, in string value.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| identity_number             | Bank account's IC Number/SSM Registration Number, in string value.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| name                        | Payment Order's recipient name.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| description                 | The Payment Order's description.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| email                       | The email address of recipient (it default to sender's email if not present).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| status                      | Payment Order status. It is either `processing` or `enquiring` or `executing` or `reviewing` or `completed` or `refunded`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| notification                | Boolean value. Sender will receive email notification if this is `true`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| recipient_notification      | Boolean value. Recipient will receive email notification if this is `true`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| total                       | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). <br><br>Depending on your plan, a fee might be charged from your credits when you successfully created a Payment Order request;<br>while the total of each Payment Order will be deducted from your Payment Order Limit. <br><br>Status code of `422` with `Bank account not verified` message will be returned if the matching bank account is pending for verification. <br><br>Status code of `422` with `Bank account rejected` message will be returned if the matching bank account is rejected. |
-| reference_id                | Payment Order's reference ID. Useful for identification on recipient part.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Parameter                   | Description                                                                                                                 |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| id                          | ID that represents a Payment Order.                                                                                         |
+| payment_order_collection_id | The Payment order collection's title in string format.                                                                      |
+| bank_code                   | SWIFT Bank Code that represents bank, in string value. Case sensitive.                                                      |
+| bank_account_number         | Bank account number, in string value.                                                                                       |
+| identity_number             | Bank account's IC Number/SSM Registration Number, in string value.                                                          |
+| name                        | Payment Order's recipient name.                                                                                             |
+| description                 | The Payment Order's description.                                                                                            |
+| email                       | The email address of recipient (it default to sender's email if not present).                                               |
+| status                      | Payment Order status. It is either `processing` or `enquiring` or `executing` or `reviewing` or `completed` or `refunded`.  |
+| notification                | Boolean value. Sender will receive email notification if this is `true`.                                                    |
+| recipient_notification      | Boolean value. Recipient will receive email notification if this is `true`.                                                 |
+| total                       | Total amount transfer to the recipient. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
+| reference_id                | Payment Order's reference ID. Useful for identification on recipient part.                                                  |
 
 ### Get a Payment Order
 
@@ -2977,10 +2980,10 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter        | Description                                                                                                      |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------- |
-| payment_order_id | The Payment Order ID. A string.                                                                                  |
-| epoch            | The current time in UNIX epoch time format.                                                                      |
+| Parameter        | Description                                                                                           |
+| ---------------- | ----------------------------------------------------------------------------------------------------- |
+| payment_order_id | The Payment Order ID. A string.                                                                       |
+| epoch            | The current time in UNIX epoch time format.                                                           |
 | checksum         | Required values for [checksum signature](#v5-checksum) in this order: **[ payment_order_id, epoch ]** |
 
 ###### RESPONSE PARAMETER
@@ -2989,7 +2992,7 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | id                          | ID that represents a Payment Order.                                                                                         |
 | payment_order_collection_id | The Payment order collection's title in string format.                                                                      |
-| bank_code                   | SWIFT Bank Code that represents bank, in string value. Case sensitive.                                                            |
+| bank_code                   | SWIFT Bank Code that represents bank, in string value. Case sensitive.                                                      |
 | bank_account_number         | Bank account number, in string value.                                                                                       |
 | identity_number             | Bank account's IC Number/ROC/ROB/ROS Number, in string value.                                                               |
 | name                        | Payment Order's recipient name.                                                                                             |
@@ -3011,28 +3014,28 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
 
 ### SWIFT Bank Code Table
 
-| Bank | Code |
-| --- | --- |
-| Affin Bank Berhad | PHBMMYKL |
-| AGROBANK / BANK PERTANIAN MALAYSIA BERHAD | AGOBMYKL |
-| Alliance Bank Malaysia Berhad | MFBBMYKL |
+| Bank                                                        | Code     |
+| ----------------------------------------------------------- | -------- |
+| Affin Bank Berhad                                           | PHBMMYKL |
+| AGROBANK / BANK PERTANIAN MALAYSIA BERHAD                   | AGOBMYKL |
+| Alliance Bank Malaysia Berhad                               | MFBBMYKL |
 | AL RAJHI BANKING & INVESTMENT CORPORATION (MALAYSIA) BERHAD | RJHIMYKL |
-| AmBank (M) Berhad | ARBKMYKL |
-| Bank Islam Malaysia Berhad | BIMBMYKL |
-| Bank Kerjasama Rakyat Malaysia Berhad | BKRMMYKL |
-| Bank Muamalat (Malaysia) Berhad | BMMBMYKL |
-| Bank Simpanan Nasional Berhad | BSNAMYK1 |
-| CIMB Bank Berhad | CIBBMYKL |
-| Citibank Berhad | CITIMYKL |
-| Hong Leong Bank Berhad | HLBBMYKL |
-| HSBC Bank Malaysia Berhad | HBMBMYKL |
-| Kuwait Finance House | KFHOMYKL |
-| Maybank / Malayan Banking Berhad | MBBEMYKL |
-| OCBC Bank (Malaysia) Berhad | OCBCMYKL |
-| Public Bank Berhad | PBBEMYKL |
-| RHB Bank Berhad | RHBBMYKL |
-| Standard Chartered Bank (Malaysia) Berhad | SCBLMYKX |
-| United Overseas Bank (Malaysia) Berhad | UOVBMYKL |
+| AmBank (M) Berhad                                           | ARBKMYKL |
+| Bank Islam Malaysia Berhad                                  | BIMBMYKL |
+| Bank Kerjasama Rakyat Malaysia Berhad                       | BKRMMYKL |
+| Bank Muamalat (Malaysia) Berhad                             | BMMBMYKL |
+| Bank Simpanan Nasional Berhad                               | BSNAMYK1 |
+| CIMB Bank Berhad                                            | CIBBMYKL |
+| Citibank Berhad                                             | CITIMYKL |
+| Hong Leong Bank Berhad                                      | HLBBMYKL |
+| HSBC Bank Malaysia Berhad                                   | HBMBMYKL |
+| Kuwait Finance House                                        | KFHOMYKL |
+| Maybank / Malayan Banking Berhad                            | MBBEMYKL |
+| OCBC Bank (Malaysia) Berhad                                 | OCBCMYKL |
+| Public Bank Berhad                                          | PBBEMYKL |
+| RHB Bank Berhad                                             | RHBBMYKL |
+| Standard Chartered Bank (Malaysia) Berhad                   | SCBLMYKX |
+| United Overseas Bank (Malaysia) Berhad                      | UOVBMYKL |
 
 ## Payment Order Limit
 
@@ -3045,7 +3048,7 @@ Use this API to query your Payment Order Limit record.
 ```shell
 # Get a Payment Order Limit
 curl -G https://www.billplz.com/api/v5/payment_order_limit \
-  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \ 
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
   -d epoch=1685591208 \
   -d checksum="e18c50ca130db623d350123ed9cc0c83120361d1045737eb172396b3b41b0141c24c26de6ca41b66dfa476c2c5299a31df21c1fdbf6e0b585ea6e7a975fbd555"
 ```
@@ -3064,16 +3067,16 @@ curl -G https://www.billplz.com/api/v5/payment_order_limit \
 
 ###### REQUIRED ARGUMENTS
 
-| Parameter        | Description                                                                                                      |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------- |
-| epoch            | The current time in UNIX epoch time format.                                                                      |
-| checksum         | Required values for [checksum signature](#v5-checksum) in this order: **[ epoch ]** |
+| Parameter | Description                                                                         |
+| --------- | ----------------------------------------------------------------------------------- |
+| epoch     | The current time in UNIX epoch time format.                                         |
+| checksum  | Required values for [checksum signature](#v5-checksum) in this order: **[ epoch ]** |
 
 ###### RESPONSE PARAMETER
 
-| Parameter                   | Description                                                                                                                 |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| total                       | Total amount available in your Payment Order Limit that you can use to perform payment order. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). 
+| Parameter | Description                                                                                                                                                                       |
+| --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| total     | Total amount available in your Payment Order Limit that you can use to perform payment order. A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00). |
 
 <aside class="notice">
   In sandbox, you are limited to 1 request / 10 seconds. In production you are limited to 3 requests / 10 minutes.

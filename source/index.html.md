@@ -2657,7 +2657,13 @@ To start using the API, you would have to create a Payment Order Collection. The
 3. The payment will be settled to the receipient once the processing completed.
 
 <aside class="notice">
-  The Payment Order feature is in the testing phase and only opened to selected merchants.
+  <p><strong>Hours of operation.</strong></p>
+  <p>
+    Payment Order service will be available for utilization between <strong>00:00–21:59</strong> (UTC+08:00 Kuala Lumpur) daily only.
+  </p>
+  <p>
+    The Payment Order Limit is to be utilized on the same day of the Self-Reload. Any unutilized Payment Order Limit shall be <strong>refunded</strong> automatically into your Bank Account registered with Billplz between <strong>22:00–23:59</strong> (UTC+08:00 Kuala Lumpur) daily.
+  </p>
 </aside>
 
 ## Payment Order Collections

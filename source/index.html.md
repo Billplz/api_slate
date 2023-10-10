@@ -2659,10 +2659,10 @@ To start using the API, you would have to create a Payment Order Collection. The
 <aside class="notice">
   <p><strong>Hours of operation.</strong></p>
   <p>
-    Payment Order service will be available for utilization between <strong>00:00–21:59</strong> (UTC+08:00 Kuala Lumpur) daily only.
+    Payment Order service will be available for utilization between <strong>00:00–19:59</strong> (UTC+08:00 Kuala Lumpur) daily only.
   </p>
   <p>
-    The Payment Order Limit is to be utilized on the same day of the Self-Reload. Any unutilized Payment Order Limit shall be <strong>refunded</strong> automatically into your Bank Account registered with Billplz between <strong>00:00–19:59</strong> (UTC+08:00 Kuala Lumpur) daily.
+    The Payment Order Limit is to be utilized on the same day of the Self-Reload. Any unutilized Payment Order Limit shall be <strong>refunded</strong> automatically into your Bank Account registered with Billplz between <strong>22:00–23:59</strong> (UTC+08:00 Kuala Lumpur) daily.
   </p>
 </aside>
 

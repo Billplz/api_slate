@@ -2779,7 +2779,6 @@ curl https://www.billplz.com/api/v5/payment_orders \
   -d payment_order_collection_id="8f4e331f-ac71-435e-a870-72fe520b4563" \
   -d bank_code="MBBEMYKL" \
   -d bank_account_number="543478924652" \
-  -d identity_number="820808062202" \
   -d name="Michael Yap" \
   -d description="Maecenas eu placerat ante." \
   -d total=2000
@@ -2795,7 +2794,6 @@ curl https://www.billplz.com/api/v5/payment_orders \
   "payment_order_collection_id": "8f4e331f-ac71-435e-a870-72fe520b4563",
   "bank_code": "MBBEMYKL",
   "bank_account_number": "543478924652",
-  "identity_number": 820808062202,
   "name": "Michael Yap",
   "description": "Maecenas eu placerat ante.",
   "email": "hello@billplz.com",
@@ -2817,7 +2815,6 @@ curl https://www.billplz.com/api/v5/payment_orders \
   -d payment_order_collection_id="8f4e331f-ac71-435e-a870-72fe520b4563" \
   -d bank_code="MBBEMYKL" \
   -d bank_account_number="543478924652" \
-  -d identity_number="820808062202" \
   -d name="Michael Yap" \
   -d description="Maecenas eu placerat ante." \
   -d total=2000 \
@@ -2837,7 +2834,6 @@ curl https://www.billplz.com/api/v5/payment_orders \
   "payment_order_collection_id": "8f4e331f-ac71-435e-a870-72fe520b4563",
   "bank_code": "MBBEMYKL",
   "bank_account_number": "543478924652",
-  "identity_number": 820808062202,
   "name": "Michael Yap",
   "description": "Maecenas eu placerat ante.",
   "email": "recipient@email.com",
@@ -2859,9 +2855,8 @@ curl https://www.billplz.com/api/v5/payment_orders \
 | Parameter                   | Description                                                                                                                                                                                                                                                                                                                                    |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | payment_order_collection_id | The Payment Order Collection ID. A string.                                                                                                                                                                                                                                                                                                     |
-| bank_code                   | [SWIFT Bank Code](#v5-payment-order-swift-bank-code-table) that represents bank, in string value. Case sensitive. <br><br> Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct. |
-| bank_account_number         | Bank account number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct.                                                                              |
-| identity_number             | Bank account's IC Number/SSM Registration Number, in string value. <br><br>Status code of `422` with `Bank account not found` message will be returned if no bank accounts matched. <br><br>So, please make sure all `bank_code`, `bank_account_number` and `identity_number` are all correct.                                                 |
+| bank_code                   | [SWIFT Bank Code](#v5-payment-order-swift-bank-code-table) that represents bank, in string value. Case sensitive.                                                                                                                                                                                                                              |
+| bank_account_number         | Bank account number, in string value.                                                                                                                                                                                                                                                                                                          |
 | name                        | Payment Order API's recipient name. Useful for identification on recipient part.                                                                                                                                                                                                                                                               |
 | description                 | The Payment Order API's description. Will be displayed on bill template. String format (Max of 200 characters).                                                                                                                                                                                                                                |
 | total                       | Total amount you would like to transfer to the recipient. <br>A positive integer in the smallest currency unit (e.g 100 cents to charge RM 1.00).                                                                                                                                                                                              |
@@ -2885,7 +2880,6 @@ curl https://www.billplz.com/api/v5/payment_orders \
 | payment_order_collection_id | The Payment order collection's title in string format.                                                                      |
 | bank_code                   | SWIFT Bank Code that represents bank, in string value. Case sensitive.                                                      |
 | bank_account_number         | Bank account number, in string value.                                                                                       |
-| identity_number             | Bank account's IC Number/SSM Registration Number, in string value.                                                          |
 | name                        | Payment Order's recipient name.                                                                                             |
 | description                 | The Payment Order's description.                                                                                            |
 | email                       | The email address of recipient (it default to sender's email if not present).                                               |
@@ -2917,7 +2911,6 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
   "payment_order_collection_id": "8f4e331f-ac71-435e-a870-72fe520b4563",
   "bank_code": "MBBEMYKL",
   "bank_account_number": "543478924652",
-  "identity_number": 820808062202,
   "name": "Michael Yap",
   "description": "Maecenas eu placerat ante.",
   "email": "recipient@email.com",
@@ -2950,7 +2943,6 @@ curl -G https://www.billplz.com/api/v5/payment_orders/cc92738f-dfda-4969-91dc-22
 | payment_order_collection_id | The Payment order collection's title in string format.                                                                      |
 | bank_code                   | SWIFT Bank Code that represents bank, in string value. Case sensitive.                                                      |
 | bank_account_number         | Bank account number, in string value.                                                                                       |
-| identity_number             | Bank account's IC Number/ROC/ROB/ROS Number, in string value.                                                               |
 | name                        | Payment Order's recipient name.                                                                                             |
 | description                 | The Payment Order's description.                                                                                            |
 | email                       | The email address of recipient (it default to sender's email if not present).                                               |
@@ -3613,7 +3605,6 @@ Content-Type: application/x-www-form-urlencoded
 | payment_order_collection_id | The payment order collection's id in string format.                                                                         |
 | bank_code                   | Bank Code that represents bank, in string value.                                                                            |
 | bank_account_number         | Bank account number, in string value.                                                                                       |
-| identity_number             | Bank account's IC Number/SSM Registration Number, in string value.                                                          |
 | name                        | Payment Order's recipient name.                                                                                             |
 | description                 | The Payment Order's description.                                                                                            |
 | email                       | The email address of recipient.                                                                                             |

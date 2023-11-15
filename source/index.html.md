@@ -1024,7 +1024,7 @@ curl https://www.billplz.com/api/v3/bills \
 | url       | URL to the bill.                |
 
 <aside class="notice">
-  All bills will default to expiry 30 days after creation, if you would like to expiry the bill before the default date please inspect merchants are encouraged to schedule a <a href="#v3-bills-delete-a-bill">bill deactivation api</a>
+  All bills will default to expiry 30 days after creation, if you would like to expire the bill before the default date please inspect the<a href="#v3-bills-delete-a-bill">bill deactivation api</a>
 </aside>
 
 <aside class="notice">

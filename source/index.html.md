@@ -1008,7 +1008,7 @@ curl https://www.billplz.com/api/v3/bills \
 
 | Parameter         | Description                                                                                                                                                   |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| due_at            | Due date for the bill. The format `YYYY-MM-DD`, default value is today. Year range is **19xx** to **2xxx**                                                    |
+| due_at            | Due date for the bill. The format `YYYY-MM-DD`, default value is today. Year range is **19xx** to **2xxx**. Please note that due_at value does not affect the bill's payability and is only for informational reference.                                                  |
 | redirect_url      | URL to redirect the customer after payment completed. It will do a GET to `redirect_url` together with bill's status and ID.                                  |
 | deliver           | Boolean value to set email and SMS (if mobile is present) delivery. Default value is `false`. **_SMS is subjected to charges depending on subscribed plan_**. |
 | reference_1_label | Label #1 to reconcile payments (Max of 20 characters). <br> Default value is `Reference 1`.                                                                   |
@@ -1022,6 +1022,10 @@ curl https://www.billplz.com/api/v3/bills \
 | --------- | ------------------------------- |
 | id        | Bill ID that represents a bill. |
 | url       | URL to the bill.                |
+
+<aside class="notice">
+  All bills will default to expiry 30 days after creation, if you would like to expiry the bill before the default date please inspect merchants are encouraged to schedule a <a href="#v3-bills-delete-a-bill">bill deactivation api</a>
+</aside>
 
 <aside class="notice">
   SMS will be ignored if your account's credit balance is insufficient.

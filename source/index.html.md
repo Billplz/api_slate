@@ -954,7 +954,7 @@ curl https://www.billplz.com/api/v3/bills \
   -d callback_url="http://example.com/webhook/" \
   -d description="Maecenas eu placerat ante." \
   -d due_at="2020-12-31" \
-  --data-urlencode mobile="+60112223333" \
+  -d mobile="+60112223333" \
   -d reference_1_label="First Name" \
   -d reference_2_label="Last Name" \
   -d reference_1="Sara" \

@@ -1390,7 +1390,6 @@ curl https://www.billplz.com/api/v3/fpx_banks \
 | HSBC0223   | HSBC Online Banking         |
 | KFH0346    | KFH Online                  |
 | MB2U0227   | Maybank2u                   |
-| MBB0227    | Maybank2E                   |
 | MBB0228    | Maybank2E                   |
 | OCBC0229   | OCBC Online Banking         |
 | PBB0233    | PBe                         |
@@ -2243,7 +2242,6 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | HSBC0223        | HSBC Online Banking         |
 | KFH0346         | KFH Online                  |
 | MB2U0227        | Maybank2u                   |
-| MBB0227         | Maybank2E                   |
 | MBB0228         | Maybank2E                   |
 | OCBC0229        | OCBC Online Banking         |
 | PBB0233         | PBe                         |

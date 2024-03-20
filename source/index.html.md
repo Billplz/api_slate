@@ -196,19 +196,29 @@ curl https://www.billplz.com/api/v3/bills \
 }
 ```
 
-Use this feature if you would like to bypass Billplz bill page, and direct payers straight from bill URL to the selected payment gateway seamlessly.
+This Billplz Feature allows your web application to bypass the default Billplz payment option selection page, thus allowing your customers to directly proceed to the payment option preconfigured in your bill. Your customers would still fallback to the payment option selection page if the settings are invalid, or the selected payment gateway is not available.
 
-1. Create bills through Billplz API with a present of `reference_1_label` and `reference_1`.
+The following guide references the [Create a bill](#v3-bills-create-a-bill) API
 
-- Always set `reference_1_label` as **Bank Code**
-- Always set a bank code to `reference_1`. Please refer to section [Get Payment Gateways](#v4-get-payment-gateways) for more details on how to get the bank codes.
+1. Create bills through Billplz API with a with filled values for `reference_1_label` and `reference_1`.
 
-1. Always append parameter, auto_submit=true to the bill's URL return from API [Create a Bill](#v3-bills-create-a-bill).
+- Set the value for `reference_1_label` as "**Bank Code**"
+- Set the value for `reference_1` as the value of the bank code of your target payment gateway.
+
+<aside class="notice">
+  Please refer to section <a href="#v4-get-payment-gateways">Get Payment Gateways</a> for more details on how to get the bank codes.
+</aside>
+
+
+2. Append query parameter, `auto_submit=true` to the bill's URL return from API [Create a Bill](#v3-bills-create-a-bill).
 
 - Example: [https://www.billplz.com/bills/abcdef]() becomes;
 - [https://www.billplz.com/bills/abcdef?auto_submit=true]()
 
-Direct Payment Gateway feature will fallback to Billplz bill page for invalid `reference_1`, `reference_1_label`, or the selected payment gateway is not enabled or active.
+<aside class="warning">
+Direct Payment Gateway feature will fallback to Billplz payment selection page for invalid reference_1, reference_1_label values, or the selected payment gateway is not enabled or active.
+</aside>
+
 
 ###### STANDARD PAYMENT FLOW
 
@@ -216,26 +226,23 @@ Direct Payment Gateway feature will fallback to Billplz bill page for invalid `r
 1. Merchant redirects payer from merchant's page to bill URL (returned from #1).
 1. Payer lands at Billplz page to select payment option.
 1. Payer redirected from Billplz to selected payment gateway to pay.
-1. Payer redirected from payment gateway to `redirect_url` / receipt page (refer to [API Flow](#api-flow)).
+1. Once payment is completed, Payer redirected from payment gateway to `redirect_url` / receipt page (refer to [API Flow](#api-flow)).
 
 ###### DIRECT PAYMENT GATEWAY PAYMENT FLOW
 
-1. Merchant creates bill through API with a valid bank code
-1. Merchant redirects payer from merchant's page to bill URL (returned from #1) with extra parameter, **auto_submit=true**
-1. Payer lands at selected payment gateway to pay
-1. Payer redirected from payment gateway to `redirect_url` / receipt page (refer to [API Flow](#api-flow))
+1. Merchant creates bill through API with a valid bank code (note reference_1 and reference_1_label)
+1. Merchant redirects payer from merchant's page to bill URL (returned from #1) with extra query parameter, `?auto_submit=true`
+1. Payer skips the payment option selection page and is redirected directly to the selected payment gateway to pay
+1. Once payment is completed, Payer redirected from payment gateway to `redirect_url` / receipt page (refer to [API Flow](#api-flow))
 
 ###### INVALID DIRECT PAYMENT GATEWAY PAYMENT FLOW
 
 1. Merchant creates bill through API with invalid / inactive bank code
-1. Merchant redirects payer from merchant's page to bill URL (returned from #1) with extra parameter, auto_submit=true
-1. Payer lands at Billplz page to payment option
+1. Merchant redirects payer from merchant's page to bill URL (returned from #1) with extra parameter, `?auto_submit=true`
+1. Payer will fallback to the Billplz Payment Option Selection page to select a payment gateway
 1. Payer redirected from Billplz to selected payment gateway to pay
-1. Payer redirected from payment gateway to redirect_url / receipt page (refer to [API Flow](#api-flow))
+1. Once payment is completed, Payer redirected from payment gateway to `redirect_url` / receipt page (refer to [API Flow](#api-flow))
 
-<aside class="warning">
-  Bypass bill page using parameter <code>?auto_submit</code> with value <code>fpx</code> or <code>paypal</code> has been removed.
-</aside>
 <aside class="notice">
   If an inactive or invalid payment gateway for whatever reasons was submitted, the payment process will land at Billplz page for payer to re-choose a payment option again. (refer to <a href="#direct-payment-gateway-bypass-billplz-bill-page-3d-secure-update-charge-card-invalid-direct-payment-gateway-payment-flow">INVALID DIRECT PAYMENT GATEWAY PAYMENT FLOW</a>).
   <br><br>

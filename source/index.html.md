@@ -2880,6 +2880,10 @@ curl https://www.billplz.com/api/v5/payment_orders \
 | epoch                       | The current time in UNIX epoch time format.                                                                                                                                                                                                                                                                                                    |
 | checksum                    | Required values for [checksum signature](#v5-checksum) in this order: **[ payment_order_collection_id, bank_account_number, total, epoch ]**                                                                                                                                                                                                   |
 
+<aside class="info">
+  For sandbox testing, please use <strong>bank_code: DUMMYBANKVERIFIED</strong> for a successful payment-order result, any other bank_codes used in sandbox will result in a transaction failure for payment orders.
+</aside>
+
 ###### OPTIONAL ARGUMENTS
 
 | Parameter              | Description                                                                                                                                                                                                                                                                                                                        |

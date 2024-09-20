@@ -257,6 +257,10 @@ This version is not in active development state. No new feature will be introduc
 
 Collections are where all of your [Bills](#v3-bills) are belongs to. Collections can be useful to categorize your bill payment. As an example, you may use Collection to separate a Tuition Fee Collection for September and November collection.
 
+<aside class="notice">
+  Billplz will now have a hard ceiling lifetime limit of 20,000 collection records for each account. The 20,000 limit includes both standard collections and open collections types.
+</aside>
+
 ### Create a Collection
 
 Billplz API now supports the creation of collection with a split rule feature. The response will contain the collection's ID that is needed in Bill API, split rule info and fields.
@@ -1421,6 +1425,10 @@ This version is in active development state. New feature will be introduced in t
 ## Collections
 
 Collections are where all of your [Bills](#v3-bills) are belongs to. Collections can be useful to categorize your bill payment. As an example, you may use Collection to separate a Tuition Fee Collection for September and November collection.
+
+<aside class="notice">
+  Billplz will now have a hard ceiling lifetime limit of 20,000 collection records for each account. The 20,000 limit includes both standard collections and open collections types.
+</aside>
 
 ### Create a Collection
 

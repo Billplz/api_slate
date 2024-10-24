@@ -2272,6 +2272,7 @@ curl https://www.billplz.com/api/v4/payment_gateways \
 | TEST0022\*      | Test 0022                   |
 | TEST0023\*      | Test 0023                   |
 | BP-FKR01\*      | Billplz Simulator           |
+| BP-BILLPLZ1     | Visa / Mastercard (Billplz) |
 | BP-PPL01        | PayPal                      |
 | BP-OCBC1        | Visa / Mastercard           |
 | BP-2C2P1        | e-pay                       |

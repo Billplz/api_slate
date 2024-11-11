@@ -2135,6 +2135,138 @@ curl https://www.billplz.com/api/v4/collections/qag4fe_o6/customer_receipt_deliv
 | id                        | ID that represents a collection.                                                                  |
 | customer_receipt_delivery | Collection's Customer Receipt Notification status, it is either `active`, `inactive` or `global`. |
 
+### Merchant Receipt Delivery
+
+By default, all collections follow the Global Merchant Receipt Notification configuration in your Account settings.
+
+You can override the Global configuration on individual collections by calling [activate](#v4-collections-merchant-receipt-delivery-activate) and [deactivate](#v4-collections-merchant-receipt-delivery-deactivate).
+
+#### Activate
+
+If you wish to ignore the Global configuration and always receive a receipt email from Billplz notifying a bill payment result, you may activate it per individual collection by calling to this API.
+
+> Example request:
+
+```shell
+# Activate a collection's merchant receipt delivery
+curl -X POST \
+https://www.billplz.com/api/v4/collections/qag4fe_o6/merchant_receipt_delivery/activate \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/collections/{COLLECTION_ID}/merchant_receipt_delivery/activate`
+
+###### URL PARAMETER
+
+| Parameter     | Description                                  |
+| ------------- | -------------------------------------------- |
+| COLLECTION_ID | Collection ID returned in Collection object. |
+
+#### Deactivate
+
+If you wish to stop receiving email notifications on payment results for a specific collection, you may deactivate it per individual collection by calling to this API.
+
+> Example request:
+
+```shell
+# Deactivate a collection's merchant receipt delivery
+curl -X POST \
+https://www.billplz.com/api/v4/collections/qag4fe_o6/merchant_receipt_delivery/deactivate \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/collections/{COLLECTION_ID}/merchant_receipt_delivery/deactivate`
+
+###### URL PARAMETER
+
+| Parameter     | Description                                  |
+| ------------- | -------------------------------------------- |
+| COLLECTION_ID | Collection ID returned in Collection object. |
+
+#### Set Global
+
+Use this API to set your individual collections to follow Global merchant Receipt Notification configuration. By default, all collections will follow the Global configuration on creation.
+
+> Example request:
+
+```shell
+# Set a collection's merchant receipt delivery to Global
+curl -X POST \
+https://www.billplz.com/api/v4/collections/qag4fe_o6/merchant_receipt_delivery/global \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{}
+```
+
+###### HTTP REQUEST
+
+`POST https://www.billplz.com/api/v4/collections/{COLLECTION_ID}/merchant_receipt_delivery/global`
+
+###### URL PARAMETER
+
+| Parameter     | Description                                  |
+| ------------- | -------------------------------------------- |
+| COLLECTION_ID | Collection ID returned in Collection object. |
+
+#### Get Status
+
+Use this API to get a Collection's merchant Receipt Notification status.
+
+> Example request:
+
+```shell
+# Get a collection's merchant receipt delivery
+curl https://www.billplz.com/api/v4/collections/qag4fe_o6/merchant_receipt_delivery \
+  -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+```
+
+> Response:
+
+```json
+{
+  "id": "qag4fe_o6",
+  "merchant_receipt_delivery": "global"
+}
+```
+
+###### HTTP REQUEST
+
+`GET https://www.billplz.com/api/v4/collections/{COLLECTION_ID}/merchant_receipt_delivery`
+
+###### URL PARAMETER
+
+| Parameter     | Description                                  |
+| ------------- | -------------------------------------------- |
+| COLLECTION_ID | Collection ID returned in Collection object. |
+
+###### RESPONSE PARAMETER
+
+| Parameter                 | Description                                                                                       |
+| ------------------------- | ------------------------------------------------------------------------------------------------- |
+| id                        | ID that represents a collection.                                                                  |
+| merchant_receipt_delivery | Collection's merchant Receipt Notification status, it is either `active`, `inactive` or `global`. |
+
+
 ## Webhook Rank
 
 Webhook Rank has been introduced to ensure callback is running at it's best. The higher the ranking, the higher priority for the callback to be executed. Use this API to query your current Account Ranking. `0.0` indicate highest ranking (default) and `10.0` lowest ranking.

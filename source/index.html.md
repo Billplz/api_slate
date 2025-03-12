@@ -3056,11 +3056,11 @@ curl -G https://www.billplz.com/api/v5/payment_order_limit \
 ## Duitnow::Pay
 
 You can now integrate Duitnow into your application using Billplz via the API detailed below. 
-Duitnow::Pay via Billplz will now allow your application to request consents from your customers and initiate autodebit transactions from your customers. This feature is most ideal for recurring payments over a fixed period with a pre-determined frequency
+Duitnow::Pay via Billplz will now allow your application to request consents from your customers and initiate AutoDebit from your customers. This feature is most ideal for recurring payments over a fixed period with a pre-determined frequency
 
 ## Duitnow::Pay Consents
 
-Consents are a way for you to request approval from your customer to initiate an AutoDebit Transaction via Duitnow::Pay AutoDebit. This API documentation will guide you on how to initaite a consent request and subsequently intiate an AutoDebit collection from your customer.
+Consents are a way for you to request approval from your customer to initiate an AutoDebit via Duitnow::Pay AutoDebit. This API documentation will guide you on how to initaite a consent request and subsequently intiate an AutoDebit collection from your customer.
 
 ### Create a Consent
 
@@ -3097,29 +3097,33 @@ curl -G https://www.billplz.com/api/v5/duitnow/pay/consents \
   "bank_code": "DNRET-CIBBMYKL",
   "max_amount": 100000,
   "frequency": "01",
-  "callback_url": null,
-  "authorize_consent_url":"",
+  "callback_url": "https://example.com/callback",
+  "authorize_consent_url":"https://example-consent-url.com/authorize",
 }
 ```
 
 ###### HTTP REQUEST
 
-`GET https://www.billplz.com/api/v5/duitnow/pay/consents`
+`POST https://www.billplz.com/api/v5/duitnow/pay/consents`
 
 ###### REQUIRED ARGUMENTS
 
 | Parameter      | Type    | Description                                                                         |
 | -------------- | ------- | ----------------------------------------------------------------------------------- |
-| merchant_ref   | string  | A unique merchant reference number set by you for your reference |
+| merchant_ref   | string  | A unique merchant reference number set by you for your reference (maximum characters: 140) |
 | max_amount     | integer | Maximum amount in cents chargeable when initiating an Duitnow::Pay AutoDebit |
-| customer_name  | string  | Your customer's name |
-| effective_date | string  | Beginning of the consent, format (yyyy-mm-dd) |
-| expiry_date    | string  | Expiry of the consent, format (yyyy-mm-dd) |
-| frequency      | string  | Indicates the frequency of transactions, where 01-unlimited, 02-daily, 03-weekly, 04-monthly, 05-quarterly, 06-yearly. Possible values: ['01','02','03','04','05','06'] |
+| customer_name  | string  | Your customer's name. (maximum characters: 140) |
+| effective_date | string  | Beginning of the consent, (format: yyyy-mm-dd) |
+| expiry_date    | string  | Expiry of the consent, (format: yyyy-mm-dd) |
+| frequency      | string  | Indicates the frequency of transactions, where 01-unlimited, 02-daily, 03-weekly, 04-monthly, 05-quarterly, 06-yearly. Allowed values: ['01','02','03','04','05','06'] |
 | bank_code      | string  | The Duitnow::Pay registered bank code, please refer to [API#v5-payment-gateways](#v5-payment-gateways) on how to obtain the correct bank code |
 | callback_url   | string  | Url endpoint provided by you for when we issue a callback to update you on the consent result of your customer |
 | epoch          | integer | The current time in UNIX epoch time format.                                         |
 | checksum       | string  | Required values for [checksum signature](#v5-checksum) in this order: **[ merchant_ref, max_amount, epoch ]** |
+
+<aside class=notice>
+  Please note that for <strong>bank_code</strong>, only payment gateways where <strong>isConsent</strong> is <strong>true</strong> can be used for Duitnow::Pay Consent, any others will fail.
+</aside>
 
 ###### RESPONSE PARAMETER
 
@@ -3138,7 +3142,7 @@ curl -G https://www.billplz.com/api/v5/duitnow/pay/consents \
 | authorize_consent_url | string  | Url provided by Paynet for you to redirect your customer to complete their consent form |
 
 <aside class="notice">
-  In sandbox, you are limited to 1 request / 10 seconds. In production you are limited to 3 requests / 10 minutes.
+  You are required to redirect your customer to the authorize_consent_url to complete the consent approval process
 </aside>
 
 ### Get a Consent
@@ -3168,8 +3172,7 @@ curl -G https://www.billplz.com/api/v5/duitnow/pay/consents/29f408bf-c569-4455-a
   "bank_code": "DNRET-CIBBMYKL",
   "max_amount": 100000,
   "frequency": "01",
-  "callback_url": null,
-  "authorize_consent_url":"",
+  "callback_url": "https://example.com/callback"
 }
 ```
 
@@ -3199,7 +3202,6 @@ curl -G https://www.billplz.com/api/v5/duitnow/pay/consents/29f408bf-c569-4455-a
 | max_amount            | integer | Maximum amount in cents chargeable when initiating an Duitnow::Pay AutoDebit |
 | frequency             | string  | Indicates the frequency of transactions, where 01-unlimited, 02-daily, 03-weekly, 04-monthly, 05-quarterly, 06-yearly. Possible values: ['01','02','03','04','05','06'] |
 | callback_url          | string  | Url endpoint provided by you for when we issue a callback to update you on the consent result of your customer |
-| authorize_consent_url | string  | Url provided by Paynet for you to redirect your customer to complete their consent form |
 
 ### Terminate a Consent
 
@@ -3229,7 +3231,6 @@ curl -X DELETE https://www.billplz.com/api/v5/duitnow/pay/consents/29f408bf-c569
   "max_amount": 100000,
   "frequency": "01",
   "callback_url": null,
-  "authorize_consent_url":"",
 }
 ```
 
@@ -3259,7 +3260,6 @@ curl -X DELETE https://www.billplz.com/api/v5/duitnow/pay/consents/29f408bf-c569
 | max_amount            | integer | Maximum amount in cents chargeable when initiating an Duitnow::Pay AutoDebit |
 | frequency             | string  | Indicates the frequency of transactions, where 01-unlimited, 02-daily, 03-weekly, 04-monthly, 05-quarterly, 06-yearly. Possible values: ['01','02','03','04','05','06'] |
 | callback_url          | string  | Url endpoint provided by you for when we issue a callback to update you on the consent result of your customer |
-| authorize_consent_url | string  | Url provided by Paynet for you to redirect your customer to complete their consent form |
 
 ## Duitnow::Pay AutoDebit
 
@@ -3267,7 +3267,7 @@ Billplz Duitnow::Pay AutoDebit allows you to debit an amount directly from your 
 
 ### Create an AutoDebit
 
-Use this API to initiate an AutoDebit transaction of your customer by providing a valid and approved consent id.
+Use this API to initiate an AutoDebit from your customer by providing a valid and approved consent id.
 
 > Example request:
 
@@ -3310,7 +3310,7 @@ curl https://www.billplz.com/api/v5/duitnow/pay/auto_debits \
 | Parameter        | Type     | Description                                                                                           |
 | ---------------- | -------- | ----------------------------------------------------------------------------------------------------- |
 | consent_id       | String   | The Duitnow::Pay Consent ID.                                                                          |
-| bill_id          | String   | A Billplz Bill ID.                                                                                    |
+| bill_id          | String   | A pending Billplz Bill ID you wish to collect from using AutoDebit. Please refer to [create-a-bill](#v3-bills-create-a-bill) on how to create one.|
 | epoch            | Integer  | The current time in UNIX epoch time format.                                                           |
 | checksum         | String   | Required values for [checksum signature](#v5-checksum) in this order: **[ consent_id, bill_id, epoch ]** |
 
@@ -3318,7 +3318,7 @@ curl https://www.billplz.com/api/v5/duitnow/pay/auto_debits \
 
 | Parameter             | Type   | Description                                                                                                                 |
 | ----------------------| ------ | --------------------------------------------------------------------------------------------------------------------------- |
-| id                    | string | A Duitnow::Pay AutoDebit Transaction ID |
+| id                    | string | A Duitnow::Pay AutoDebit ID |
 | status                | string | Result of the transaction, possible values: ['success','unsuccessful'] |
 | status_code           | string | A Status code provided by Paynet |
 | issuer                | string | Bank code of the bank that processed the AutoDebit |
@@ -3332,7 +3332,7 @@ curl https://www.billplz.com/api/v5/duitnow/pay/auto_debits \
 
 ### Get an AutoDebit index
 
-Use this API to query a list of AutoDebit Transactions based on bill and consent id.
+Use this API to query a list of AutoDebits based on bill and consent id.
 
 > Example request:
 
@@ -3386,17 +3386,17 @@ curl -G https://www.billplz.com/api/v5/duitnow/pay/consents/29f408bf-c569-4455-a
 
 | Parameter             | Type   | Description                                                                                                                 |
 | ----------------------| ------ | --------------------------------------------------------------------------------------------------------------------------- |
-| auto_debits           | array  | An Array of Duitnow::Pay AutoDebit Transactions |
-| id                    | string | A Duitnow::Pay AutoDebit Transaction ID |
+| auto_debits           | array  | An Array of Duitnow::Pay AutoDebit |
+| id                    | string | A Duitnow::Pay AutoDebit ID |
 | status                | string | Result of the transaction, possible values: ['success','unsuccessful'] |
 | status_code           | string | A Status code provided by Paynet |
 | issuer                | string | Bank code of the bank that processed the AutoDebit |
 | consent               | object | A Consent object |
 | consent[id]           | string | A Duitnow::Pay Consent Id |
 | bill                  | object | A Billplz Bill object|
-| bill[id]              | string | A Billplz Bill ID|
+| bill[id]              | string | A Billplz Bill ID that was used to initiate an AutoDebit Collection from |
 | bill[transaction]     | object | A Billplz Transaction object |
-| bill[transaction][id] | string | A Billplz Transaction ID |
+| bill[transaction][id] | string | A Billplz Transaction ID, an transaction reference for to identify the transaction attempt |
 
 ## Payment Gateways
 
@@ -4208,9 +4208,8 @@ Response parameter will be as usual if didn't exceed the rate limit. Otherwise, 
 
 This is a list of all the bank codes used in our system
 
-\* Only applicable in staging environment.
-
 ## FPX Bank Codes
+\* Only applicable in staging environment.
 
 | Type| Code            | Name                        |
 | --- | --------------- | --------------------------- |
@@ -4302,77 +4301,78 @@ This is a list of all the bank codes used in our system
 | Fpx | B2B1-UOB0228    | UOB BIBPlus                 |
 
 ## Duitnow Bank Codes
+\* Only applicable in staging environment.
 
 | Type    | Code           | Name |
 | ------- | ------------   | ---- |
-| Duitnow | DNRET-ARBKMYKL | Ambank
-| Duitnow | DNRET-BCBB0235 | CIMB Bank |
-| Duitnow | DNCOR-CIBBMYKL | CIMB Bank |
-| Duitnow | DNRET-ACFBMYK1 | PYN Bank A |
-| Duitnow | DNRET-AFBQMYKL | MBSB Bank |
-| Duitnow | DNRET-AGOBMYKL | AgroBank
-| Duitnow | DNRET-BIMB0340 | Bank Islam Malaysia Bhd |
-| Duitnow | DNRET-BIMBMYKL | Bank Islam Malaysia Bhd |
-| Duitnow | DNRET-BKCHMYKL | Bank Of China |
-| Duitnow | DNRET-BKRMMYKL | Bank Kerjasama Rakyat |
-| Duitnow | DNRET-BMMBMYKL | Bank Muamalat Malaysia Bhd |
-| Duitnow | DNRET-BSNAMYK1 | Bank Simpanan Nasional |
-| Duitnow | DNRET-CIBBMYKL | CIMB Bank |
-| Duitnow | DNRET-DEVPMYK1 | PayNet IPOJ Bank |
-| Duitnow | DNRET-DEVPMYK2 | DASH Bank |
-| Duitnow | DNRET-DMM1MYKL | Dummy Bank 1 |
-| Duitnow | DNRET-DMM4MYKL | Dummy Bank 4 |
-| Duitnow | DNRET-FNXSMYNB | Finexus
-| Duitnow | DNRET-HBMBMYKL | HSBC |
-| Duitnow | DNRET-HLBBMYKL | Hong Leong Bank Bhd |
-| Duitnow | DNRET-HLFBMYK1 | PYN Bank B |
-| Duitnow | DNRET-HSBC0223 | HSBC
-| Duitnow | DNRET-ICBKMYKL | ICBC |
-| Duitnow | DNRET-IPAYMYNB | iPay88 |
-| Duitnow | DNRET-MB2U0227 | MAYBANK |
-| Duitnow | DNRET-MBBEMYKL | MAYBANK |
-| Duitnow | DNRET-MFBBMYKL | Alliance Bank |
-| Duitnow | DNRET-OCBC0229 | OCBC Bhd |
-| Duitnow | DNRET-OCBCMYKL | OCBC Bhd |
-| Duitnow | DNRET-PBBEMYKL | Public Bank |
-| Duitnow | DNRET-PCBCMYKL | CCBM
-| Duitnow | DNRET-PHBMMYKL | AFFIN BANK Bhd |
-| Duitnow | DNRET-PICAMYK1 | PayNet Simulator Bank |
-| Duitnow | DNRET-RHBBMYKL | RHB Bank |
-| Duitnow | DNRET-RJHIMYKL | Al Rajhi |
-| Duitnow | DNRET-TEST0021 | SBI BANK A |
-| Duitnow | DNRET-TEST0022 | SBI BANK B |
-| Duitnow | DNRET-MBLOMYNB | MobilityOne
-| Duitnow | DNRET-TEST0023 | SBI BANK B |
-| Duitnow | DNRET-TESTMYK1 | Paynet Bank Simulator 1 |
-| Duitnow | DNRET-UOVBMYKL | United Overseas Bank |
-| Duitnow | DNCOR-AFBQMYKL | MBSB Bank |
-| Duitnow | DNCOR-AGOBMYKL | AgroBank
-| Duitnow | DNCOR-ARBKMYKL | Ambank |
-| Duitnow | DNCOR-BIMBMYKL | Bank Islam Malaysia Bhd |
-| Duitnow | DNCOR-BKCHMYKL | Bank Of China |
-| Duitnow | DNCOR-BKRMMYKL | Bank Kerjasama Rakyat |
-| Duitnow | DNCOR-BMMBMYKL | Bank Muamalat Malaysia Bhd |
-| Duitnow | DNCOR-BNPAMYKL | BNP Paribas |
-| Duitnow | DNCOR-DEUTMYKL | Deutsche Bank |
-| Duitnow | DNCOR-DMM1MYKL | Dummy Bank 1 |
-| Duitnow | DNCOR-HBMBMYKL | HSBC
-| Duitnow | DNCOR-HLBBMYKL | Hong Leong Bank Bhd |
-| Duitnow | DNCOR-MBBEMYKL | MAYBANK
-| Duitnow | DNCOR-MFBBMYKL | Alliance Bank |
-| Duitnow | DNCOR-OCBCMYKL | OCBC Bhd |
-| Duitnow | DNCOR-PBBEMYKL | Public Bank |
-| Duitnow | DNCOR-CHASMYKX | JP Morgan Chase Bank |
-| Duitnow | DNCOR-HLFBMYK1 | PYN Bank B |
-| Duitnow | DNCOR-MHCBMYKA | Mizuho Bank |
-| Duitnow | DNCOR-PCBCMYKL | CCBM
-| Duitnow | DNCOR-PHBMMYKL | AFFIN BANK Bhd |
-| Duitnow | DNCOR-RHBBMYKL | RHB Bank |
-| Duitnow | DNCOR-TEST0023 | SBI BANK B |
-| Duitnow | DNCOR-UOVBMYKL | United Overseas Bank |
-| Duitnow | DNRET-BOBEMYK2 | Boost Digital Bank |
-| Duitnow | DNRET-DENGMYK1 | Paynet Bank Simulator 2 |
-| Duitnow | DNRET-SCCHMYKL | Ryt Bank |
-| Duitnow | DNCOR-ACFBMYK1 | PYN Bank A |
-| Duitnow | DNCOR-ICBKMYKL | ICBC
-| Duitnow | DNCOR-SMBCMYKL | Sumitomo Mitsui Bank |
+| Duitnow | DNRET-ARBKMYKL   | Ambank
+| Duitnow | DNRET-BCBB0235   | CIMB Bank |
+| Duitnow | DNCOR-CIBBMYKL   | CIMB Bank |
+| Duitnow | DNRET-AFBQMYKL   | MBSB Bank |
+| Duitnow | DNRET-AGOBMYKL   | AgroBank
+| Duitnow | DNRET-BIMB0340   | Bank Islam Malaysia Bhd |
+| Duitnow | DNRET-BIMBMYKL   | Bank Islam Malaysia Bhd |
+| Duitnow | DNRET-BKCHMYKL   | Bank Of China |
+| Duitnow | DNRET-BKRMMYKL   | Bank Kerjasama Rakyat |
+| Duitnow | DNRET-BMMBMYKL   | Bank Muamalat Malaysia Bhd |
+| Duitnow | DNRET-BSNAMYK1   | Bank Simpanan Nasional |
+| Duitnow | DNRET-CIBBMYKL   | CIMB Bank |
+| Duitnow | DNRET-FNXSMYNB   | Finexus
+| Duitnow | DNRET-HBMBMYKL   | HSBC |
+| Duitnow | DNRET-HLBBMYKL   | Hong Leong Bank Bhd |
+| Duitnow | DNRET-HSBC0223   | HSBC
+| Duitnow | DNRET-ICBKMYKL   | ICBC |
+| Duitnow | DNRET-IPAYMYNB   | iPay88 |
+| Duitnow | DNRET-MB2U0227   | MAYBANK |
+| Duitnow | DNRET-MBBEMYKL   | MAYBANK |
+| Duitnow | DNRET-MFBBMYKL   | Alliance Bank |
+| Duitnow | DNRET-OCBC0229   | OCBC Bhd |
+| Duitnow | DNRET-OCBCMYKL   | OCBC Bhd |
+| Duitnow | DNRET-PBBEMYKL   | Public Bank |
+| Duitnow | DNRET-PCBCMYKL   | CCBM
+| Duitnow | DNRET-PHBMMYKL   | AFFIN BANK Bhd |
+| Duitnow | DNRET-RHBBMYKL   | RHB Bank |
+| Duitnow | DNRET-RJHIMYKL   | Al Rajhi |
+| Duitnow | DNRET-MBLOMYNB   | MobilityOne
+| Duitnow | DNRET-UOVBMYKL   | United Overseas Bank |
+| Duitnow | DNCOR-AFBQMYKL   | MBSB Bank |
+| Duitnow | DNCOR-AGOBMYKL   | AgroBank
+| Duitnow | DNCOR-ARBKMYKL   | Ambank |
+| Duitnow | DNCOR-BIMBMYKL   | Bank Islam Malaysia Bhd |
+| Duitnow | DNCOR-BKCHMYKL   | Bank Of China |
+| Duitnow | DNCOR-BKRMMYKL   | Bank Kerjasama Rakyat |
+| Duitnow | DNCOR-BMMBMYKL   | Bank Muamalat Malaysia Bhd |
+| Duitnow | DNCOR-BNPAMYKL   | BNP Paribas |
+| Duitnow | DNCOR-DEUTMYKL   | Deutsche Bank |
+| Duitnow | DNCOR-DMM1MYKL   | Dummy Bank 1 |
+| Duitnow | DNCOR-HBMBMYKL   | HSBC
+| Duitnow | DNCOR-HLBBMYKL   | Hong Leong Bank Bhd |
+| Duitnow | DNCOR-MBBEMYKL   | MAYBANK
+| Duitnow | DNCOR-MFBBMYKL   | Alliance Bank |
+| Duitnow | DNCOR-OCBCMYKL   | OCBC Bhd |
+| Duitnow | DNCOR-PBBEMYKL   | Public Bank |
+| Duitnow | DNCOR-CHASMYKX   | JP Morgan Chase Bank |
+| Duitnow | DNCOR-MHCBMYKA   | Mizuho Bank |
+| Duitnow | DNCOR-PCBCMYKL   | CCBM
+| Duitnow | DNCOR-PHBMMYKL   | AFFIN BANK Bhd |
+| Duitnow | DNCOR-RHBBMYKL   | RHB Bank |
+| Duitnow | DNCOR-UOVBMYKL   | United Overseas Bank |
+| Duitnow | DNRET-BOBEMYK2   | Boost Digital Bank |
+| Duitnow | DNRET-SCCHMYKL   | Ryt Bank |
+| Duitnow | DNCOR-ICBKMYKL   | ICBC
+| Duitnow | DNCOR-SMBCMYKL   | Sumitomo Mitsui Bank |
+| Duitnow | DNRET-ACFBMYK1\* | PYN Bank A |
+| Duitnow | DNRET-DEVPMYK1\* | PayNet IPOJ Bank |
+| Duitnow | DNRET-DEVPMYK2\* | DASH Bank |
+| Duitnow | DNRET-DMM1MYKL\* | Dummy Bank 1 |
+| Duitnow | DNRET-DMM4MYKL\* | Dummy Bank 4 |
+| Duitnow | DNRET-HLFBMYK1\* | PYN Bank B |
+| Duitnow | DNRET-PICAMYK1\* | PayNet Simulator Bank |
+| Duitnow | DNRET-TEST0021\* | SBI BANK A |
+| Duitnow | DNRET-TEST0022\* | SBI BANK B |
+| Duitnow | DNRET-TEST0023\* | SBI BANK B |
+| Duitnow | DNRET-TESTMYK1\* | Paynet Bank Simulator 1 |
+| Duitnow | DNCOR-HLFBMYK1\* | PYN Bank B |
+| Duitnow | DNCOR-TEST0023\* | SBI BANK B |
+| Duitnow | DNRET-DENGMYK1\* | Paynet Bank Simulator 2 |
+| Duitnow | DNCOR-ACFBMYK1\* | PYN Bank A |

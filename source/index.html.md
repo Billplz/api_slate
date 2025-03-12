@@ -3119,7 +3119,7 @@ curl -G https://www.billplz.com/api/v5/duitnow/pay/consents \
 | bank_code      | string  | The Duitnow::Pay registered bank code, please refer to [API#v5-payment-gateways](#v5-payment-gateways) on how to obtain the correct bank code |
 | callback_url   | string  | Url endpoint provided by you for when we issue a callback to update you on the consent result of your customer |
 | epoch          | integer | The current time in UNIX epoch time format.                                         |
-| checksum       | string  | Required values for [checksum signature](#v5-checksum) in this order: **[ merchant_ref, max_amount, epoch ]** |
+| checksum       | string  | Required values for [checksum signature](#v5-checksum) in this order: **[ merchant_ref, max_amount, effective_date, expiry_date, frequency, callback_url, epoch ]** |
 
 <aside class=notice>
   Please note that for <strong>bank_code</strong>, only payment gateways where <strong>isConsent</strong> is <strong>true</strong> can be used for Duitnow::Pay Consent, any others will fail.
@@ -3435,6 +3435,8 @@ You can find a list of all the payment gateway codes [here](#payment-gateway-abb
 ```shell
 curl https://www.billplz.com/api/v5/payment_gateways \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81:
+  -d epoch=1668149595 \
+  -d checksum="92987e17459c6e488b83c02dea1693615011fee049d88a3eb9745538f191e323ac4f067571aa8abc335075470b06693994443b52b78be22fbd12b44cb699b265"
 ```
 
 > Response:
@@ -3476,6 +3478,13 @@ curl https://www.billplz.com/api/v5/payment_gateways \
 ###### HTTP REQUEST
 
 `GET https://www.billplz.com/api/v5/payment_gateways`
+
+###### REQUIRED ARGUMENTS
+
+| Parameter        | Type    | Description                                                                                           |
+| ---------------- | ------- | ----------------------------------------------------------------------------------------------------- |
+| epoch            | integer | The current time in UNIX epoch time format.                                                           |
+| checksum         | string  | Required values for [checksum signature](#v5-checksum) in this order: **[ epoch ]**                   |
 
 ###### RESPONSE PARAMETER
 

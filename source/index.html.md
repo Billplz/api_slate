@@ -3230,7 +3230,7 @@ curl -X DELETE https://www.billplz.com/api/v5/duitnow/pay/consents/29f408bf-c569
   "bank_code": "DNRET-CIBBMYKL",
   "max_amount": 100000,
   "frequency": "01",
-  "callback_url": null,
+  "callback_url": "https://example.com/callback",
 }
 ```
 
@@ -3334,6 +3334,10 @@ curl https://www.billplz.com/api/v5/duitnow/pay/auto_debits \
 
 Use this API to query a list of AutoDebits based on bill and consent id.
 
+<aside class='notice'>
+  Only the latest 30 AutoDebit records will be returned scoped to each bill and consent
+</aside>
+
 > Example request:
 
 ```shell
@@ -3361,6 +3365,21 @@ curl -G https://www.billplz.com/api/v5/duitnow/pay/consents/29f408bf-c569-4455-a
         "id": "ad8diu187sbkj",
         "transaction": {
           "id": "U129ASIDUH12CATC"
+        }
+      }
+    },
+    {
+      "id": "3e6dab51-e8a5-4703-b93e-36accb4173a9",
+      "status": "unsuccessful",
+      "status_code": "U122",
+      "issuer": "DNRET-CIBBMYKL",
+      "consent": {
+        "id": "29f408bf-c569-4455-a134-1331d9c2bf01"
+      },
+      "bill": {
+        "id": "ad8diu187sbkj",
+        "transaction": {
+          "id": "HA18VS215TS89SJV"
         }
       }
     },

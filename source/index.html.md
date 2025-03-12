@@ -3069,7 +3069,7 @@ Before beginning the process of creating an AutoDebit setup with your customer, 
 > Example request:
 
 ```shell
-# Get a Payment Order Limit
+# Create a Duitnow::Pay Consent
 curl -G https://www.billplz.com/api/v5/duitnow/pay/consents \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
   -d merchant_ref="C001" \
@@ -3272,7 +3272,7 @@ Use this API to initiate an AutoDebit from your customer by providing a valid an
 > Example request:
 
 ```shell
-# Get a Payment Order
+# Create an Duitnow::Pay AutoDebit
 curl https://www.billplz.com/api/v5/duitnow/pay/auto_debits \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
   -d consent_id="29f408bf-c569-4455-a134-1331d9c2bf01" \
@@ -3341,8 +3341,8 @@ Use this API to query a list of AutoDebits based on bill and consent id.
 > Example request:
 
 ```shell
-# Get a Payment Order
-curl -G https://www.billplz.com/api/v5/duitnow/pay/consents/29f408bf-c569-4455-a134-1331d9c2bf01/autodebits/ad8diu187sbkj \
+# Get an AutoDebit Index
+curl -G https://www.billplz.com/api/v5/duitnow/pay/consents/29f408bf-c569-4455-a134-1331d9c2bf01/auto_debits/ad8diu187sbkj \
   -u 73eb57f0-7d4e-42b9-a544-aeac6e4b0f81: \
   -d epoch=1668149595 \
   -d checksum="92987e17459c6e488b83c02dea1693615011fee049d88a3eb9745538f191e323ac4f067571aa8abc335075470b06693994443b52b78be22fbd12b44cb699b265"
@@ -3390,7 +3390,7 @@ curl -G https://www.billplz.com/api/v5/duitnow/pay/consents/29f408bf-c569-4455-a
 
 ###### HTTP REQUEST
 
-`GET https://www.billplz.com/api/v5/duitnow/pay/consents/{consent_id}/autodebits/{bill_id}`
+`GET https://www.billplz.com/api/v5/duitnow/pay/consents/{consent_id}/auto_debits/{bill_id}`
 
 ###### REQUIRED ARGUMENTS
 

@@ -3265,6 +3265,10 @@ curl -X DELETE https://www.billplz.com/api/v5/duitnow/pay/consents/29f408bf-c569
 
 Billplz Duitnow::Pay AutoDebit allows you to debit an amount directly from your customer provided a consent was already approved. This feature would be particularly useful for merchants who intends to collect payments from customers on a recurring basis.
 
+<aside class="notice">
+  Please ensure that the bill you are trying AutoDebit from has the Duitnow::Pay payment method configured. This can be done on the Billplz dashboard collection payment method settings, or contact team@billplz.com for more information on how to set this up.
+</aside>
+
 ### Create an AutoDebit
 
 Use this API to initiate an AutoDebit from your customer by providing a valid and approved consent id.

@@ -3084,7 +3084,7 @@ curl -G https://www.billplz.com/api/v5/duitnow/pay/consents \
   -d checksum="e18c50ca130db623d350123ed9cc0c83120361d1045737eb172396b3b41b0141c24c26de6ca41b66dfa476c2c5299a31df21c1fdbf6e0b585ea6e7a975fbd555"
 ```
 
-> Response:
+> Example of a successful response:
 
 ```json
 {
@@ -3099,6 +3099,33 @@ curl -G https://www.billplz.com/api/v5/duitnow/pay/consents \
   "frequency": "01",
   "callback_url": "https://example.com/callback",
   "authorize_consent_url":"https://example-consent-url.com/authorize",
+}
+```
+
+> Example of a failed response:
+
+```json
+{
+  "id": "29f408bf-c569-4455-a134-1331d9c2bf01",
+  "status": "failed",
+  "merchant_ref": "C002",
+  "customer_name": "Kevin",
+  "effective_date": "2025-03-04",
+  "expiry_date": "2025-12-31",
+  "bank_code": "DNRET-CIBBMYKL",
+  "max_amount": 100000,
+  "frequency": "01",
+  "callback_url": "https://example.com/callback",
+  "error": {
+    "type": "CREATED",
+    "message": {
+        "message": "U224",
+        "data": {
+            "endToEndId": "20250313M0043139811OBW00011694",
+            "issuer": "PayNet Simulator Bank"
+        }
+    }
+  }
 }
 ```
 
@@ -3127,10 +3154,10 @@ curl -G https://www.billplz.com/api/v5/duitnow/pay/consents \
 
 ###### RESPONSE PARAMETER
 
-| Parameter             | Type    | Description                                                                                                                 |
-| ----------------------| ------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Parameter             | Type    | Description  |
+| ----------------------| ------- | --------------------|
 | id                    | string  | ID that represents a Duitnow::Pay Consent |
-| status                | string  | Status of the consent. Possible values: ['pending', 'active', 'inactive'] |
+| status                | string  | Status of the consent. Possible values: ['pending', 'active', 'inactive', 'failed'] |
 | merchant_ref          | string  | A unique merchant reference number set by you for your reference |
 | customer_name         | string  | Your customer's name |
 | effective_date        | string  | Beginning of the consent |
@@ -3139,7 +3166,15 @@ curl -G https://www.billplz.com/api/v5/duitnow/pay/consents \
 | max_amount            | integer | Maximum amount in cents chargeable when initiating an Duitnow::Pay AutoDebit |
 | frequency             | string  | Indicates the frequency of transactions, where 01-unlimited, 02-daily, 03-weekly, 04-monthly, 05-quarterly, 06-yearly. Possible values: ['01','02','03','04','05','06'] |
 | callback_url          | string  | Url endpoint provided by you for when we issue a callback to update you on the consent result of your customer |
-| authorize_consent_url | string  | Url provided by Paynet for you to redirect your customer to complete their consent form |
+| authorize_consent_url | string  | Url provided by Paynet for you to redirect your customer to complete their consent form (only if the request was successful) |
+
+In some cases, there will errors resulting in processing from on Paynet's side, when this happens, the record will still be created however the consent status will be returned in a failed status along with the error message
+
+| Parameter             | Type    | Description  |
+| ----------------------| ------- | --------------------|
+| error                 | object  | An error object containing the type and message (only if the request resulted in failure) |
+| error[type]           | string  | Value will be 'CREATED' |
+| error[message]        | object  | Details about the error from Paynet |
 
 <aside class="notice">
   You are required to redirect your customer to the authorize_consent_url to complete the consent approval process

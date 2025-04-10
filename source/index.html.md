@@ -3060,7 +3060,13 @@ Duitnow::Pay via Billplz will now allow your application to request consents fro
 
 ## Duitnow::Pay Consents
 
-Consents are a way for you to request approval from your customer to initiate an AutoDebit via Duitnow::Pay AutoDebit. This API documentation will guide you on how to initaite a consent request and subsequently intiate an AutoDebit collection from your customer.
+Consents are a way for you to request approval from your customer to initiate an AutoDebit via Duitnow::Pay AutoDebit. This API documentation will guide you on how to initaite a consent request and subsequently intiate an AutoDebit collection from your customer.</br>
+Please note that each consent will only have a lifespan of 365 days x 50 years (ignoring leap years). This means the maximum expiry date for a consent will be 18,250 days from the consent's effective date. </br>
+
+<aside class="notice">
+  
+  ie: A consent with effective date beginning on 15 January 2025, will have a maximum expiry date of 03 January 2075, equivalent to exactly 18,250 days (i.e. 365 × 50, ignoring leap years)
+</aside>
 
 ### Create a Consent
 

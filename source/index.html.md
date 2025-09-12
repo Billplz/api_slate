@@ -3053,6 +3053,7 @@ curl -G https://www.billplz.com/api/v5/payment_order_limit \
 </aside>
 
 
+<!-- COMMENT OUT DUITNOW::PAY UNTIL FURTHER NOTICE 12/09/2025 - KEVIN HUI
 ## Duitnow::Pay
 
 You can now integrate Duitnow into your application using Billplz via the API detailed below. 
@@ -3545,6 +3546,7 @@ curl https://www.billplz.com/api/v5/payment_gateways \
 | extras[isFpx]       | boolean | Indicate if this payment gateway is for FPX |
 | extras[isObw]       | boolean | Indicate if this payment gateway is for Duitnow |
 | extras[isConsent]   | boolean | Indicate if this payment gateway can be used for Duitnow::Pay Consent |
+ -->
 
 # X Signature
 
@@ -4373,6 +4375,7 @@ This is a list of all the bank codes used in our system
 | Fpx | B2B1-TEST0023\* | SBI Bank C                  |
 | Fpx | B2B1-UOB0228    | UOB BIBPlus                 |
 
+<!-- COMMENT OUT DUITNOW BANK CODES UNTIL FURTHER NOTICE - 12/09/2025 - KEVIN HUI
 ## Duitnow Bank Codes
 \* Only applicable in staging environment.
 
@@ -4449,3 +4452,4 @@ This is a list of all the bank codes used in our system
 | Duitnow | DNCOR-TEST0023\* | SBI BANK B |
 | Duitnow | DNRET-DENGMYK1\* | Paynet Bank Simulator 2 |
 | Duitnow | DNCOR-ACFBMYK1\* | PYN Bank A |
+-->

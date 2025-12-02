@@ -4241,7 +4241,7 @@ Content-Type: application/json;
 {
   "error": {
     "type": "RateLimit",
-    "message": "Too many requests"
+    "message": ["Too many requests"]
   }
 }
 ```
@@ -4277,7 +4277,7 @@ Response parameter will be as usual if didn't exceed the rate limit. Otherwise, 
 | Parameter      | Value               |
 | -------------- | ------------------- |
 | error[type]    | `RateLimit`         |
-| error[message] | `Too many requests` |
+| error[message] | [`Too many requests`] |
 
 # Payment Gateway Abbreviations
 
